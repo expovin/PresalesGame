@@ -4,12 +4,18 @@ var Opportunities = require('./lib/ClassOpportunities');
 var Presales = require('./lib/ClassPresales');
 var Market = require('./lib/ClassMarket');
 
-var oppy = new Opportunities(4, 4000, 4, 50);
+var oppy = [];
 var market = new Market();
 var presales = new Presales();
 
-if(process.argv[2] === "oppy")
-    console.log("Oppy details:",oppy.getValues());
+if(process.argv[2] === "oppy"){
+    oppy.push(new Opportunities(4, 4000, 4, 50));
+    oppy.push(new Opportunities(4, 4000, 4, 50));
+    oppy.push(new Opportunities(4, 4000, 4, 50));
+    oppy.push(new Opportunities(4, 4000, 4, 50));
+    oppy.forEach(o => console.log(o.getValues()));
+}
+
 
 if(process.argv[2] === "market")    
     console.log("Market : ",market.getMarketTrends());
