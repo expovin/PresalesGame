@@ -102,8 +102,6 @@ var schema = {
             Deals[companyName].push(p);
           
         })
-        console.log("Fine delle consultazioni, questi i dettagli: ");
-        console.log(Deals);
 
         CompanyList.forEach( c => c.hirePerson(Deals[c.getName()]))
         break;
@@ -144,7 +142,7 @@ var schema = {
   }
 
   function Comp(arr){
-    var listOfCommands = ['init','get','help'];
+    var listOfCommands = ['init','get','campain','help'];
 
     var command=arr.shift();
 
@@ -156,15 +154,17 @@ var schema = {
 
       case 'get':
         if(isNaN(arr[0])){
-          CompanyList.forEach( c =>console.log((c.getValues())));
+          CompanyList.forEach( c =>console.log(prettyjson.render(c.getValues())));
         }else{
           console.log("--------------------------------------------------------");
           console.log("Request sigle Copany Number : ",arr[0]);
           console.log("--------------------------------------------------------");
           console.log(prettyjson.render(CompanyList[arr[0]].getValues()));
         }
+        break;
 
-        
+      case 'campain':
+        CompanyList[arr[0]].marketingCampain(arr[1],arr[2]);
         break;
 
       case 'help':
@@ -210,35 +210,6 @@ var schema = {
         printHelp(listOfCommands);
         break;
 
-      case 'test':
-        OppyList.push(new Opportunities(4,100,5,35));
-        console.log(OppyList[0].getValues());
-        OppyList.push(new Opportunities(4,100,5,35));
-
-        OppyList.forEach( ele => console.log(ele.getValues()));
-
-        break;
-
-      case 'test2':
-        
-        let a;
-        var myVar = [];
-        console.log("Creo un valore oppy nel primo elemento dell'array o");
-        a=new Opportunities(4,100,5,35);
-        console.log("Controllo se funziona ");
-        console.log(a.getValues());
-        myVar.push(a);
-        a={};
-        console.log("Bene, ora creo una seconda classe nel secondo elemento dell'array");
-        a=new Opportunities(4,100,5,35);
-        console.log("Vediamo se o Funziona a... ", a.getValues());
-        myVar.push(a);
-        a={};
-
-        myVar.forEach( ele => console.log(ele.getValues()));
-
-        break;
-
       case 'init':
         if(arr.length !== 5){
           console.error("Parameters not valid.");
@@ -252,7 +223,6 @@ var schema = {
           for(var i=0; i<arr[0]; i++){
             var o = {};
             o =  new Opportunities(arr[1], arr[2], arr[3], arr[4]);
-            console.log(o.getValues());
             OppyList.push(o);
           }
         }
