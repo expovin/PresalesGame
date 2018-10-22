@@ -95,12 +95,15 @@ var schema = {
         break;
 
       case 'evalProposal':
-        var Deals={};
+        Deals=initDeals();
         PresalesList.forEach( p =>{
           var companyName=p.acceptProposal();
-          Deals[companyName]=[];
-          Deals[companyName].push(p.getID());
+          if(companyName !== null)
+            Deals[companyName].push(p);
+          
         })
+        console.log("Fine delle consultazioni, questi i dettagli: ");
+        console.log(Deals);
 
         CompanyList.forEach( c => c.hirePerson(Deals[c.getName()]))
         break;
@@ -158,7 +161,7 @@ var schema = {
           console.log("--------------------------------------------------------");
           console.log("Request sigle Copany Number : ",arr[0]);
           console.log("--------------------------------------------------------");
-          console.log((CompanyList[arr[0]].getValues()));
+          console.log(prettyjson.render(CompanyList[arr[0]].getValues()));
         }
 
         
@@ -291,3 +294,8 @@ var schema = {
 
   
 
+function initDeals(){
+  var deals={};
+  CompanyList.forEach( c => deals[c.getName()]=[]);
+  return deals;
+}
