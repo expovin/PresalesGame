@@ -1,21 +1,19 @@
 var express = require('express');
-var Presales = require('../lib/ClassPresales');
-var m = require('../lib/Game');
-
+var Presales = require('../lib/Game');
 var router = express.Router();
 
-var PresalesPeople={};
+var games={};
 
 /* get all presales */
 router.route('/')
 .get( function(req, res, next) {
     //PresalesPeople.forEach( p => people.push(p.getValues()));
-    res.status(200).json({result:'OK', data: m['m'].getPeople()});
+    res.status(200).json({result:'OK', data: PresalesPeople});
 })
 .post( function (req, res, next){
     for(var i=0; i<req.body.num; i++){
         var p = new Presales();
-        m['m'].addPerson(p);
+        PresalesPeople[p.getID()]=p;
     }
     res.status(200).json({result:'OK', message:'Generated '+req.body.num+' presales person'});
 })
