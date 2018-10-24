@@ -4,7 +4,7 @@ var m = require('../lib/Game');
 
 var router = express.Router();
 
-//var PresalesPeople={};
+
 
 /* get all presales */
 router.route('/')
