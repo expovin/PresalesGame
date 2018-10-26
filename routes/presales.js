@@ -40,4 +40,22 @@ router.route('/:presalesID')
     res.status(209).json({result:'WARNING', message:'This function has not been implemented yet'});
 })
 
+
+router.route('/:presalesID/satisfaction')
+.get( function(req, res, next) {
+    res.status(209).json({result:'WARNING', message:'This function has not been implemented yet'});
+})
+.post( function (req, res, next){
+    res.status(200).json({result:'OK', data: m[req.headers.gameid]
+                        .getPerson(req.params.presalesID)
+                        .changeSatisfactionalLevel(req.body.percentage, req.body.absolute)});
+})
+.put( function (req, res, next){
+    res.status(209).json({result:'WARNING', message:'This function has not been implemented yet'});
+})
+.delete( function (req, res, next){
+    res.status(209).json({result:'WARNING', message:'This function has not been implemented yet'});
+})
+
+
 module.exports = router;

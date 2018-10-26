@@ -7,7 +7,7 @@ var MarketTrends=[];
 
 function initDeals(CompanyList){
     var deals={};
-    CompanyList.forEach( c => deals[c.getID()]=[]);
+    Object.keys(CompanyList).forEach(companyID => deals[companyID]=[]);
     return deals;
   }
 
@@ -32,24 +32,48 @@ router.route('/')
 /* get all presales */
 router.route('/evaluate')
 .get( function(req, res, next) {
-    Deals=initDeals(m[req.headers.gameid].getCompanies());
+    var Deals=initDeals(m[req.headers.gameid].getCompanies());
     var people = m[req.headers.gameid].getPeople();
     Object.keys(people).forEach(function(personID) {
         companyID=m[req.headers.gameid].getPerson(personID).acceptProposal();
+
         if(companyID !== null){
             Deals[companyID].push(personID);
 
             m[req.headers.gameid]
                 .getCompany(companyID)
-                .sendMessage("Congratulation, you hired ",m[req.headers.gameid]
+                .sendMessage("Congratulation, you hired "+
+            m[req.headers.gameid]
                 .getPerson(personID)
                 .getName());
         }
 
-        m[req.headers.gameid].getCompanies().forEach( company => company.hirePerson(Deals[c.getID()]))
+        const resigned=m[req.headers.gameid].getPerson(personID).resign();
+        if(resigned){
+            m[req.headers.gameid]
+                .getCompany(resigned)
+                .sendMessage("Dears, please accept my resignations, Sincerely "+
+            m[req.headers.gameid]
+                .getPerson(personID)
+                .getName());
+
+            m[req.headers.gameid]
+                .getCompany(resigned)                
+                .dismissPerson(  
+            m[req.headers.gameid]
+                .getPerson(personID))
+        }
       });
 
-    res.status(200).json({result:'OK', data: MarketTrends.getMarketTrends()});
+      Object.keys(Deals).forEach(companyID => {
+          Deals[companyID].forEach( personID =>{
+              m[req.headers.gameid]
+              .getCompany(companyID)
+              .hirePerson(m[req.headers.gameid].getPerson(personID));
+          })
+      });
+
+    res.status(200).json({result:'OK', data: Deals});
 })
 .post( function (req, res, next){
     MarketTrends = new Market();
@@ -72,7 +96,8 @@ router.route('/proposal/:companyID/:presalesID')
 .post( function (req, res, next){
     var p = m[req.headers.gameid].getPerson(req.params.presalesID);
     var c = m[req.headers.gameid].getCompany(req.params.companyID);
-    p.evalProposal( c.getID(), req.headers.value)
+    p.evalProposal( c.getID(), req.body.value);
+    c.makeProposal(p.getID());
     res.status(200).json({result:'OK', message:'Proposal from company '+c.getName()+' has been sent to '+p.getName()});
 })
 .put( function (req, res, next){
