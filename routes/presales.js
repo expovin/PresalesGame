@@ -9,12 +9,12 @@ var router = express.Router();
 /* get all presales */
 router.route('/')
 .get( function(req, res, next) {
-    res.status(200).json({result:'OK', data: m[req.headers.gameid].getPeople()});
+    res.status(200).json({result:'OK', data: m[req.headers.gameid].getPeople(req.headers.employed)});
 })
 .post( function (req, res, next){
     for(var i=0; i<req.body.num; i++){
         var p = new Presales(m[req.headers.gameid].getMarketTrends());
-        m['m'].addPerson(p);
+        m[req.headers.gameid].addPerson(p);
     }
     res.status(200).json({result:'OK', message:'Generated '+req.body.num+' presales person'});
 })
@@ -22,7 +22,7 @@ router.route('/')
     res.status(209).json({result:'WARNING', message:'This function has not been implemented yet'});
 })
 .delete( function (req, res, next){
-    m['m'].deletePeople()
+    m[req.headers.gameid].deletePeople()
     res.status(200).json({result:'OK', message:'Presales people have been deleted'});
 })
 
@@ -48,7 +48,8 @@ router.route('/:presalesID/satisfaction')
 .post( function (req, res, next){
     res.status(200).json({result:'OK', data: m[req.headers.gameid]
                         .getPerson(req.params.presalesID)
-                        .changeSatisfactionalLevel(req.body.percentage, req.body.absolute)});
+                        .changeSatisfactionalLevel( parseInt(req.body.percentage,10), 
+                                                    parseInt(req.body.absolute,10))});
 })
 .put( function (req, res, next){
     res.status(209).json({result:'WARNING', message:'This function has not been implemented yet'});

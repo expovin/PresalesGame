@@ -33,7 +33,10 @@ router.route('/')
 router.route('/evaluate')
 .get( function(req, res, next) {
     var Deals=initDeals(m[req.headers.gameid].getCompanies());
-    var people = m[req.headers.gameid].getPeople();
+    var people = m[req.headers.gameid].getPeople("false");
+
+
+    /** Loop over unemployed people*/
     Object.keys(people).forEach(function(personID) {
         companyID=m[req.headers.gameid].getPerson(personID).acceptProposal();
 
@@ -47,9 +50,15 @@ router.route('/evaluate')
                 .getPerson(personID)
                 .getName());
         }
+      });
 
+    /** Loop over employed people */
+    var people = m[req.headers.gameid].getPeople("true");
+    var resignedPeople=[];
+    Object.keys(people).forEach(function(personID) {
         const resigned=m[req.headers.gameid].getPerson(personID).resign();
         if(resigned){
+            resignedPeople.push(personID);
             m[req.headers.gameid]
                 .getCompany(resigned)
                 .sendMessage("Dears, please accept my resignations, Sincerely "+
@@ -61,9 +70,10 @@ router.route('/evaluate')
                 .getCompany(resigned)                
                 .dismissPerson(  
             m[req.headers.gameid]
-                .getPerson(personID))
+                .getPerson(personID));
         }
       });
+
 
       Object.keys(Deals).forEach(companyID => {
           Deals[companyID].forEach( personID =>{
@@ -73,7 +83,7 @@ router.route('/evaluate')
           })
       });
 
-    res.status(200).json({result:'OK', data: Deals});
+    res.status(200).json({result:'OK', data: Deals, resigned : resignedPeople});
 })
 .post( function (req, res, next){
     MarketTrends = new Market();
