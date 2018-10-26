@@ -86,15 +86,13 @@ router.route('/evaluate')
     res.status(200).json({result:'OK', data: Deals, resigned : resignedPeople});
 })
 .post( function (req, res, next){
-    MarketTrends = new Market();
-    res.status(200).json({result:'OK', message:'Market trends have been generated'});
+    res.status(209).json({result:'WARNING', message:'This function has not been implemented yet'});
 })
 .put( function (req, res, next){
     res.status(209).json({result:'WARNING', message:'This function has not been implemented yet'});
 })
 .delete( function (req, res, next){
-    MarketTrends=[];
-    res.status(200).json({result:'OK', message:'Market trends have been deleted'});
+    res.status(209).json({result:'WARNING', message:'This function has not been implemented yet'});
 })
 
 

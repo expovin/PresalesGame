@@ -52,4 +52,52 @@ router.route('/:companyID/message')
     res.status(200).json({result:'OK', message:'All messages have been deleted!'});
 })
 
+router.route('/:companyID/BAM')
+.get( function(req, res, next) {
+    res.status(200).json({result:'OK', 
+                    data: m[req.headers.gameid].getCompany(req.params.companyID).getBAMStatus()});
+})
+.post( function (req, res, next){
+    m[req.headers.gameid].getCompany(req.params.companyID).enableBAM();
+    res.status(200).json({result:'OK', message:'BAM has been enabled'});
+})
+.put( function (req, res, next){
+    res.status(209).json({result:'WARNING', message:'This function has not been implemented yet'});
+})
+.delete( function (req, res, next){
+    m[req.headers.gameid].getCompany(req.params.companyID).disableBAM();
+    res.status(200).json({result:'OK', message:'BAM has been disabled'});
+})
+
+router.route('/:companyID/TOP')
+.get( function(req, res, next) {
+    res.status(200).json({result:'OK', data: m[req.headers.gameid].getCompany(req.params.companyID).getTOPStatus()});
+})
+.post( function (req, res, next){
+    m[req.headers.gameid].getCompany(req.params.companyID).enableTOP();
+    res.status(200).json({result:'OK', message:'TOP has been enabled'});
+})
+.put( function (req, res, next){
+    res.status(209).json({result:'WARNING', message:'This function has not been implemented yet'});
+})
+.delete( function (req, res, next){
+    m[req.headers.gameid].getCompany(req.params.companyID).disableTOP();
+    res.status(200).json({result:'OK', message:'TOP has been disabled'});
+})
+
+router.route('/:companyID/Compain')
+.get( function(req, res, next) {
+    res.status(209).json({result:'WARNING', message:'This function has not been implemented yet'});
+})
+.post( function (req, res, next){
+    m[req.headers.gameid].getCompany(req.params.companyID).marketingCampain(req.body.cost, req.body.hours);
+    res.status(200).json({result:'OK', message:'Campain has been acquired'});
+})
+.put( function (req, res, next){
+    res.status(209).json({result:'WARNING', message:'This function has not been implemented yet'});
+})
+.delete( function (req, res, next){
+    res.status(209).json({result:'WARNING', message:'This function has not been implemented yet'});
+})
+
 module.exports = router;
