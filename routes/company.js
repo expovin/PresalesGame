@@ -10,7 +10,7 @@ router.route('/')
     res.status(200).json({result:'OK', data: m[req.headers.gameid].getCompanies()});
 })
 .post( function (req, res, next){
-    var c = new Company(req.body.name);
+    var c = new Company(req.body.name, m[req.headers.gameid].getBaseProductFeatures());
     m[req.headers.gameid].addCompany(c);
     res.status(200).json({result:'OK', message:'Added company '+req.body.name, id : c.getID()});
 })
@@ -92,6 +92,23 @@ router.route('/:companyID/Compain')
 .post( function (req, res, next){
     m[req.headers.gameid].getCompany(req.params.companyID).marketingCampain(req.body.cost, req.body.hours);
     res.status(200).json({result:'OK', message:'Campain has been acquired'});
+})
+.put( function (req, res, next){
+    res.status(209).json({result:'WARNING', message:'This function has not been implemented yet'});
+})
+.delete( function (req, res, next){
+    res.status(209).json({result:'WARNING', message:'This function has not been implemented yet'});
+})
+
+router.route('/:companyID/ProductFeature')
+.get( function(req, res, next) {
+    res.status(209).json({result:'OK', data:m[req.headers.gameid].getCompany(req.params.companyID).getProductFeatures()});
+})
+.post( function (req, res, next){
+    if(m[req.headers.gameid].getCompany(req.params.companyID).improveFeature(req.body.feature, req.body.points))
+        res.status(200).json({result:'OK', message:'Product features has been improved'});
+    else
+        res.status(200).json({result:'WARNING', message:'Sorry, you have no enought points'});
 })
 .put( function (req, res, next){
     res.status(209).json({result:'WARNING', message:'This function has not been implemented yet'});
