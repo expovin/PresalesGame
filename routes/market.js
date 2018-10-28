@@ -135,16 +135,37 @@ router.route('/course/:companyID/:presalesID')
 })
 .post( function (req, res, next){
     if(m[req.headers.gameid].getCourse(req.params.companyID, 
-                                    req.params.presalesID, 
-                                    req.body.marketTrend, 
-                                    req.body.feature,
-                                    req.body.money,
-                                    req.body.hours,
-                                    req.body.quantity))
-
+        req.params.presalesID, 
+        req.body.marketTrend, 
+        req.body.feature,
+        req.body.money,
+        req.body.hours,
+        req.body.quantity))
         res.status(200).json({result:'OK', message:'Presales '+m[req.headers.gameid].getPerson(req.params.presalesID).getName()+' has succesfully get the course'});
     else
         res.status(209).json({result:'WARNING', message:'Sorry, you have not enought budget nor hours to afford this sourse'});
+})
+.put( function (req, res, next){
+    res.status(209).json({result:'WARNING', message:'This function has not been implemented yet'});
+})
+.delete( function (req, res, next){
+    MarketTrends=[];
+    res.status(209).json({result:'WARNING', message:'This function has not been implemented yet'});
+})
+
+router.route('/retentionBonus/:companyID/:presalesID')
+.get( function(req, res, next) {
+    res.status(209).json({result:'OK', data:m[req.headers.gameid].getPerson(req.params.presalesID).getRetentionBonus()});
+})
+.post( function (req, res, next){
+    if(m[req.headers.gameid]
+        .getCompany(req.params.companyID)
+        .retentionBonus(req.body.money)) {
+            m[req.headers.gameid].getPerson(req.params.presalesID).retentionBonus(req.body.money);
+            res.status(200).json({result:'OK', message:'Retention bonus has been sent to '+m[req.headers.gameid].getPerson(req.params.presalesID).getName()});
+        }
+    else
+        res.status(209).json({result:'WARNING', message:'Sorry, you have not enought budget for the retention bonus'});
 })
 .put( function (req, res, next){
     res.status(209).json({result:'WARNING', message:'This function has not been implemented yet'});

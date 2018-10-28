@@ -40,6 +40,24 @@ router.route('/:presalesID')
     res.status(209).json({result:'WARNING', message:'This function has not been implemented yet'});
 })
 
+router.route('/:presalesID/meritIncrease')
+.get( function(req, res, next) {
+    res.status(200).json({result:'OK', data: m[req.headers.gameid].getPerson(req.params.presalesID).getMeritIncreases()});
+})
+.post( function (req, res, next){
+    m[req.headers.gameid]
+        .getPerson(req.params.presalesID)
+        .meritIncrease(req.body.percentage)
+
+    res.status(209).json({result:'OK', message:'Merit increase added to '+m[req.headers.gameid].getPerson(req.params.presalesID).getName()});
+})
+.put( function (req, res, next){
+    res.status(209).json({result:'WARNING', message:'This function has not been implemented yet'});
+})
+.delete( function (req, res, next){
+    res.status(209).json({result:'WARNING', message:'This function has not been implemented yet'});
+})
+
 
 router.route('/:presalesID/satisfaction')
 .get( function(req, res, next) {
