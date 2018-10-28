@@ -47,7 +47,7 @@ router.route('/:presalesID/meritIncrease')
 .post( function (req, res, next){
     m[req.headers.gameid]
         .getPerson(req.params.presalesID)
-        .meritIncrease(req.body.percentage)
+        .meritIncrease(req.body.percentage, m[req.headers.gameid].getCurrentQuarter())
 
     res.status(209).json({result:'OK', message:'Merit increase added to '+m[req.headers.gameid].getPerson(req.params.presalesID).getName()});
 })

@@ -161,7 +161,7 @@ router.route('/retentionBonus/:companyID/:presalesID')
     if(m[req.headers.gameid]
         .getCompany(req.params.companyID)
         .retentionBonus(req.body.money)) {
-            m[req.headers.gameid].getPerson(req.params.presalesID).retentionBonus(req.body.money);
+            m[req.headers.gameid].getPerson(req.params.presalesID).retentionBonus(req.body.money, m[req.headers.gameid].getCurrentQuarter());
             res.status(200).json({result:'OK', message:'Retention bonus has been sent to '+m[req.headers.gameid].getPerson(req.params.presalesID).getName()});
         }
     else
