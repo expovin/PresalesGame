@@ -58,8 +58,10 @@ router.route('/:companyID/BAM')
                     data: m[req.headers.gameid].getCompany(req.params.companyID).getBAMStatus()});
 })
 .post( function (req, res, next){
-    m[req.headers.gameid].getCompany(req.params.companyID).enableBAM();
-    res.status(200).json({result:'OK', message:'BAM has been enabled'});
+    if(m[req.headers.gameid].getCompany(req.params.companyID).enableBAM())
+        res.status(200).json({result:'OK', message:'BAM has been enabled'});
+    else
+        res.status(200).json({result:'WARNING', message:'Sorry, you have not enought hours to implement BAM'});
 })
 .put( function (req, res, next){
     res.status(209).json({result:'WARNING', message:'This function has not been implemented yet'});
@@ -74,8 +76,10 @@ router.route('/:companyID/TOP')
     res.status(200).json({result:'OK', data: m[req.headers.gameid].getCompany(req.params.companyID).getTOPStatus()});
 })
 .post( function (req, res, next){
-    m[req.headers.gameid].getCompany(req.params.companyID).enableTOP();
-    res.status(200).json({result:'OK', message:'TOP has been enabled'});
+    if(m[req.headers.gameid].getCompany(req.params.companyID).enableTOP())
+        res.status(200).json({result:'OK', message:'TOP has been enabled'});
+    else
+    res.status(200).json({result:'WARNING', message:'Sorry, you have not enought hours to implement TOP'});
 })
 .put( function (req, res, next){
     res.status(209).json({result:'WARNING', message:'This function has not been implemented yet'});
@@ -90,8 +94,10 @@ router.route('/:companyID/Compain')
     res.status(209).json({result:'WARNING', message:'This function has not been implemented yet'});
 })
 .post( function (req, res, next){
-    m[req.headers.gameid].getCompany(req.params.companyID).marketingCampain(req.body.cost, req.body.hours);
-    res.status(200).json({result:'OK', message:'Campain has been acquired'});
+    if(m[req.headers.gameid].getCompany(req.params.companyID).marketingCampain(req.body.cost, req.body.hours))
+        res.status(200).json({result:'OK', message:'Campain has been acquired'})
+    else
+        res.status(200).json({result:'WARNING', message:'Sorry, you have not enought budget nor hours for this campain'})
 })
 .put( function (req, res, next){
     res.status(209).json({result:'WARNING', message:'This function has not been implemented yet'});
