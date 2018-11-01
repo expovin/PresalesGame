@@ -19,6 +19,7 @@
     "lodash.clonedeep": "^4.5.0",
     "morgan": "~1.9.0",
     "node-random-name": "^1.0.1",
+    "picasso.js": "^0.15.0",
     "prettyjson": "^1.2.1",
     "prompt": "^1.0.0",
     "random-name": "^0.1.2",

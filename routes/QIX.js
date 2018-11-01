@@ -79,11 +79,24 @@ router.route('/app/layout')
 .get( function(req, res, next) {
     qix.getAppLayout()
     .then( appLayout =>{
+
         res.status(200).json({result:'OK', data: appLayout});
     }, error =>{
         res.status(508).json({result:'ERROR', error: error});
     })
 })
+
+/* get all presales */
+router.route('/app/createSessionObject')
+.get( function(req, res, next) {
+    qix.createSessionObject()
+    .then( hypercube =>{
+        res.status(200).json({result:'OK', data: hypercube});
+    }, error =>{
+        res.status(508).json({result:'ERROR', error: error});
+    })
+})
+
 
 /* get all presales */
 router.route('/app/script')
