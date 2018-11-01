@@ -15,6 +15,7 @@ router.route('/')
     for(var i=0; i<req.body.num; i++){
         var p = new Presales(m[req.headers.gameid].getMarketTrends());
         m[req.headers.gameid].addPerson(p);
+        m[req.headers.gameid].addPeopleToArray(p);
     }
     res.status(200).json({result:'OK', message:'Generated '+req.body.num+' presales person'});
 })

@@ -11,6 +11,7 @@ var opportunitiesRoute = require('./routes/opportunities');
 var companiesRoute = require('./routes/company');
 var marketRoute = require('./routes/market');
 var gameRoute = require('./routes/game');
+var qix = require('./routes/QIX');
 
 var app = express();
 
@@ -32,6 +33,7 @@ app.use('/opportunities', opportunitiesRoute);
 app.use('/companies', companiesRoute);
 app.use('/market', marketRoute);
 app.use('/game', gameRoute);
+app.use('/qix', qix);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -5,6 +5,7 @@ var router = express.Router();
 
 var MarketTrends=[];
 
+
 function initDeals(CompanyList){
     var deals={};
     Object.keys(CompanyList).forEach(companyID => deals[companyID]=[]);
@@ -18,15 +19,24 @@ router.route('/')
 })
 .post( function (req, res, next){
     MarketTrends = new Market();
-    res.status(200).json({result:'OK', message:'Market trends have been generated'});
+    m[req.headers.gameid].initQIX(m)
+    .then( result => {
+        res.status(200).json({result:'OK', message:'Market initialized'});
+    }, error =>{
+        res.status(200).json({result:'ERROR', error});
+    })
+    .catch(error =>{
+        res.status(200).json({result:'ERROR', error});
+    })
+    
 })
-.put( function (req, res, next){
-    res.status(209).json({result:'WARNING', message:'This function has not been implemented yet'});
-})
+
 .delete( function (req, res, next){
     MarketTrends=[];
     res.status(200).json({result:'OK', message:'Market trends have been deleted'});
 })
+
+
 
 
 /* get all presales */

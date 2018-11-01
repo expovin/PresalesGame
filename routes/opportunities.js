@@ -14,6 +14,7 @@ router.route('/')
 .post( function (req, res, next){
     for(var i=0; i<req.body.num; i++)
         m[req.headers.gameid].addOpportunity(new Oppy(req.body.minValue, req.body.maxValue, req.body.minTTC, req.body.maxTTC))
+    m[req.headers.gameid].deserializeOppy();
 
     res.status(200).json({result:'OK', message:'Generated '+req.body.num+' opportunities'});
 })
