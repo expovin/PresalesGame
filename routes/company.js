@@ -123,4 +123,87 @@ router.route('/:companyID/ProductFeature')
     res.status(209).json({result:'WARNING', message:'This function has not been implemented yet'});
 })
 
+router.route('/:companyID/filter')
+.get( function(req, res, next) {
+    res.status(200).json({result:'OK', data: m[req.headers.gameid].getCompany(req.params.companyID).getAllFilters()});
+})
+
+router.route('/:companyID/filter/value')
+.get( function(req, res, next) {
+    res.status(200).json({result:'OK', data: m[req.headers.gameid].getCompany(req.params.companyID).getOppyValue()});
+})
+.post( function (req, res, next){
+    m[req.headers.gameid].getCompany(req.params.companyID).setOppyValue(req.body.oppyValues);
+    res.status(200).json({result:'OK', message:'Values has been set'});
+})
+.put( function (req, res, next){
+    m[req.headers.gameid].getCompany(req.params.companyID).toggleValue();
+    res.status(209).json({result:'OK', message:'OppyValue flag has been changed'});
+})
+
+router.route('/:companyID/filter/qualification')
+.get( function(req, res, next) {
+    res.status(200).json({result:'OK', data: m[req.headers.gameid].getCompany(req.params.companyID).getOppyQualification()});
+})
+.post( function (req, res, next){
+    m[req.headers.gameid].getCompany(req.params.companyID).setOppyQualification(req.body.oppyQualifications);
+    res.status(200).json({result:'OK', message:'Values has been set'});
+})
+.put( function (req, res, next){
+    m[req.headers.gameid].getCompany(req.params.companyID).toggleQualification();
+    res.status(209).json({result:'OK', message:'OppyValue flag has been changed'});
+})
+
+router.route('/:companyID/filter/trend')
+.get( function(req, res, next) {
+    res.status(200).json({result:'OK', data: m[req.headers.gameid].getCompany(req.params.companyID).getOppyTrend()});
+})
+.post( function (req, res, next){
+    m[req.headers.gameid].getCompany(req.params.companyID).setOppyTrends(req.body.oppyTrends);
+    res.status(200).json({result:'OK', message:'Values has been set'});
+})
+.put( function (req, res, next){
+    m[req.headers.gameid].getCompany(req.params.companyID).toggleTrends();
+    res.status(209).json({result:'OK', message:'OppyValue flag has been changed'});
+})
+
+router.route('/:companyID/filter/feature')
+.get( function(req, res, next) {
+    res.status(200).json({result:'OK', data: m[req.headers.gameid].getCompany(req.params.companyID).getOppyFeature()});
+})
+.post( function (req, res, next){
+    m[req.headers.gameid].getCompany(req.params.companyID).setOppyFeature(req.body.oppyFeatures);
+    res.status(200).json({result:'OK', message:'Values has been set'});
+})
+.put( function (req, res, next){
+    m[req.headers.gameid].getCompany(req.params.companyID).toggleFeature();
+    res.status(209).json({result:'OK', message:'OppyValue flag has been changed'});
+})
+
+router.route('/:companyID/filter/worker')
+.get( function(req, res, next) {
+    res.status(200).json({result:'OK', data: m[req.headers.gameid].getCompany(req.params.companyID).getOppyWorkers()});
+})
+.post( function (req, res, next){
+    m[req.headers.gameid].getCompany(req.params.companyID).setOppyWorkers(req.body.oppyWorkers);
+    res.status(200).json({result:'OK', message:'Values has been set'});
+})
+.put( function (req, res, next){
+    m[req.headers.gameid].getCompany(req.params.companyID).toggleWorkers();
+    res.status(209).json({result:'OK', message:'OppyValue flag has been changed'});
+})
+
+router.route('/:companyID/filter/industry')
+.get( function(req, res, next) {
+    res.status(200).json({result:'OK', data: m[req.headers.gameid].getCompany(req.params.companyID).getOppyIndustry()});
+})
+.post( function (req, res, next){
+    m[req.headers.gameid].getCompany(req.params.companyID).setOppyIndustry(req.body.oppyIndustries);
+    res.status(200).json({result:'OK', message:'Values has been set'});
+})
+.put( function (req, res, next){
+    m[req.headers.gameid].getCompany(req.params.companyID).toggleIndustry();
+    res.status(209).json({result:'OK', message:'OppyValue flag has been changed'});
+})
+
 module.exports = router;
