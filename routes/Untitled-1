@@ -1,5 +1,13 @@
-Presales:   2c9d6492ece1bb24883191ca2dcc190e
-            7af41ca70c203bd65d8c76c46fad1010
+1) Mapping Maket Trends      => Somma dei trend del Team x Trend pesato Opportunity (8, 4, 2)   [0 - 1400]
+2) Mapping Product Features  => Ogni feature di progetto moltiplicato per la percentuale delle feature di ogni singolo componente del team diviso il  umero di componenti
+3) Sum of Business Acumen    => Somma del BA dei componenti del team            [0 - 100]
+4) Brend Recognition         => Aggiunta del Brand Recognition della compagnia  [0 - 100]
 
-Copany :    d1e98f2050464ba3b2a72031049974c5
-            88a9705a758d5de11d5df51d90d088c0
+TBD:
+a) Team average ageing
+
+
+
+Qlik : 4f032bf1760690d89fa74488a631b8e1
+Tableau : f7e35265e8f7acb55ca67513ae0eb3cd
+

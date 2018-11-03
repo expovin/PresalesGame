@@ -19,6 +19,7 @@ router.route('/')
 })
 .post( function (req, res, next){
     MarketTrends = new Market();
+    /*
     m[req.headers.gameid].initQIX(m)
     .then( result => {
         res.status(200).json({result:'OK', message:'Market initialized'});
@@ -28,7 +29,8 @@ router.route('/')
     .catch(error =>{
         res.status(200).json({result:'ERROR', error});
     })
-    
+    */
+   res.status(200).json({result:'OK', message:'Market initialized'});
 })
 
 .delete( function (req, res, next){
@@ -37,7 +39,11 @@ router.route('/')
 })
 
 
-
+/* get all presales */
+router.route('/nextPeriod')
+.get( function(req, res, next) {
+    m[req.headers.gameid].nextPeriod();
+})
 
 /* get all presales */
 router.route('/evaluate')
