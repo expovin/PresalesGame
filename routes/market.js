@@ -32,9 +32,12 @@ router.route('/')
     */
    res.status(200).json({result:'OK', message:'Market initialized'});
 })
-
+.put( function (req, res, next){
+    m[req.headers.gameid].preNextPeriod()
+    res.status(200).json({result:'OK', message:'Test scenario is ready'});
+})
 .delete( function (req, res, next){
-    MarketTrends=[];
+    
     res.status(200).json({result:'OK', message:'Market trends have been deleted'});
 })
 
@@ -43,6 +46,7 @@ router.route('/')
 router.route('/nextPeriod')
 .get( function(req, res, next) {
     m[req.headers.gameid].nextPeriod();
+    res.status(200).json({result:'OK', message:'Ready to fight for the net Quarter'});
 })
 
 /* get all presales */
@@ -136,9 +140,6 @@ router.route('/proposal/:companyID/:presalesID')
         p.evalProposal( c.getID(), req.body.value);
         res.status(200).json({result:'OK', message:'Proposal from company '+c.getName()+' has been sent to '+p.getName()});
     }
-})
-.put( function (req, res, next){
-    res.status(209).json({result:'WARNING', message:'This function has not been implemented yet'});
 })
 .delete( function (req, res, next){
     MarketTrends=[];
