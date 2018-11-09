@@ -23,17 +23,31 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+//
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/users', usersRouter);
-app.use('/presales', presalesRoute);
-app.use('/opportunities', opportunitiesRoute);
-app.use('/companies', companiesRoute);
-app.use('/market', marketRoute);
-app.use('/game', gameRoute);
-app.use('/qix', qix);
+let staticRoot = path.resolve(__dirname, '..', 'dist');
+
+app.use(express.static(staticRoot));
+
+app.get('/*', function(req, res, next) {
+  if (req.originalUrl.indexOf("/api/") !== -1) {
+      return next();
+  } else {
+      res.sendFile(path.join(staticRoot, 'index.html'));
+      
+  }
+});
+
+
+//app.use('/', indexRouter);
+app.use('/api/users', usersRouter);
+app.use('/api/users', usersRouter);
+app.use('/api/presales', presalesRoute);
+app.use('/api/opportunities', opportunitiesRoute);
+app.use('/api/companies', companiesRoute);
+app.use('/api/market', marketRoute);
+app.use('/api/game', gameRoute);
+app.use('/api/qix', qix);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
