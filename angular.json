@@ -24,7 +24,7 @@
             ],
             "styles": [
               "src/styles.css",
-              "node_modules/bootstrap/dist.337/css/bootstrap.css",
+              "node_modules/bootstrap/dist/css/bootstrap.css",
               "src/TemplateAssets/css/animate.min.css",
               "src/TemplateAssets/css/paper-dashboard.css",
               "src/TemplateAssets/css/demo.css",
@@ -32,7 +32,7 @@
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
-              "node_modules/bootstrap/dist.337/js/bootstrap.min.js",
+              "node_modules/bootstrap/dist/js/bootstrap.min.js",
               "src/TemplateAssets/js/bootstrap-checkbox-radio.js",
               "src/TemplateAssets/js/chartist.min.js",
               "src/TemplateAssets/js/bootstrap-notify.js",

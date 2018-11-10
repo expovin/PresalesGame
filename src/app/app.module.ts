@@ -10,8 +10,15 @@ import { OpportunitiesComponent } from './opportunities/opportunities.component'
 import { PeopleComponent } from './people/people.component';
 import { BamComponent } from './bam/bam.component';
 import { TopComponent } from './top/top.component';
+import { HttpModule } from '@angular/http';
 
 import { AppRoutingModule } from './app-routing/app-routing.module';
+import { baseURL } from './shared/baseurl';
+import { RestangularModule, Restangular } from 'ngx-restangular';
+import { RestangularConfigFactory } from './shared/restConfig';
+import { CompanyService } from './services/company.service'
+import { ProcessHTTPMsgService} from './services/process-httpmsg.service'
+
 
 @NgModule({
   declarations: [
@@ -28,9 +35,13 @@ import { AppRoutingModule } from './app-routing/app-routing.module';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpModule,
+    RestangularModule.forRoot(RestangularConfigFactory)
   ],
-  providers: [],
+  providers: [{provide: 'BaseURL', useValue: baseURL},
+  ProcessHTTPMsgService,
+  CompanyService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
