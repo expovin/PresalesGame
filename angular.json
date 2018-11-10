@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist",
+            "outputPath": "dist/game",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -23,9 +23,23 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "node_modules/bootstrap/dist.337/css/bootstrap.css",
+              "src/TemplateAssets/css/animate.min.css",
+              "src/TemplateAssets/css/paper-dashboard.css",
+              "src/TemplateAssets/css/demo.css",
+              "src/TemplateAssets/css/themify-icons.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/bootstrap/dist.337/js/bootstrap.min.js",
+              "src/TemplateAssets/js/bootstrap-checkbox-radio.js",
+              "src/TemplateAssets/js/chartist.min.js",
+              "src/TemplateAssets/js/bootstrap-notify.js",
+              "src/TemplateAssets/js/paper-dashboard.js",
+              "src/TemplateAssets/js/demo.js",
+              "src/TemplateAssets/js/chartist.min.js"
+            ]
           },
           "configurations": {
             "production": {
