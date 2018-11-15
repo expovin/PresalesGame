@@ -34,7 +34,6 @@ app.get('/*', function(req, res, next) {
       return next();
   } else {
       res.sendFile(path.join(staticRoot, 'index.html'));
-      
   }
 });
 

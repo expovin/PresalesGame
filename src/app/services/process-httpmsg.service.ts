@@ -6,7 +6,6 @@ export class ProcessHTTPMsgService {
 
    public extractData(res: Response) {
     let body = res.json();
-    console.log('body : ',body);
     return body || { };
   }
   constructor() { }

@@ -34,11 +34,9 @@
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/bootstrap/dist/js/bootstrap.min.js",
               "src/TemplateAssets/js/bootstrap-checkbox-radio.js",
-              "src/TemplateAssets/js/chartist.min.js",
               "src/TemplateAssets/js/bootstrap-notify.js",
               "src/TemplateAssets/js/paper-dashboard.js",
-              "src/TemplateAssets/js/demo.js",
-              "src/TemplateAssets/js/chartist.min.js"
+              "src/TemplateAssets/js/demo.js"
             ]
           },
           "configurations": {

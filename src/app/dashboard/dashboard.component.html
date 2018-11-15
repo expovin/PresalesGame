@@ -1,7 +1,6 @@
 <div class="main-panel">
     <div class="content">
         <div class="container-fluid">
-
             <div class="row">
                 <div class="col-lg-3 col-sm-6">
                     <div class="card">
@@ -9,20 +8,20 @@
                             <div class="row">
                                 <div class="col-xs-5">
                                     <div class="icon-big icon-warning text-center">
-                                        <i class="ti-server"></i>
+                                        <i class="ti-cup"></i>
                                     </div>
                                 </div>
                                 <div class="col-xs-7">
                                     <div class="numbers">
-                                        <p>Capacity</p>
-                                        105GB
+                                        <p>Brend Recognition</p>
+                                        {{company.brendRecognition}} %
                                     </div>
                                 </div>
                             </div>
                             <div class="footer">
                                 <hr />
                                 <div class="stats">
-                                    <i class="ti-reload"></i> Updated now
+                                    <i class="ti-stats-up"></i> Increase
                                 </div>
                             </div>
                         </div>
@@ -39,15 +38,15 @@
                                 </div>
                                 <div class="col-xs-7">
                                     <div class="numbers">
-                                        <p>Revenue</p>
-                                        $1,345
+                                        <p>Budget</p>
+                                        € {{company.budget}}
                                     </div>
                                 </div>
                             </div>
                             <div class="footer">
                                 <hr />
                                 <div class="stats">
-                                    <i class="ti-calendar"></i> Last day
+                                    <i class="ti-view-list"></i> List details
                                 </div>
                             </div>
                         </div>
@@ -59,20 +58,20 @@
                             <div class="row">
                                 <div class="col-xs-5">
                                     <div class="icon-big icon-info text-center">
-                                        <i class="ti-twitter-alt"></i>
+                                        <i class="ti-ruler-pencil"></i>
                                     </div>
                                 </div>
                                 <div class="col-xs-7">
                                     <div class="numbers">
-                                        <p>Followers</p>
-                                        +45
+                                        <p>AVG Team Satisf</p>
+                                        {{avgSatisfaction}}
                                     </div>
                                 </div>
                             </div>
                             <div class="footer">
                                 <hr />
                                 <div class="stats">
-                                    <i class="ti-reload"></i> Updated now
+                                    <i class="ti-stats-up"></i> Improve
                                 </div>
                             </div>
                         </div>
@@ -84,13 +83,13 @@
                                 <div class="row">
                                     <div class="col-xs-5">
                                         <div class="icon-big icon-danger text-center">
-                                            <i class="ti-pulse"></i>
+                                            <i class="ti-hummer"></i>
                                         </div>
                                     </div>
                                     <div class="col-xs-7">
                                         <div class="numbers">
-                                            <p>Errors</p>
-                                            23
+                                            <p>Working Hours</p>
+                                            {{company.totalHours}}
                                         </div>
                                     </div>
                                 </div>
@@ -106,14 +105,14 @@
             </div>
 
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-6">
                     <div class="card">
                         <div class="header">
-                            <h4 class="title">Users Behavior</h4>
-                            <p class="category">24 Hours performance</p>
+                            <h4 class="title">My Product Features</h4>
+                            <p class="category">Sorted by Relevance</p>
                         </div>
                         <div class="content">
-                            <div id="chartHours" class="ct-chart"></div>
+                            <div id="chartProductFeatures" class="ct-chart"></div>
                             <div class="footer">
                                 <div class="chart-legend">
                                     <i class="fa fa-circle text-info"></i> Open
@@ -122,13 +121,49 @@
                                 </div>
                                 <hr>
                                 <div class="stats">
-                                    <i class="ti-reload"></i> Updated 3 minutes ago
+                                    <i class="ti-stats-up"></i> Improve
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="header">
+                            <h4 class="title">Team Members</h4>
+                        </div>
+                        <div class="content">
+                            <ul class="list-unstyled team-members">
+                                        <li *ngFor="let person of team">
+                                            <div class="row">
+                                                <div class="col-xs-3">
+                                                    <div class="avatar">
+                                                        <img src="assets/img/faces/face-0.jpg" alt="Circle Image" class="img-circle img-no-padding img-responsive">
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-6">
+                                                    {{person.name}}
+                                                    <br />
+                                                    <span class="text-success"><small>Satisfaction : {{person.satisfactionLevel}}</small></span>
+                                                </div>
+
+                                            </div>
+                                        </li>
+
+                                    </ul>
+                        </div>
+                        <div class="footer">
+                            <hr />
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-info btn-fill btn-wd">Hire People</button>
+                            </div>
+                        </div>                        
+                    </div>
+                </div>
             </div>
+
+
             <div class="row">
                 <div class="col-md-6">
                     <div class="card">

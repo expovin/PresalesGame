@@ -3,3 +3,29 @@
     background-color: #f4f3ef;
     border-bottom: 1px solid #DDDDDD;
 }
+
+#chartProductFeatures {
+    height: 250px;
+    position: relative;
+}
+
+.skillsProgress{
+    margin: 15px 15px 15px 15px;
+}
+
+.table-fixed thead {
+    width: 97%;
+  }
+  
+  .table-fixed tbody {
+    height: 300px;
+    overflow-y: auto;
+    width: 100%;
+  }
+  .table-fixed thead, .table-fixed tbody, .table-fixed tr, .table-fixed td, .table-fixed th {
+    display: block;
+  }
+  .table-fixed tbody td, .table-fixed thead > tr> th {
+    float: left;
+    border-bottom-width: 0;
+  }

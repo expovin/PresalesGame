@@ -18,7 +18,11 @@ import { RestangularModule, Restangular } from 'ngx-restangular';
 import { RestangularConfigFactory } from './shared/restConfig';
 import { CompanyService } from './services/company.service'
 import { ProcessHTTPMsgService} from './services/process-httpmsg.service'
+import { CookieService } from 'ngx-cookie-service';
+import { MessageService } from './services/message.service'
 
+import { ChartModule } from 'angular-highcharts';
+import { ChartsComponent } from './charts/charts.component';
 
 @NgModule({
   declarations: [
@@ -31,17 +35,22 @@ import { ProcessHTTPMsgService} from './services/process-httpmsg.service'
     OpportunitiesComponent,
     PeopleComponent,
     BamComponent,
-    TopComponent
+    TopComponent,
+    ChartsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpModule,
+    ChartModule,
     RestangularModule.forRoot(RestangularConfigFactory)
   ],
   providers: [{provide: 'BaseURL', useValue: baseURL},
-  ProcessHTTPMsgService,
-  CompanyService],
+                ProcessHTTPMsgService,
+                CompanyService,
+                MessageService,
+                CookieService
+              ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

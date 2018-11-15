@@ -1,5 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { CompanyService } from '../services/company.service'
+import { CookieService } from 'ngx-cookie-service';
+import { MessageService } from '../services/message.service';
+import { PresalesService } from '../services/presales.service';
+import { MarketService } from '../services/market.service';
+import { Company } from '../shared/company';
+import picasso from 'picasso.js';
+import barChart from '../shared/barChart.js';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,16 +14,47 @@ import { CompanyService } from '../services/company.service'
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
+  private companyID:string=null;
+  private gameID: string=null;
 
-  company={};
+  private company:Company;
+  private team=[];
+  private marketTrends=[];
+  private avgSatisfaction;
 
-  constructor(private companyService: CompanyService) { }
+  constructor(private companyService: CompanyService, 
+              private cookieService: CookieService,
+              private messageService: MessageService,
+              private presalesService: PresalesService,
+              private marketService: MarketService) { }
 
   ngOnInit() {
-    console.log("Getting Company details");
-    this.company={};
-    this.companyService.getDetails('8dc0d03351ad90c857d256635742f81f','m').subscribe( CompanyDet => this.company=CompanyDet);
-    console.log(this.company);
+    this.companyID = this.cookieService.get('companyID');
+    this.gameID = this.cookieService.get('gameID');
+
+
+    this.marketService.getTeamAvgSatisfaction(this.companyID, this.companyID)
+    .subscribe ( res =>{
+      this.avgSatisfaction=res['data'];
+    })
+
+
+    this.companyService.getDetails(this.companyID,this.gameID)
+    .subscribe( CompanyDet =>{
+      this.company=CompanyDet['data'];
+
+      picasso.chart({
+        element: document.querySelector('#chartProductFeatures'), // This is the element to render the chart in
+        data: [{
+          type: 'matrix',
+          data: this.company['productFeatures']
+        }],
+        settings: barChart
+      })
+    } );
+    
+
+
   }
 
 }

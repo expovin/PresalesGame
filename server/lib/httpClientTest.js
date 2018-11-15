@@ -1,6 +1,5 @@
 
 const httpClient = require('./httpClientModules');
-const chkData = require('../testClass/checkResults');
 
     /** Call REST endpoint to set up test scenarios */
 
@@ -20,9 +19,9 @@ const chkData = require('../testClass/checkResults');
 
     function preNextPeriod(){
         var companies=[];
-        var presales=[];
         httpClient.genMarket()
         .then( (res) => {
+            console.log(res);
             printMessage("["+res.code+"] Market Trends has been generated. ==>  ["+res.body.result+"] "+res.body.message);
             return (httpClient.genPresales())
         })      
@@ -49,6 +48,11 @@ const chkData = require('../testClass/checkResults');
             companies.push(res.body.id);
              return httpClient.genCompany("Tableau")
         }) 
+        .then( res =>{
+            printMessage("["+res.code+"] Company Tableau has been generated. ==> ["+res.body.result+"] "+res.body.message);
+            companies.push(res.body.id);
+            return httpClient.getPresales();
+        })
         .then( res => {
             /** res undefined here  */
             //printMessage("["+res.code+"] Evaluation Completed ");

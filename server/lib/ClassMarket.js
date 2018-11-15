@@ -292,12 +292,29 @@ class Market {
         })
     }
 
+    getAvgSatisfactionalLevel(companyId){
+        let satisfaction=0;
+        this.Companies[companyId].presalesTeam.forEach( p => {
+            satisfaction += this.People[p].person.satisfactionLevel;
+        })
+        satisfaction /= this.Companies[companyId].presalesTeam.length;
+
+        return(satisfaction);
+    }
+
     generateBaseProductFeatures(){
+        let tmp=[];
         for(var i=0; i<settings.numberOfProductFeatures; i++){
             var feature = features[Math.floor(Math.random()*features.length)];
-            this.ProductBasicFeatures.push({ name: feature, score : helper.generateRandomValue(settings.MinFeatureScore, settings.MaxFeatureScore)})
+            if(tmp.indexOf(feature) === -1){
+                tmp.push(feature);
+                this.ProductBasicFeatures.push({ name: feature, score : helper.generateRandomValue(settings.MinFeatureScore, settings.MaxFeatureScore)})
+            }
+            else
+                i--;
         }
-        this.ProductBasicFeatures =  this.removeDuplicates(this.ProductBasicFeatures);
+        this.ProductBasicFeatures.sort(this.compare);
+        //this.ProductBasicFeatures =  this.removeDuplicates(this.ProductBasicFeatures);
     }
 
     getBaseProductFeatures(){ return this.ProductBasicFeatures }
@@ -347,10 +364,18 @@ class Market {
     }    
 
     removeDuplicates(array){
-        return( array.filter(function(elem, pos) {
+        return( array.filter( function(elem, pos) {
             return array.indexOf(elem) == pos;
         }))
     }
+
+    compare(a,b) {
+        if (a.score > b.score)
+          return -1;
+        if (a.score < b.score)
+          return 1;
+        return 0;
+      }    
 
 
 }

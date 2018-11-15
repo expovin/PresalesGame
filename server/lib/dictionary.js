@@ -19,6 +19,10 @@ module.exports = {
         "Machine Learning"
     ],
 
+    icons : [ 'F01', 'F02', 'F03', 'F04', 'F05', 'F06', 'F07', 'F08', 'F09', 'F10', 'F11', 'F12', 'F13', 'F14', 'F15', 'F16',
+            'F17', 'F18', 'F19', 'F20', 'F21', 'F22', 'F23', 'F24', 'F25', 'M01', 'M02', 'M03', 'M04', 'M05', 'M06', 'M07', 'M08',
+            'M09', 'M10', 'M11', 'M12', 'M13', 'M14', 'M15', 'M16', 'M17', 'M18', 'M19', 'M20', 'M21', 'M22', 'M23', 'M25', 'M25'],
+
     /** People bring skills */
     skills : [
         "Business Acumen",
@@ -44,7 +48,11 @@ module.exports = {
         "Data storytelling",
         "Responsive design",
         "Augmentet Intelligence",
-        "Georeference"
+        "Georeference",
+        "Storytelling",
+        "Massive distribution",
+        "Printing",
+        "Pixel Perfect"
     ],
 
     periods : ["2019 Q1", "2019 Q2", "2019 Q3", "2019 Q4", "2020 Q1", "2020 Q2", "2020 Q3", "2020 Q4", "2021 Q1", "2021 Q2", "2021 Q3", "2021 Q4"],

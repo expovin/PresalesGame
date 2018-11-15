@@ -124,7 +124,10 @@ router.route('/evaluate')
     res.status(209).json({result:'WARNING', message:'This function has not been implemented yet'});
 })
 
-
+router.route('/avgSatisfaction/:companyID/')
+.get( function(req, res, next) {
+    res.status(209).json({result:'OK', data:m[req.headers.gameid].getAvgSatisfactionalLevel(req.params.companyID)});
+});
 
 router.route('/proposal/:companyID/:presalesID')
 .get( function(req, res, next) {

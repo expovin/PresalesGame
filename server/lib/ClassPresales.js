@@ -4,7 +4,9 @@ var settings = require("./settings");
 var skills = require('./dictionary').skills;
 var features = require('./dictionary').features;
 var trends = require('./dictionary').trends;
-var random = require('random-name');
+var icons = require('./dictionary').icons;
+//var random = require('random-name');
+var random = require('node-random-name');
 const helper = require('./helper');
 
 class Presales  {
@@ -17,6 +19,7 @@ class Presales  {
         this.person = {
             ID:"",
             name : "",
+            icon:"",
             cost : 0,
             satisfactionLevel : settings.initSatisfactionLevel,
             timePerQuarter:settings.timePerQuarterPerPerson,
@@ -42,7 +45,19 @@ class Presales  {
     }
 
     getEmployedStatus() {return this.person.isEmployed }
-    generateName (){ this.person.name=random() }
+
+    generateName (){ 
+        this.person.icon=icons[Math.floor(Math.random() * icons.length)];
+        let gender = this.person.icon[0];
+        let name="";
+
+        if(gender === 'M') 
+            name=random({ random: Math.random, male: true}) 
+        else
+            name=random({ random: Math.random, female: true}) 
+
+        this.person.name=name + " "+ random({ random: Math.random, last: true})
+    }
     getCost(){ return (this.person.cost) }
     getID(){ return(this.person.ID) }
     getName(){ return(this.person.name) }

@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { MessageService } from '../services/message.service'
+
+
 
 @Component({
   selector: 'app-navbar',
@@ -7,9 +10,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor() { }
+  private companyName:string;
 
-  ngOnInit() {
+  constructor(private messageService: MessageService) { }
+
+  ngOnInit() {      
+
   }
 
 }

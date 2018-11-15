@@ -10,7 +10,6 @@ import { Company } from '../shared/company';
 
 import 'rxjs/add/operator/catch';
 
-
 @Injectable({
   providedIn: 'root'
 })
