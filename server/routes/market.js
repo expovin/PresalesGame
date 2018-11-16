@@ -101,12 +101,12 @@ router.route('/evaluate')
               if(!m[req.headers.gameid]
               .getCompany(companyID)
               .hirePerson(m[req.headers.gameid].getPerson(personID))){
-                    m[req.headers.gameid].
-                        getPerson(personID).
-                        dismiss();
-                    m[req.headers.gameid].
-                        getCompany(companyID).
-                        sendMessage({type:'warning', msg:"Sorry, you did not hired "+m[req.headers.gameid].getPerson(personID).getName()+" because you run out of budget"});
+                    m[req.headers.gameid]
+                        .getPerson(personID)
+                        .dismiss();
+                    m[req.headers.gameid]
+                        .getCompany(companyID)
+                        .sendMessage({type:'warning', msg:"Sorry, you did not hired "+m[req.headers.gameid].getPerson(personID).getName()+" because you run out of budget"});
               }
                     
           })

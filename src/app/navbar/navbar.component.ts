@@ -15,6 +15,8 @@ export class NavbarComponent implements OnInit {
   private gameID;
   private isEnabledNotification:boolean=false;
   private stepNotify=null;
+  private notificationLable=['Disable Notification', 'Enable Notification'];
+  private notificationLableIdx=0;
 
   constructor(private notifierService: NotifierService,
               private companyService: CompanyService,
@@ -29,11 +31,14 @@ export class NavbarComponent implements OnInit {
   }
 
   toggleNotification(){
-    this.isEnabledNotification=!this.isEnabledNotification;
+    this.isEnabledNotification= !this.isEnabledNotification;
 
+    console.log("Notification Status : ",this.isEnabledNotification, " Lable : ",this.notificationLable[this.notificationLableIdx]);
     var _this=this;
-    if(this.isEnabledNotification){
-      this.stepNotify = setInterval(function(){ 
+    if(!this.isEnabledNotification){
+      console.log("Abilito Notifiche");
+      _this.notificationLableIdx=0;
+      _this.stepNotify = setInterval(function(){ 
         _this.companyService.getMessage(_this.companyID,_this.gameID)
         .subscribe( res =>{
           console.log(res);
@@ -45,8 +50,9 @@ export class NavbarComponent implements OnInit {
         } );
        }, 5000);
     } else {
-      clearInterval(this.stepNotify);
-      this.isEnabledNotification=null;
+      console.log("DisAbilito Notifiche");
+      clearInterval(_this.stepNotify);
+      _this.notificationLableIdx=1;
     }
 
   }

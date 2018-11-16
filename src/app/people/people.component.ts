@@ -51,7 +51,7 @@ export class PeopleComponent implements OnInit {
       this.marketTrends=res['data'][Object.keys(res['data'])[0]]['marketTrends'];
       var _this=this;
       Object.keys(res['data']).forEach(function(personID) {
-        _this.presalesPeople.push(res['data'][personID])
+        _this.presalesPeople.push(res['data'][personID]);
       });
     })
 

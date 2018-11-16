@@ -18,6 +18,7 @@ export class DashboardComponent implements OnInit {
 
   private company:Company;
   private team=[];
+  private proposals=[];
   private marketTrends=[];
   private avgSatisfaction;
 
@@ -31,8 +32,9 @@ export class DashboardComponent implements OnInit {
     this.gameID = this.cookieService.get('gameID');
 
 
-    this.marketService.getTeamAvgSatisfaction(this.companyID, this.companyID)
+    this.marketService.getTeamAvgSatisfaction(this.gameID, this.companyID)
     .subscribe ( res =>{
+      console.log(res);
       this.avgSatisfaction=res['data'];
 
     })
@@ -49,7 +51,12 @@ export class DashboardComponent implements OnInit {
         })
       })
       
-
+      CompanyDet['data']['proposal'].forEach( p =>{
+        this.presalesService.getPresale(p,this.gameID)
+        .subscribe( person =>{
+          this.proposals.push(person['data']['person']);
+        })
+      })
 
       picasso.chart({
         element: document.querySelector('#chartProductFeatures'), // This is the element to render the chart in

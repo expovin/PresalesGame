@@ -35,6 +35,22 @@ export class CompanyService {
             .map(res => { return this.processHTTPMsgService.extractData(res); });
   } 
 
+  getCompanies(gameId) : Observable <Company[]> {
+
+    const headerDict = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'gameID' : gameId
+    }
+    
+    const requestOptions = {                                                                                                                                                                                 
+      headers: new Headers(headerDict), 
+    };
+
+    return this.http.get(baseURL + 'companies/', requestOptions)
+            .map(res => { return this.processHTTPMsgService.extractData(res); });
+  } 
+
   getMessage(idCompany,gameId) : Observable <Company[]> {
 
     const headerDict = {
