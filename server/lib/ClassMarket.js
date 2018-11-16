@@ -209,10 +209,10 @@ class Market {
                     oppy.setWinner(winner);         // Set the Winner on the Company record
                     this.Companies[winner].addOppy(oppy.getID(), this.quarter, oppy.getValue(), oppy.getTTC(), oppy.getAssociatedCost(),true)
                     this.Companies[winner].cashIn(oppy.getRealValue())
-                    this.Companies[winner].sendMessage("Congratulation, you won the oppy ID "+oppy.getID()+
-                                                        " original value was "+oppy.getValue()+" the real income value is "+oppy.getRealValue()
-                                                        + " you spent "+oppy.getAssociatedCost()+"K€ and "+oppy.getTTC()+" hours to complete the task"
-                                                        + " current budget "+this.Companies[winner].getBudget());
+                    //this.Companies[winner].sendMessage("Congratulation, you won the oppy ID "+oppy.getID()+
+                    //                                    " original value was "+oppy.getValue()+" the real income value is "+oppy.getRealValue()
+                    //                                    + " you spent "+oppy.getAssociatedCost()+"K€ and "+oppy.getTTC()+" hours to complete the task"
+                    //                                    + " current budget "+this.Companies[winner].getBudget());
                 }
             }
         })

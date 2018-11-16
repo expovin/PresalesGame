@@ -48,5 +48,20 @@ export class MarketService {
       return this.http.get(baseURL + 'market/avgSatisfaction/'+CompanyId, requestOptions)
               .map(res => { return this.processHTTPMsgService.extractData(res); });
     }
+
+    placeOffer(gameId, CompanyId, PersonId, offer){
+      const headerDict = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'gameID' : gameId
+      }
+      
+      const requestOptions = {                                                                                                                                                                                 
+        headers: new Headers(headerDict), 
+      };
+
+      return this.http.post(baseURL + 'market/proposal/'+CompanyId+'/'+PersonId, {value:offer},requestOptions)
+              .map(res => { return this.processHTTPMsgService.extractData(res); });
+    }
   }
 

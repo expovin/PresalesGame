@@ -14,7 +14,7 @@
                                 <div class="col-xs-7">
                                     <div class="numbers">
                                         <p>Brend Recognition</p>
-                                        {{company.brendRecognition}} %
+                                       {{company.brendRecognition}} %
                                     </div>
                                 </div>
                             </div>
@@ -139,7 +139,7 @@
                                             <div class="row">
                                                 <div class="col-xs-3">
                                                     <div class="avatar">
-                                                        <img src="assets/img/faces/face-0.jpg" alt="Circle Image" class="img-circle img-no-padding img-responsive">
+                                                        <img src="assets/img/{{person.icon}}.png" alt="Circle Image" class="img-circle img-no-padding img-responsive">
                                                     </div>
                                                 </div>
                                                 <div class="col-xs-6">
@@ -154,10 +154,14 @@
                                     </ul>
                         </div>
                         <div class="footer">
-                            <hr />
-                            <div class="text-center">
-                                <button type="submit" class="btn btn-info btn-fill btn-wd">Hire People</button>
+                            <div class="container">
+                                    <hr />
+                                    <div class="stats">
+                                        <a routerLink="/people"><i class="ti-timer"></i> Hire People</a>
+                                    </div>
                             </div>
+
+
                         </div>                        
                     </div>
                 </div>

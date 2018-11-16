@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { PresalesService } from '../services/presales.service';
 import { CompanyService } from '../services/company.service';
+import { MarketService } from '../services/market.service';
 import { CookieService } from 'ngx-cookie-service';
 import { Presale } from '../shared/presale';
 import { ChartsComponent } from '../charts/charts.component'
-
-
+import { NotifierService } from 'angular-notifier';
 
 @Component({
   selector: 'app-people',
@@ -24,37 +24,45 @@ export class PeopleComponent implements OnInit {
   private lablesChart=[];
   private personalScore=[];
   private marketScore=[];
+  private notifier;
 
   private isTrend:boolean=true;
   private lableButton:string="Show Features";
   private companyID:string=null;
+  private companyFeatures=[];
   private gameID: string=null;
   private presalesPeople=[];
+  private offer=0;
   constructor(private presalesService: PresalesService,
               private companyService: CompanyService,
-              private cookieService: CookieService) { }
+              private marketService: MarketService,
+              private notifierService: NotifierService,
+              private cookieService: CookieService) { 
+    
+              this.notifier = this.notifierService;
+              }
 
   ngOnInit() {
     this.gameID = this.cookieService.get('gameID');
     this.companyID = this.cookieService.get('companyID');
+
     this.presalesService.getPresales(this.gameID)
     .subscribe( res =>{
-      //this.presalesPeople = res['data'];
-
       this.marketTrends=res['data'][Object.keys(res['data'])[0]]['marketTrends'];
-      console.log(this.marketTrends);
       var _this=this;
       Object.keys(res['data']).forEach(function(personID) {
         _this.presalesPeople.push(res['data'][personID])
       });
     })
 
-/*
-    this.companyService(this.companyID, this.gameID)
-    .subscribe( res =>{
 
-    })
-*/
+
+    this.companyService.getDetails(this.companyID,this.gameID)
+    .subscribe( CompanyDet =>{
+      console.log(CompanyDet['data']);
+      this.companyFeatures=CompanyDet['data']['ProductBasicFeatures'];
+    } );
+
   }
 
   toggleChart(){
@@ -67,11 +75,27 @@ export class PeopleComponent implements OnInit {
    this.SelectPerson(this.selectedPerson);
   }
 
+  placeOffer(){
+    console.log("Stai Offrendo ",this.offer);
+
+    this.marketService.placeOffer(this.gameID,this.companyID,this.selectedPerson['ID'],this.offer)
+    .subscribe( res =>{
+      console.log(res);
+    } );
+
+    this.notifier.notify( 'info', 'You placed an offer to '+this.selectedPerson['name'] );
+
+  }
+
+
+
+
   SelectPerson(person){
     this.selectedPerson=person;
     this.labels=[];
     this.personalScore=[];
     this.marketScore=[];
+    this.offer=this.selectedPerson['cost'];
 
 
     if(this.isTrend){
@@ -87,6 +111,11 @@ export class PeopleComponent implements OnInit {
         this.lablesChart=['Personal Features','Market Features'];
         this.labels.push(f.name);
         this.personalScore.push(f.score);
+        this.companyFeatures.forEach( cf => {
+          if(cf.name === f.name)
+          this.marketScore.push(cf.score)
+        })
+
       })
     }
 

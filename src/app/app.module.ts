@@ -11,7 +11,7 @@ import { PeopleComponent } from './people/people.component';
 import { BamComponent } from './bam/bam.component';
 import { TopComponent } from './top/top.component';
 import { HttpModule } from '@angular/http';
-
+import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing/app-routing.module';
 import { baseURL } from './shared/baseurl';
 import { RestangularModule, Restangular } from 'ngx-restangular';
@@ -20,7 +20,7 @@ import { CompanyService } from './services/company.service'
 import { ProcessHTTPMsgService} from './services/process-httpmsg.service'
 import { CookieService } from 'ngx-cookie-service';
 import { MessageService } from './services/message.service'
-
+import { NotifierModule } from 'angular-notifier';
 import { ChartModule } from 'angular-highcharts';
 import { ChartsComponent } from './charts/charts.component';
 
@@ -40,9 +40,48 @@ import { ChartsComponent } from './charts/charts.component';
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     AppRoutingModule,
     HttpModule,
     ChartModule,
+    NotifierModule.withConfig( {
+      position: {
+        horizontal: {
+          position: 'right',
+          distance: 12
+        },
+        vertical: {
+          position: 'top',
+          distance: 12,
+          gap: 10
+        }
+      },
+      theme: 'material',
+      behaviour: {
+        autoHide: 5000,
+        onMouseover: 'pauseAutoHide',
+        showDismissButton: true,
+      },
+      animations: {
+        enabled: true,
+        show: {
+          preset: 'slide',
+          speed: 300,
+          easing: 'ease'
+        },
+        hide: {
+          preset: 'fade',
+          speed: 300,
+          easing: 'ease',
+          offset: 50
+        },
+        shift: {
+          speed: 300,
+          easing: 'ease'
+        },
+        overlap: 150
+      }
+    }),
     RestangularModule.forRoot(RestangularConfigFactory)
   ],
   providers: [{provide: 'BaseURL', useValue: baseURL},

@@ -65,10 +65,10 @@ router.route('/evaluate')
 
             m[req.headers.gameid]
                 .getCompany(companyID)
-                .sendMessage("Congratulation, you hired "+
+                .sendMessage({type:'success', msg:'Congratulation, you hired'+
             m[req.headers.gameid]
                 .getPerson(personID)
-                .getName());
+                .getName()});
         }
       });
 
@@ -81,10 +81,10 @@ router.route('/evaluate')
             resignedPeople.push(personID);
             m[req.headers.gameid]
                 .getCompany(resigned)
-                .sendMessage("Dears, please accept my resignations, Sincerely "+
+                .sendMessage({type:'error',msg:"Dears, please accept my resignations, Sincerely "+
             m[req.headers.gameid]
                 .getPerson(personID)
-                .getName());
+                .getName()});
 
             m[req.headers.gameid]
                 .getCompany(resigned)                
@@ -106,7 +106,7 @@ router.route('/evaluate')
                         dismiss();
                     m[req.headers.gameid].
                         getCompany(companyID).
-                        sendMessage("Sorry, you did not hired "+m[req.headers.gameid].getPerson(personID).getName()+" because you run out of budget");
+                        sendMessage({type:'warning', msg:"Sorry, you did not hired "+m[req.headers.gameid].getPerson(personID).getName()+" because you run out of budget"});
               }
                     
           })
