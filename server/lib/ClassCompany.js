@@ -159,8 +159,11 @@ class Company {
     }
 
     enableBAM(){
-        if(this.totalHours - settings.BAMinitialHourCost < 0)
+        if(this.totalHours - settings.BAMinitialHourCost < 0){
+            this.sendMessage({type:'warning',msg:'Sorry, you have not enought money to enable BAM!'})
             return (false)
+        }
+            
 
         this.isBAMEnabled=true;
         this.totalHours -=settings.BAMinitialHourCost;
@@ -170,8 +173,11 @@ class Company {
     getBAMStatus() { return this.isBAMEnabled }
 
     enableTOP(){
-        if(this.totalHours - settings.TOPinitialHourCost < 0)
+        if(this.totalHours - settings.TOPinitialHourCost < 0){
+            this.sendMessage({type:'warning',msg:'Sorry, you have not enought money to enable TOP!'})
             return (false)
+        }
+            
 
         this.isTOPEnabled=true;
         this.totalHours-=settings.TOPinitialHourCost;
@@ -232,9 +238,12 @@ class Company {
         this.totalHours -=hours;
 
 
-        this.brendRecognition = cost / settings.campainCostBrandRatio   + 
-        Math.floor(cost / (settings.campainCostHourRatio * hours)) * settings.campainOverflow +     // Overflow Cost
-        Math.floor((settings.campainCostHourRatio * hours) / cost) * settings.campainOverflow;      // Overflow Hours
+        if(cost > 0) {
+            this.brendRecognition += cost / settings.campainCostBrandRatio   + 
+            Math.floor(cost / (settings.campainCostHourRatio * hours)) * settings.campainOverflow +     // Overflow Cost
+            Math.floor((settings.campainCostHourRatio * hours) / cost) * settings.campainOverflow;      // Overflow Hours
+        }
+
         
         return (true)
     }

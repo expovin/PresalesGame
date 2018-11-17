@@ -20,6 +20,7 @@
                             </div>
                             <div class="footer">
                                 <hr />
+
                                 <div class="stats">
                                     <i class="ti-stats-up"></i> Increase
                                 </div>
@@ -132,21 +133,95 @@
                     <div class="card ">
                         <div class="header">
                             <h4 class="title">Report Settings</h4>
-                            <p class="category">All products including Taxes</p>
+                            <p class="category">Managing sub system BAM e TOP</p>
                         </div>
                         <div class="content">
-                            <div id="chartActivity" class="ct-chart"></div>
 
-                            <div class="footer">
-                                <div class="chart-legend">
-                                    <i class="fa fa-circle text-info"></i> Tesla Model S
-                                    <i class="fa fa-circle text-warning"></i> BMW 5 Series
-                                </div>
-                                <hr>
-                                <div class="stats">
-                                    <i class="ti-check"></i> Data information certified
+                            <div class="row" >
+                                <div class="BAM_TOP">
+                                    <div class="col-md-4">
+                                        <div class="row">
+                                                <h3 class="sistemLable sistemLableActive" [hidden]="!company.isBAMEnabled">BAM Enabled</h3>
+                                                <h3 class="sistemLable sistemLableDeactive" [hidden]="company.isBAMEnabled">BAM Disabled</h3>
+                                        </div>
+
+                                        <div class="row">
+                                            <button type="button" class="btn btn-outline-primary" (click)="toggleBAM()">{{labelBAM}}</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                            <p class="text-warning">
+                                                BAM cna give you more insights on the opportunities you face in the previous quarter.
+                                                Enabling BAM now you can find out several information which might help you to better
+                                                setting your company. <br>
+                                                BAM require an initial cost in terms of effort to implement (hours) and in terms of money
+                                                and a recoursive cost each quarter (hours + money). You can disable this feature any time avoiding
+                                                the recoursive cost.
+                                            </p>
+                                    </div>
                                 </div>
                             </div>
+
+                            <hr>
+
+                            <div class="row" >
+                                <div class="BAM_TOP">
+                                    <div class="col-md-4">
+                                        <div class="row">
+                                                <h3 class="sistemLable sistemLableActive" [hidden]="!company.isTOPEnabled">TOP Enabled</h3>
+                                                <h3 class="sistemLable sistemLableDeactive" [hidden]="company.isTOPEnabled">TOP Disabled</h3>
+                                        </div>
+
+                                        <div class="row">
+                                            <button type="button" class="btn btn-outline-primary" (click)="toggleTOP()">{{labelTOP}}</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                            <p class="text-warning">
+                                                TOP is a system to allow your cmpany in a better planning the big opportunities and find out
+                                                the product's strength and weakness. This may help to better address the product improvements.<br>
+                                                TOP require an initial cost in terms of effort to implement (hours) and in terms of money
+                                                and a recoursive cost each quarter (hours + money). You can disable this feature any time avoiding
+                                                the recoursive cost.
+                                            </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr>
+
+                            <div class="row" >
+                                    <div class="BAM_TOP">
+                                        <div class="col-md-4">
+                                            <h3>Brend Recognition</h3>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <form>
+                                                    <div class="row" >
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>Hours</label>
+                                                                <input type="number" class="form-control border-input"  placeholder="Insert the #Hours to invest" [(ngModel)]="hoursToInvest" name="hoursToInvest" required />
+                                                                
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>Cost</label>
+                                                                <input type="number" [(ngModel)]="moneyToInvest" class="form-control border-input" placeholder="Insert the amount to invest" name="moneyToInvest" required />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <br>
+                                                            <button type="button" class="btn btn-outline-primary" (click)="getCampain()">Invest</button>
+                                                        </div>                                                     
+                                                    </div>
+                                            </form>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+
                         </div>
                     </div>
                 </div>
@@ -173,22 +248,40 @@
                                                     <br />
                                                     <span class="text-success"><small>Satisfaction : {{person.satisfactionLevel}}</small></span>
                                                 </div>
+                                                <div class="col-xs-3">
+                                                    <div class="col-xs-4">
+                                                            <div class="icon-big icon-danger text-center">
+                                                                    <i class="ti-hummer"></i>
+                                                            </div>
+                                                    </div>
+                                                    <div class="col-xs-4">
+                                                            <div class="icon-big icon-danger text-center">
+                                                                    <i class="ti-hummer"></i>
+                                                                </div> 
+                                                    </div>
+                                                    <div class="col-xs-4">
+                                                            <div class="icon-big icon-danger text-center">
+                                                                    <i class="ti-hummer"></i>
+                                                                </div> 
+                                                    </div>
 
+                                                   
+                                                </div>
                                             </div>
                                         </li>
 
                                     </ul>
                         </div>
                         <div class="footer">
-                            <div class="container">
-                                    <hr />
-                                    <div class="stats">
-                                        <a routerLink="/people"><i class="ti-timer"></i> Hire People</a>
-                                    </div>
-                            </div>
-
-
-                        </div>                        
+                                <div class="container">
+                                        <hr />
+                                        <div class="stats">
+                                            <a routerLink="/people"><i class="ti-timer"></i> Hire People</a>
+                                        </div>
+                                </div>
+    
+    
+                            </div>    
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -216,16 +309,7 @@
 
                                     </ul>
                         </div>
-                        <div class="footer">
-                            <div class="container">
-                                    <hr />
-                                    <div class="stats">
-                                        <a routerLink="/people"><i class="ti-timer"></i> Hire People</a>
-                                    </div>
-                            </div>
-
-
-                        </div>                        
+                    
                     </div>
                 </div>
             </div>

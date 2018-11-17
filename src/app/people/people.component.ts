@@ -7,6 +7,7 @@ import { Presale } from '../shared/presale';
 import { ChartsComponent } from '../charts/charts.component'
 import { NotifierService } from 'angular-notifier';
 
+
 @Component({
   selector: 'app-people',
   templateUrl: './people.component.html',
@@ -26,6 +27,7 @@ export class PeopleComponent implements OnInit {
   private marketScore=[];
   private notifier;
 
+  private isPersonSelected:boolean=false;
   private isTrend:boolean=true;
   private lableButton:string="Show Features";
   private companyID:string=null;
@@ -33,6 +35,8 @@ export class PeopleComponent implements OnInit {
   private gameID: string=null;
   private presalesPeople=[];
   private offer=0;
+  private companyNameDict={};
+  private showEmployed:boolean;
   constructor(private presalesService: PresalesService,
               private companyService: CompanyService,
               private marketService: MarketService,
@@ -46,6 +50,16 @@ export class PeopleComponent implements OnInit {
     this.gameID = this.cookieService.get('gameID');
     this.companyID = this.cookieService.get('companyID');
 
+    var _this=this;
+    this.companyService.getCompanies(this.gameID)
+    .subscribe( Companies =>{
+      Object.keys(Companies['data']).forEach(function(companyId) {
+        _this.companyNameDict[companyId] = Companies['data'][companyId]['name'];
+      })
+      console.log(this.companyNameDict)
+    });
+    
+    
     this.presalesService.getPresales(this.gameID)
     .subscribe( res =>{
       this.marketTrends=res['data'][Object.keys(res['data'])[0]]['marketTrends'];
@@ -63,6 +77,10 @@ export class PeopleComponent implements OnInit {
       this.companyFeatures=CompanyDet['data']['ProductBasicFeatures'];
     } );
 
+  }
+
+  onChangeShowEmpoyed(){
+    console.log(this.showEmployed);
   }
 
   toggleChart(){
@@ -96,6 +114,7 @@ export class PeopleComponent implements OnInit {
     this.personalScore=[];
     this.marketScore=[];
     this.offer=this.selectedPerson['cost'];
+    this.isPersonSelected=true;
 
 
     if(this.isTrend){

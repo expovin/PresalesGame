@@ -1,35 +1,91 @@
 <div class="main-panel">
     <div class="content">
         <div class="container-fluid">
-                <div class="col-md-8">
+        <div class="row">
+            <div class="col-md-8">
+                        <div class="card">
+                            <div class="header">
+                                <h4 class="title">Opportunities</h4>
+                                <p class="category">by Values</p>
+                            </div>
+                            <div class="content">
+                                <div id="chartOpportunities" class="ct-chart"></div>
+                            </div>
+                        </div>
+            </div>
+            <div class="col-md-4" [hidden]="!isOppySelected">
                     <div class="card card-plain">
                         <div class="header">
-                            <h4 class="title">Market Opportunities</h4>
-                            <p class="category">Click on the id for more details</p>
+                            <h4 class="title">Opportunities details</h4>
+                            <p class="category">Included companies</p>
                         </div>
-                        <div class="content table-responsive table-full-width">
-                            <table class="table table-hover">
-                                <thead>
-                                  <th>ID</th>
-                                  <th>Company Name</th>
-                                  <th>Estimated Value</th>
-                                  <th>Qualification level</th>
-                                  <th>status</th>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let oppy of opportunities">
-                                      <td>{{oppy.ID}}</td>
-                                      <td>{{oppy.CompanyName}}</td>
-                                      <td>{{oppy.teoricalValue}}</td>
-                                      <td>{{oppy.qualificationLevel}}</td>
-                                      <td>{{oppy.status}}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                        <div class="content">
+                                <dl class="dl-horizontal">
+                                        <dt>ID</dt>
+                                        <dd>{{selectedOppy.ID}}</dd>
 
+                                        <dt>Company Name</dt>
+                                        <dd>{{selectedOppy.CompanyName}}</dd>
+                                        
+                                        <dt>Value</dt>
+                                        <dd>{{selectedOppy.teoricalValue}} K€</dd>
+                                        <hr>
+                                        <dt>Trend required</dt>
+                                        <dd *ngFor="let trend of selectedOppy.TrendsRequired" >{{trend}}</dd>   
+                                        <hr>
+                                        <dt>Feature required</dt>
+                                        <dd *ngFor="let feat of selectedOppy.features">{{feat.name}} @{{feat.score}}%</dd>                                          
+                                </dl>
                         </div>
                     </div>
-                </div>
+            </div>
+        </div>
+        <div class="row">
+                <div class="col-md-8 table-Fix">
+                        <div class="card card-plain">
+                            <div class="header">
+                                <h4 class="title">Market Opportunities</h4>
+                                <p class="category">Click on the id for more details</p>
+                            </div>
+                            <div class="content table-responsive table-full-width">
+                                <table class="table table-hover">
+                                    <thead>
+                                      <th>ID</th>
+                                      <th>Company Name</th>
+                                      <th>Estimated Value</th>
+                                      <th>Qualification level</th>
+                                      <th>status</th>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let oppy of opportunities">
+                                          <td (click)="SelectOppy(oppy)">{{oppy.ID}}</td>
+                                          <td>{{oppy.CompanyName}}</td>
+                                          <td>{{oppy.teoricalValue}}</td>
+                                          <td>{{oppy.qualificationLevel}}</td>  
+                                          <td>{{oppy.status}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+    
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card card-plain">
+                                <div class="header">
+                                    <h4 class="title">Filter Pane</h4>
+                                    <p class="category">Select the opportunities</p>
+                                </div>
+                                <div class="content">
+                                        Filter by price interval: <b>€ 10</b> 
+                                        <input id="ex2" type="text" class="span2" value="" 
+                                        data-slider-min="10" data-slider-max="1000" data-slider-step="5" 
+                                        data-slider-value="[250,450]"/> <b>€ 1000</b>                                
+                                </div>
+                        </div>
+                    </div>
+        </div>
+
 
 
             </div>

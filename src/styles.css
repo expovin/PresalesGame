@@ -4,10 +4,12 @@
     border-bottom: 1px solid #DDDDDD;
 }
 
-#chartProductFeatures {
+.ct-chart {
     height: 250px;
     position: relative;
 }
+
+
 
 .skillsProgress{
     margin: 15px 15px 15px 15px;
@@ -28,4 +30,24 @@
   .table-fixed tbody td, .table-fixed thead > tr> th {
     float: left;
     border-bottom-width: 0;
+  }
+
+  .sistemLableActive {
+    color: green;
+  }
+
+  .sistemLableDeactive{
+    color:red;
+  }
+
+  .BAM_TOP{
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-bottom: 35px;
+  }
+
+.table-Fix  {
+    /*display: block;*/
+    height: 450px;
+    overflow-y: auto;
   }

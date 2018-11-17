@@ -34,6 +34,7 @@
               "node_modules/angular-notifier/styles/core.css",
               "src/TemplateAssets/css/animate.min.css",
               "src/TemplateAssets/css/paper-dashboard.css",
+              "node_modules/bootstrap-slider/dist/css/bootstrap-slider.css",
               "src/TemplateAssets/css/demo.css",
               "src/TemplateAssets/css/themify-icons.css"
             ],
@@ -41,6 +42,7 @@
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/bootstrap/dist/js/bootstrap.min.js",
               "src/TemplateAssets/js/bootstrap-checkbox-radio.js",
+              "node_modules/bootstrap-slider/dist/bootstrap-slider.min.js",
               "src/TemplateAssets/js/paper-dashboard.js"
             ]
           },

@@ -1,7 +1,7 @@
 <div class="main-panel">
     <div class="content">
         <div class="container-fluid">
-                <div class="row">
+                <div class="row" [hidden]="!isPersonSelected">
                     <div class="col-md-5">
                         <div class="card">
 
@@ -17,6 +17,7 @@
                                                     <h3>{{selectedPerson.cost}} K€</h3>
                                             </div>
                                 </div>
+                               
                                 <div class="row">
                                         <div class="progress skillsProgress">
                                                 <div class="progress-bar" role="progressbar" [ngStyle]="{'width.%': selectedPerson.skills[0].score}"  aria-valuenow="selectedPerson.skills[0].score" aria-valuemin="0" aria-valuemax="100">Business Acumen</div>
@@ -37,10 +38,10 @@
                                     <div class="container">
                                         <form>
                                             <div class="col-md-2">
-                                                <input type="number" class="form-control border-input"  placeholder="Place an offer" [(ngModel)]="offer" name="offer">
+                                                <input type="number" class="form-control border-input"  placeholder="Place an offer" [(ngModel)]="offer" name="offer" [attr.disabled]="selectedPerson.isEmployed ? '' : null">
                                             </div>
                                             <div class="col-md-2">
-                                                <button type="button" class="btn btn-outline-success" (click)="placeOffer()">Place an offer</button>
+                                                <button type="button" class="btn btn-outline-success" (click)="placeOffer()" [attr.disabled]="selectedPerson.isEmployed ? '' : null">Place an offer</button>
                                             </div>
                                             <div class="col-md-4">
                                                 <button type="button" class="btn btn-outline-primary" (click)="toggleChart()">{{lableButton}}</button>
@@ -74,14 +75,14 @@
                 </div>
 
                 <div class="row">
-                        <div class="col-md-8">
+                        <div class="col-md-8 table-Fix"  id="tablePresales">
                                 <div class="card card-plain">
                                     <div class="header">
                                         <h4 class="title">Presales People</h4>
                                         <p class="category">Click on the id for more details</p>
                                     </div>
                                     <div class="content table-responsive table-full-width">
-                                        <table class="table table-hover">
+                                        <table class="table table-hover table-sm">
                                             <thead>
                                               <th>ID</th>
                                               <th>Name</th>
@@ -95,7 +96,7 @@
                                                   <td (click)="SelectPerson(presale.person)">{{presale.person.ID}}</td>
                                                   <td>{{presale.person.name}}</td>
                                                   <td>{{presale.person.cost}} K€ </td>
-                                                  <td>{{presale.person.employedBy}}</td>
+                                                  <td>{{companyNameDict[presale.person.employedBy]}}</td>
                                                   <td>{{presale.person.PersonTrends.length}}</td>
                                                   <td>{{presale.person.features.length}}</td>
                                                 </tr>
@@ -104,6 +105,27 @@
             
                                     </div>
                                 </div>
+                            </div>
+
+                            <div class="col-md-4">
+
+                                    <div class="content">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <h4>Filters Pane - {{presalesPeople.length}}</h4>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <form>
+                                            <div class="checkbox">
+                                                <label><input type="checkbox" (ngModelChange)="onChangeShowEmpoyed()" [ngModel]="showEmployed">
+                                                    Show Employed people</label>
+                                                <button type="button" class="btn btn-outline-primary" (click)="onChangeShowEmpoyed()">Show Employed</button>
+                                            </div>
+                                            </form>
+                                        </div>
+                                    </div>
+
                             </div>
                 </div>
 
