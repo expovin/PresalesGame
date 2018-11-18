@@ -23,6 +23,7 @@ import { MessageService } from './services/message.service'
 import { NotifierModule } from 'angular-notifier';
 import { ChartModule } from 'angular-highcharts';
 import { ChartsComponent } from './charts/charts.component';
+import { MyFilterPipe } from './shared/filter.pipe';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { ChartsComponent } from './charts/charts.component';
     PeopleComponent,
     BamComponent,
     TopComponent,
+    MyFilterPipe,
     ChartsComponent
   ],
   imports: [

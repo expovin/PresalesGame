@@ -63,5 +63,39 @@ export class MarketService {
       return this.http.post(baseURL + 'market/proposal/'+CompanyId+'/'+PersonId, {value:offer},requestOptions)
               .map(res => { return this.processHTTPMsgService.extractData(res); });
     }
+
+    offerRetentionBonus(gameId, CompanyId, PersonId, offer){
+      const headerDict = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'gameID' : gameId
+      }
+      
+      const requestOptions = {                                                                                                                                                                                 
+        headers: new Headers(headerDict), 
+      };
+
+      return this.http.post(baseURL + 'market/retentionBonus/'+CompanyId+'/'+PersonId, {money:offer},requestOptions)
+              .map(res => { return this.processHTTPMsgService.extractData(res); });
+    }    
+
+    enrollCourse(gameId, CompanyId, PersonId, feature, money, hours, gain, type){
+      const headerDict = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'gameID' : gameId
+      }
+      
+      const requestOptions = {                                                                                                                                                                                 
+        headers: new Headers(headerDict), 
+      };
+      
+      if(type===0)
+        return this.http.post(baseURL + 'market/course/'+CompanyId+'/'+PersonId, {feature:feature, money:money, hours:hours, quantity:gain},requestOptions)
+                .map(res => { return this.processHTTPMsgService.extractData(res); });
+      else
+        return this.http.post(baseURL + 'market/course/'+CompanyId+'/'+PersonId, {marketTrend:feature, money:money, hours:hours, quantity:gain},requestOptions)
+                .map(res => { return this.processHTTPMsgService.extractData(res); });              
+    }       
   }
 

@@ -71,17 +71,83 @@
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div class="card card-plain">
-                                <div class="header">
-                                    <h4 class="title">Filter Pane</h4>
-                                    <p class="category">Select the opportunities</p>
+                        <div class="row">
+                            <div class="row">
+                                    <h4>Filters Pane  </h4>
+                                    <hr>
+
+                                    <div class="panel panel-default">
+                                            <div class="panel-heading"><h5>Opportunity Value</h5></div>
+                                            <div class="panel-body">
+                                                <div class="row">
+                                                        <form>
+                                                                <div class="col-md-4">
+                                                                        <div class="btn-group-vertical" role="group" aria-label="...">
+                                                                                <button type="button" class="btn btn-outline-primary" (click)="toggleConstraint(0)">{{lblValue}}</button>
+                                                                                <button type="button" class="btn btn-outline-primary" (click)="changeConstraint(0)" [disabled]="!company.oppyConstraint.flgValue">Submit</button>
+                                                                        </div>
+
+                                                                </div>
+                                                                        <div class="col-md-4">
+                                                                                <div class="form-group">
+                                                                                        <label>From</label>
+                                                                                        <input type="number" class="form-control border-input"  
+                                                                                                placeholder="Insert the Merit Increase in %" 
+                                                                                                [(ngModel)]="company.oppyConstraint.Value[0]" 
+                                                                                                name="valueMin" 
+                                                                                                [disabled]="!company.oppyConstraint.flgValue"
+                                                                                                required />
+                                                                                </div>
+                                                                        </div>
+                                                                        <div class="col-md-4">
+                                                                                <div class="form-group">
+                                                                                        <label>To</label>
+                                                                                        <input type="number" class="form-control border-input"  
+                                                                                            placeholder="Insert the Merit Increase in %" 
+                                                                                            [(ngModel)]="company.oppyConstraint.Value[1]" 
+                                                                                            name="valueMax" 
+                                                                                            [disabled]="!company.oppyConstraint.flgValue"
+                                                                                            required />
+                                                                                </div>
+                                                                        </div>
+                                                            </form>
+                                                </div>
+                                            </div>
+                                    </div>
+
+                                    <div class="panel panel-default">
+                                            <div class="panel-heading"><h5>Qualification Level</h5></div>
+                                            <div class="panel-body">
+                                                <div class="row">
+                                                        <form>
+                                                                <div class="col-md-4">
+                                                                        <div class="btn-group-vertical" role="group" aria-label="...">
+                                                                                <button type="button" class="btn btn-outline-primary" (click)="toggleConstraint(1)">{{lblQualification}}</button>
+                                                                                <button type="button" class="btn btn-outline-primary" (click)="changeConstraint(1)" [disabled]="!company.oppyConstraint.flgQualification">Submit</button>
+                                                                        </div>
+
+                                                                </div>
+                                                                        <div class="col-md-8">
+                                                                                <div class="row">
+                                                                                    <label>Qualification Level</label>
+                                                                                </div>
+                                                                                <div class="row">
+                                                                                        <div class="btn-group" role="group" aria-label="..." >
+                                                                                                <button type="button" [ngClass]="btnClassArray['1B']" (click)="modifyQualificationArray(1)" [disabled]="!company.oppyConstraint.flgQualification">1</button>
+                                                                                                <button type="button" [ngClass]="btnClassArray['2B']" (click)="modifyQualificationArray(2)" [disabled]="!company.oppyConstraint.flgQualification">2</button>
+                                                                                                <button type="button" [ngClass]="btnClassArray['3B']" (click)="modifyQualificationArray(3)" [disabled]="!company.oppyConstraint.flgQualification">3</button>
+                                                                                                <button type="button" [ngClass]="btnClassArray['4B']" (click)="modifyQualificationArray(4)" [disabled]="!company.oppyConstraint.flgQualification">4</button>
+                                                                                                <button type="button" [ngClass]="btnClassArray['5B']" (click)="modifyQualificationArray(5)" [disabled]="!company.oppyConstraint.flgQualification">5</button>
+                                                                                        </div>
+                                                                                </div>
+                                                                        </div>
+                                                            </form>
+                                                </div>
+                                            </div>
+                                    </div>
                                 </div>
-                                <div class="content">
-                                        Filter by price interval: <b>€ 10</b> 
-                                        <input id="ex2" type="text" class="span2" value="" 
-                                        data-slider-min="10" data-slider-max="1000" data-slider-step="5" 
-                                        data-slider-value="[250,450]"/> <b>€ 1000</b>                                
-                                </div>
+
+
                         </div>
                     </div>
         </div>

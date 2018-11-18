@@ -146,4 +146,64 @@ export class CompanyService {
     return this.http.post(baseURL + 'companies/'+idCompany+'/Compain',{cost:cost, hours:hours}, requestOptions)
             .map(res => { return this.processHTTPMsgService.extractData(res); });
   }    
+
+  toggleValueConstraint(idCompany,gameId){
+    const headerDict = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'gameID' : gameId
+    }
+    
+    const requestOptions = {                                                                                                                                                                                 
+      headers: new Headers(headerDict), 
+    };
+
+    return this.http.put(baseURL + 'companies/'+idCompany+'/filter/value',{} ,requestOptions)
+            .map(res => { return this.processHTTPMsgService.extractData(res); });
+  }    
+  
+  changeValueConstraint(idCompany,gameId,values){
+    const headerDict = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'gameID' : gameId
+    }
+    
+    const requestOptions = {                                                                                                                                                                                 
+      headers: new Headers(headerDict), 
+    };
+
+    return this.http.post(baseURL + 'companies/'+idCompany+'/filter/value',{oppyValues:values} ,requestOptions)
+            .map(res => { return this.processHTTPMsgService.extractData(res); });
+  }  
+
+  toggleValueQualification(idCompany,gameId){
+    const headerDict = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'gameID' : gameId
+    }
+    
+    const requestOptions = {                                                                                                                                                                                 
+      headers: new Headers(headerDict), 
+    };
+
+    return this.http.put(baseURL + 'companies/'+idCompany+'/filter/qualification',{} ,requestOptions)
+            .map(res => { return this.processHTTPMsgService.extractData(res); });
+  }    
+
+  changeValueQualification(idCompany,gameId, values){
+    const headerDict = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'gameID' : gameId
+    }
+    
+    const requestOptions = {                                                                                                                                                                                 
+      headers: new Headers(headerDict), 
+    };
+
+    return this.http.post(baseURL + 'companies/'+idCompany+'/filter/qualification',{oppyQualifications:values} ,requestOptions)
+            .map(res => { return this.processHTTPMsgService.extractData(res); });
+  }  
 }

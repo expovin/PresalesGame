@@ -65,7 +65,7 @@
                                 <div class="col-xs-7">
                                     <div class="numbers">
                                         <p>AVG Team Satisf</p>
-                                        {{avgSatisfaction}}
+                                        {{avgSatisfaction | number : '1.2-2'}} %
                                     </div>
                                 </div>
                             </div>
@@ -245,7 +245,7 @@
                                                 </div>
                                                 <div class="col-xs-4">
                                                     <h3>{{person.name}}</h3>
-                                                    <span class="text-success"><small>Satisfaction : {{person.satisfactionLevel}}</small></span>
+                                                    <span class="text-success"><small>Satisfaction : {{person.satisfactionLevel | number : '1.2-2'}} %</small></span>
                                                 </div>
                                                 <div class="col-xs-5">
                                                     <div class="col-xs-3">
@@ -260,12 +260,12 @@
                                                     </div>
                                                     <div class="col-xs-3">
                                                             <div class="icon-big icon-info text-center">
-                                                                    <i class="ti-briefcase" (click)="toggleCourses(person,3)"></i>
+                                                                    <i class="ti-briefcase" (click)="toggleCourses(person,3);isTrends=true;"></i>
                                                                 </div> 
                                                     </div>
                                                     <div class="col-xs-3">
                                                             <div class="icon-big icon-danger text-center">
-                                                                    <i class="ti-stats-up" (click)="toggleCourses(person,4)"></i>
+                                                                    <i class="ti-stats-up" (click)="toggleCourses(person,4);isTrends=false"></i>
                                                                 </div> 
                                                     </div>
                                                    
@@ -315,9 +315,12 @@
                     
                     </div>
 
-                    <div class="card" [hidden]="userDetails != 1">
+                    <div class="card">
                             <div class="header">
-                                <h4 class="title">Merit increase</h4>
+                                <h4 class="title" [hidden]="userDetails != 1">Merit increase</h4>
+                                <h4 class="title" [hidden]="userDetails != 2">Retention Bonus</h4>
+                                <h4 class="title" [hidden]="userDetails != 3">Improve features skills</h4>
+                                <h4 class="title" [hidden]="userDetails != 4">Improve Market Trends skill</h4>
                                 <p (click)="toggleCourses(selectedPerson,0)">Click here to show the proposal placed </p>
                             </div>
                             <div class="content">
@@ -346,7 +349,7 @@
                                                                     
                                                                     <hr>
                                                                     <dt>Courses enrolled</dt>
-                                                                    <dd *ngFor="let course of selectedPerson.courses">{{course}}</dd>     
+                                                                    <dd *ngFor="let course of selectedPerson.courses">{{course.period}} - {{course.feature}} {{course.marketTrend}} : {{course.hours}} hours spent</dd>     
                                                                     
                                                                     <hr>
                                                                     <dt>Merit increase earned</dt>
@@ -354,7 +357,7 @@
 
                                                                     <hr>
                                                                     <dt>Retention bonus Gained</dt>
-                                                                    <dd *ngFor="let retention of selectedPerson.retentionBonuses">{{retention}}</dd>  
+                                                                    <dd *ngFor="let retention of selectedPerson.retentionBonuses">{{retention.period}} - {{retention.money}} K€</dd>  
                                                                     
                                                             </dl>
                                                     </div>
@@ -373,113 +376,140 @@
                                                 </div>
 
                                                 <div class="row">
-                                                    <div class="container">
-                                                        <form>
+                                                    <!--<div class="container">-->
+
+                                                        <form [hidden]="userDetails != 1">
+                                                                    <div class="row" >
+                                                                        <div class="col-md-4">
+                                                                            <div class="form-group">
+                                                                                <label>Merit Increase</label>
+                                                                                <input type="number" class="form-control border-input"  placeholder="Insert the Merit Increase in %" [(ngModel)]="meritIncrease" name="meritIncrease" required />
+                                                                            </div>
+                                                                        </div>
+    
+                                                                        <div class="col-md-4">
+                                                                            <br>
+                                                                            <button type="button" class="btn btn-outline-primary" (click)="giveMeritIncrease()">Submit</button>
+                                                                        </div>                                                     
+                                                                    </div>
+                                                        </form>
+
+                                                        <form [hidden]="userDetails != 2">
                                                                 <div class="row" >
                                                                     <div class="col-md-4">
                                                                         <div class="form-group">
-                                                                            <label>Merit increase</label>
-                                                                            <input type="number" class="form-control border-input"  placeholder="Insert the " [(ngModel)]="meritIncrease" name="meritIncrease" required />
+                                                                            <label>Retention Bonus</label>
+                                                                            <input type="number" class="form-control border-input"  placeholder="Insert the retention bonus in K€" [(ngModel)]="retentionBonus" name="meritIncrease" required />
                                                                         </div>
                                                                     </div>
 
                                                                     <div class="col-md-4">
                                                                         <br>
-                                                                        <button type="button" class="btn btn-outline-primary" (click)="giveMeritIncrease()">Invest</button>
+                                                                        <button type="button" class="btn btn-outline-primary" (click)="giveRetentiononus()">Submit</button>
                                                                     </div>                                                     
                                                                 </div>
                                                         </form>
-                                                    </div>
+
+                                                        <form [hidden]="userDetails != 3">
+                                                                <div class="row" >
+                                                                    <div class="col-md-4">
+                                                                        <div class="form-group">
+                                                                            <label>Select the Feature to improve</label>
+                                                                            <input type="text" class="form-control border-input"  placeholder="Insert the feature to improve" 
+                                                                                    [(ngModel)]="featureToImprove" name="featureToImprove" (ngModelChange)="featureSuggestion($event)" required />
+                                                                            <ul [hidden]="!isFeatureSuggestion">
+                                                                                <li *ngFor="let feature of company.productFeatures | myfilter:featureToImprove" (click)="featureToImprove=feature.name;isFeatureSuggestion=false"> {{feature.name}}</li>
+                                                                            </ul>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                                <label>Course Level</label><br>
+                                                                                <div class="btn-group" role="group" aria-label="...">
+                                                                                        
+                                                                                        <button type="button" class="btn btn-default" (click)="courseIndexCost=0">Base</button>
+                                                                                        <button type="button" class="btn btn-default" (click)="courseIndexCost=1">Advance</button>
+                                                                                        <button type="button" class="btn btn-default" (click)="courseIndexCost=2">Intensive</button>
+                                                                                      </div>
+                                                                            </div>
+
+                                                                    </div>
+                                                                    <div class="col-md-2"></div>
+                                                                    <div class="col-md-6" [hidden]="courseIndexCost < 0">
+                                                                            <h4>Course Details ({{featureToImprove}}) </h4>
+                                                                            <hr>
+                                                                            <dl class="dl-horizontal">
+                                                                                    <dt>Course Cost</dt>
+                                                                                    <dd>{{courseMoneyCost[courseIndexCost]}} K€</dd>
+
+                                                                                    <dt>Required hours</dt>
+                                                                                    <dd>{{courseHoursCost[courseIndexCost]}} hours</dd>   
+                                                                                    
+                                                                                    <dt>Knowledge Increase</dt>
+                                                                                    <dd>up to {{courseIncreaseUpTo[courseIndexCost]}} %</dd>
+                                                                            </dl>
+                                                                    </div> 
+                                                  
+                                                                </div>
+                                                                <div class="row">
+                                                                        <div class="col-md-4">
+                                                                                <br>
+                                                                                <button type="button" class="btn btn-outline-primary" (click)="enrollCourse(0)">Get Course</button>
+                                                                            </div>   
+                                                                </div>
+                                                        </form>         
+                                                        
+                                                        <form [hidden]="userDetails != 4">
+                                                                <div class="row" >
+                                                                    <div class="col-md-4">
+                                                                        <div class="form-group">
+                                                                            <label>Select the Trend to improve</label>
+                                                                            <input type="text" class="form-control border-input"  placeholder="Insert the trend to improve" 
+                                                                                    [(ngModel)]="trendToImprove" name="trendToImprove" (ngModelChange)="trendSuggestion($event)" required />
+                                                                            <ul [hidden]="!isTrendSuggestion">
+                                                                                <li *ngFor="let trend of marketTrendsList | myfilter:trendToImprove" (click)="trendToImprove=trend.name;isTrendSuggestion=false"> {{trend.name}}</li>
+                                                                            </ul>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                                <label>Course Level</label><br>
+                                                                                <div class="btn-group" role="group" aria-label="...">
+                                                                                        
+                                                                                        <button type="button" class="btn btn-default" (click)="courseIndexCost=0">Base</button>
+                                                                                        <button type="button" class="btn btn-default" (click)="courseIndexCost=1">Advance</button>
+                                                                                        <button type="button" class="btn btn-default" (click)="courseIndexCost=2">Intensive</button>
+                                                                                      </div>
+                                                                            </div>
+
+                                                                    </div>
+                                                                    <div class="col-md-2"></div>
+                                                                    <div class="col-md-6" [hidden]="courseIndexCost < 0">
+                                                                            <h4>Course Details ({{trendToImprove}}) </h4>
+                                                                            <hr>
+                                                                            <dl class="dl-horizontal">
+                                                                                    <dt>Course Cost</dt>
+                                                                                    <dd>{{courseMoneyCost[courseIndexCost]}} K€</dd>
+
+                                                                                    <dt>Required hours</dt>
+                                                                                    <dd>{{courseHoursCost[courseIndexCost]}} hours</dd>   
+                                                                                    
+                                                                                    <dt>Knowledge Increase</dt>
+                                                                                    <dd>up to {{courseIncreaseUpTo[courseIndexCost]}} %</dd>
+                                                                            </dl>
+                                                                    </div> 
+                                                  
+                                                                </div>
+                                                                <div class="row">
+                                                                        <div class="col-md-4">
+                                                                                <br>
+                                                                                <button type="button" class="btn btn-outline-primary" (click)="enrollCourse(1)">Get Course</button>
+                                                                            </div>   
+                                                                </div>
+                                                        </form> 
+                                                    <!--</div>-->
                                                 </div>
     
                                         </ul>
                             </div>
                         
-                        </div>         
-                        
-                        <div class="card" [hidden]="userDetails != 2">
-                                <div class="header">
-                                    <h4 class="title">Retention Bonus</h4>
-                                    <p (click)="toggleCourses(selectedPerson,0)">Click here to show the proposal placed </p>
-                                </div>
-                                <div class="content">
-                                    <ul class="list-unstyled team-members">
-                                                <li *ngFor="let person of proposals">
-                                                    <div class="row">
-                                                        <div class="col-xs-3">
-                                                            <div class="avatar">
-                                                                <img src="assets/img/{{person.icon}}.png" alt="Circle Image" class="img-circle img-no-padding img-responsive">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xs-6">
-                                                            {{person.name}}
-                                                            <br />
-                                                            <span class="text-success"><small>Satisfaction : {{person.satisfactionLevel}}</small></span>
-                                                        </div>
-        
-                                                    </div>
-                                                </li>
-        
-                                            </ul>
-                                </div>
-                            
-                            </div>     
-
-                            <div class="card" [hidden]="userDetails != 3">
-                                    <div class="header">
-                                        <h4 class="title">Feature's Courses</h4>
-                                        <p (click)="toggleCourses(selectedPerson,0)">Click here to show the proposal placed </p>
-                                    </div>
-                                    <div class="content">
-                                        <ul class="list-unstyled team-members">
-                                                    <li *ngFor="let person of proposals">
-                                                        <div class="row">
-                                                            <div class="col-xs-3">
-                                                                <div class="avatar">
-                                                                    <img src="assets/img/{{person.icon}}.png" alt="Circle Image" class="img-circle img-no-padding img-responsive">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-xs-6">
-                                                                {{person.name}}
-                                                                <br />
-                                                                <span class="text-success"><small>Satisfaction : {{person.satisfactionLevel}}</small></span>
-                                                            </div>
-            
-                                                        </div>
-                                                    </li>
-            
-                                                </ul>
-                                    </div>
-                                
-                                </div>            
-                                
-                                <div class="card" [hidden]="userDetails != 4">
-                                        <div class="header">
-                                            <h4 class="title">Market trends courses</h4>
-                                            <p (click)="toggleCourses(selectedPerson,0)">Click here to show the proposal placed </p>
-                                        </div>
-                                        <div class="content">
-                                            <ul class="list-unstyled team-members">
-                                                        <li *ngFor="let person of proposals">
-                                                            <div class="row">
-                                                                <div class="col-xs-3">
-                                                                    <div class="avatar">
-                                                                        <img src="assets/img/{{person.icon}}.png" alt="Circle Image" class="img-circle img-no-padding img-responsive">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-xs-6">
-                                                                    {{person.name}}
-                                                                    <br />
-                                                                    <span class="text-success"><small>Satisfaction : {{person.satisfactionLevel}}</small></span>
-                                                                </div>
-                
-                                                            </div>
-                                                        </li>
-                
-                                                    </ul>
-                                        </div>
-                                    
-                                    </div>                                   
+                        </div>                                           
                 </div>
             </div>
         </div>

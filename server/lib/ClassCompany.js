@@ -61,7 +61,7 @@ class Company {
     cashIn( oppyValue ) { this.budget += oppyValue }
     payQuarterCosts(totalPeopleCosts){
         this.budget -= this.recursivelyQuartelyCost;        // Fixed recursive Quartely costs €
-        this.budget -= totalPeopleCosts/4;                  // Only get a quarter of a full year copensation
+        this.budget -= totalPeopleCosts;                  // Only get a quarter of a full year copensation
 
         // BAM and TOP hours Quartely costs
         if(this.isBAMEnabled)   this.totalHours -= settings.BAMrecursiveHourQuartelyCost;
@@ -124,7 +124,7 @@ class Company {
             /** If this opportunity require more hours or budget then the company's have
              *  The attrib will be set to zero and the company cannot compete
              */
-            if( this.budget <= 0) { 
+            if(this.budget <= 0 || isNaN(this.budget)) { 
                 this.budget = 0;
                 this.isBankrupt=true;
                 join=false;
@@ -137,8 +137,8 @@ class Company {
         }
 
         /** If this company has run out of hours or budget cannot compete! */
-        if(( this.budget === 0 ) || (this.totalHours === 0)){
-            this.sendMessage("Sorry, you can't compete on the oppy "+oppy.getID()+" because you run out of budget or hours.Current budget : ",this.budget," current hours : ",this.totalHours);
+        if(( this.budget === 0 ) || (this.totalHours === 0) || isNaN(this.budget)){
+            this.sendMessage({type:'warning', msg:"Sorry, you can't compete on the oppy "+oppy.getID()+" because you run out of budget or hours.Current budget : "+this.budget+" current hours : "+this.totalHours});
             this.addOppyNotCompeted(oppy.getID(), quarter);
             join=false;
         }

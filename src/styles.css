@@ -51,3 +51,7 @@
     height: 450px;
     overflow-y: auto;
   }
+
+  form {
+    margin-left: 15px;
+  }

@@ -53,6 +53,8 @@ class Opportunities  {
                                                         settings.MaxOppyValueVariationPercentage,
                                                         4,1,this.qualificationLevel);                                           
         this.realOppyValue=Math.round(this.teoricalValue*(1+this.variationPerc/100));
+        if(isNaN(this.variationPerc))
+            this.variationPerc=0;
     }    
     generateTTC(min, max){this.TTC =helper.generateRandomValue(min, max,0,-1)}
     generateTrends(){

@@ -105,22 +105,32 @@ class Presales  {
     }
 
     increaseTrend(trend, percentage) {
+        let found=false;
         this.person.PersonTrends.forEach(t => {
             if(t.name === trend){
+                found=true;
                 const WL = this.getSkillWL();
                 t.score = Math.round(t.score * percentage/100 * WL/100 + t.score);
             }
         })
+        if(!found)
+            this.person.PersonTrends.push({name:trend, score:10})
     }
 
 
     increaseFeature(feature, percentage) {
+        let found=false;
         this.person.features.forEach(f => {
             if(f.name === feature){
+                found=true;
                 const WL = this.getSkillWL();
                 f.score =  Math.round(f.score * percentage/100 * WL/100 + f.score);
             }
         })
+        if(!found){
+            this.person.features.push({name:feature, score:10})   
+        }
+            
     }
 
     getTrend(){ return(trends[Math.floor(Math.random() * trends.length)]) }

@@ -5,6 +5,8 @@ import { MessageService } from '../services/message.service'
 import { Opportunity } from '../shared/oppy';
 import picasso from 'picasso.js';
 import PicassoCharts from '../shared/PicassoCharts.js';
+import { CompanyService } from '../services/company.service';
+import { NotifierService } from 'angular-notifier';
 
 @Component({
   selector: 'app-opportunities',
@@ -18,14 +20,31 @@ export class OpportunitiesComponent implements OnInit {
   private plottigPoint=[];
   private selectedOppy={};
   private isOppySelected:boolean=false;
+  private companyID;
+  private company;
+  private notifier; 
+  private lblValue="Enable";
+  private lblQualification="Enable";
+  private btnClassArray={};
+
 
   constructor(private opportunitiesService: OpportunitiesService, 
-              private cookieService: CookieService) { }
+              private companyService: CompanyService,
+              private notifierService: NotifierService,
+              private cookieService: CookieService) { this.notifier = this.notifierService; }
 
   ngOnInit() {
 
     this.gameID = this.cookieService.get('gameID');
+    this.companyID = this.cookieService.get('companyID');
 
+    this.companyService.getDetails(this.companyID,this.gameID)
+    .subscribe( CompanyDet =>{
+      this.company=CompanyDet['data'];
+      this.modifyQualificationArray(0);
+    })
+    
+    
     this.opportunitiesService.getOpportunities(this.gameID)
     .subscribe( res =>{
       this.opportunities=res['data'];
@@ -49,5 +68,95 @@ export class OpportunitiesComponent implements OnInit {
   SelectOppy(oppy){
     this.isOppySelected=true;
     this.selectedOppy=oppy;
+  }
+
+  toggleConstraint(type){
+    
+    if(type === 0){
+      if(!this.company.oppyConstraint.flgValue)
+        this.lblValue="Disable";
+      else
+        this.lblValue="Enable";
+
+      this.companyService.toggleValueConstraint(this.companyID,this.gameID)
+      .subscribe( res =>{
+        if(res['result'] === 'OK'){
+          this.notifier.notify( 'success', 'Retention Bonus succesfully assigned');
+        }
+        else
+          this.notifier.notify( 'error', 'Error while assigning the retention Bonus');
+  
+        this.ngOnInit();
+      })
+    } else {
+
+      if(!this.company.oppyConstraint.flgQualification)
+        this.lblQualification="Disable";
+      else
+        this.lblQualification="Enable";
+
+      this.companyService.toggleValueQualification(this.companyID,this.gameID)
+      .subscribe( res =>{
+        if(res['result'] === 'OK'){
+          this.notifier.notify( 'success', 'Retention Bonus succesfully assigned');
+        }
+        else
+          this.notifier.notify( 'error', 'Error while assigning the retention Bonus');
+  
+        this.ngOnInit();
+      })
+    }
+  }  
+
+  changeConstraint(type){
+
+    if(type === 0) {
+
+      this.companyService.changeValueConstraint(this.companyID,this.gameID, this.company.oppyConstraint.Value)
+      .subscribe( res =>{
+        if(res['result'] === 'OK'){
+          this.notifier.notify( 'success', 'Retention Bonus succesfully assigned');
+        }
+        else
+          this.notifier.notify( 'error', 'Error while assigning the retention Bonus');
+  
+        this.ngOnInit();
+      })
+    } else {
+      console.log(this.company.oppyConstraint.Qualification);
+      this.companyService.changeValueQualification(this.companyID,this.gameID, this.company.oppyConstraint.Qualification)
+      .subscribe( res =>{
+        if(res['result'] === 'OK'){
+          this.notifier.notify( 'success', 'Retention Bonus succesfully assigned');
+        }
+        else
+          this.notifier.notify( 'error', 'Error while assigning the retention Bonus');
+  
+        this.ngOnInit();
+      })
+    }
+  }
+
+  modifyQualificationArray(level){
+
+    if(level !== 0 ){
+      var index = this.company.oppyConstraint.Qualification.indexOf(level);
+      if (index > -1) {
+        this.company.oppyConstraint.Qualification.splice(index, 1);
+      } else {
+        this.company.oppyConstraint.Qualification.push(level);
+      }
+    }
+
+
+    this.btnClassArray={};
+    for(var i=1; i<6; i++){
+      if(this.company.oppyConstraint.Qualification.indexOf(i) !== -1)
+        this.btnClassArray[i+"B"]="btn btn-success";
+      else
+        this.btnClassArray[i+"B"]="btn btn-danger";
+    }
+
+    console.log(this.company.oppyConstraint.Qualification);
   }
 }

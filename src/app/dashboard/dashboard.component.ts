@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { CompanyService } from '../services/company.service'
+import { CompanyService } from '../services/company.service';
 import { CookieService } from 'ngx-cookie-service';
 import { PresalesService } from '../services/presales.service';
 import { MarketService } from '../services/market.service';
@@ -26,6 +26,7 @@ export class DashboardComponent implements OnInit {
   private team=[];
   private proposals=[];
   private marketTrends={};
+  private marketTrendsList=[];
   private avgSatisfaction;
   private notifier;
   private labelBAM="Enable BAM";
@@ -40,6 +41,19 @@ export class DashboardComponent implements OnInit {
   private lablesChart=[];
   private isTrends:boolean=true;
   private meritIncrease:number;
+  private retentionBonus:number;
+  private featureToImprove:string;
+  private isFeatureSuggestion:boolean=false;
+
+  private trendToImprove:string;
+  private isTrendSuggestion:boolean=false;
+
+  private filterargs;
+  private courseHoursCost = [10, 20, 40];
+  private courseMoneyCost = [2, 4, 8];
+  private courseIncreaseUpTo = [10, 20, 40];
+  private courseIndexCost = -1;
+
 
   constructor(private companyService: CompanyService,
               private cookieService: CookieService,
@@ -48,6 +62,7 @@ export class DashboardComponent implements OnInit {
               private marketService: MarketService) { this.notifier = this.notifierService; }
 
   ngOnInit() {
+    console.log("Dashboard.component --> ON-INIT");
     this.companyID = this.cookieService.get('companyID');
     this.gameID = this.cookieService.get('gameID');
     this.userDetails=0;
@@ -63,15 +78,24 @@ export class DashboardComponent implements OnInit {
     .subscribe( CompanyDet =>{
       this.company=CompanyDet['data'];
 
+      this.team=[];
       CompanyDet['data']['presalesTeam'].forEach( p =>{
         this.presalesService.getPresale(p,this.gameID)
         .subscribe( person =>{
           this.team.push(person['data']['person']);
           this.marketTrends=person['data']['marketTrends'];
           this.selectedPerson=this.team[0];
+
+          var _this=this;
+          Object.keys(this.marketTrends).forEach(function(trend) {
+            _this.marketTrendsList.push({name:trend, score:_this.marketTrends[trend]})
+            
+          });
         })
       })
+
       
+      this.proposals=[];
       CompanyDet['data']['proposal'].forEach( p =>{
         this.presalesService.getPresale(p,this.gameID)
         .subscribe( person =>{
@@ -187,13 +211,15 @@ export class DashboardComponent implements OnInit {
       person.features.forEach( s=> {
         featuresTranscode[s.name]=s.score;
       })      
-      console.log(featuresTranscode);
 
       this.company['productFeatures'].forEach( f =>{
-      this.labels.push(f.name);
-      this.personalScore.push(featuresTranscode[f.name]);
+      this.labels.push(f.name);      
       this.marketScore.push(f.score);
 
+      if(featuresTranscode[f.name] !== undefined)
+        this.personalScore.push(featuresTranscode[f.name]);
+      else
+        this.personalScore.push(0);
       })
       this.lablesChart=["Personal Features","Product Features"];
       console.log(this.personalScore);
@@ -210,11 +236,68 @@ export class DashboardComponent implements OnInit {
   toggleChart(){
     
     this.isTrends= !this.isTrends;
-    console.log("Toggle Chart ",this.isTrends);
     this.toggleCourses(this.selectedPerson,this.userDetails);
   }
 
   giveMeritIncrease(){
     console.log("You are givince merit increase : ", this.meritIncrease);
   }
+
+  giveRetentiononus(){
+    console.log("You are givince retention Bonus : ", this.retentionBonus);
+    this.marketService.offerRetentionBonus(this.gameID, this.companyID, this.selectedPerson.ID, this.retentionBonus)
+    .subscribe ( res =>{
+      if(res['result'] === 'OK'){
+        this.notifier.notify( 'success', 'Retention Bonus succesfully assigned');
+      }
+      else
+        this.notifier.notify( 'error', 'Error while assigning the retention Bonus');
+
+      this.ngOnInit();
+    })    
+  }
+
+  featureSuggestion(){
+
+    if(this.featureToImprove.length > 1){
+      this.filterargs={name:this.featureToImprove}
+      this.isFeatureSuggestion=true;
+    } else {
+      this.isFeatureSuggestion=false;
+    }
+  }  
+
+  trendSuggestion(){
+
+    if(this.trendToImprove.length > 1){
+      this.filterargs={name:this.trendToImprove}
+      this.isTrendSuggestion=true;
+    } else {
+      this.isTrendSuggestion=false;
+    }
+  }  
+
+  enrollCourse(type){
+    if(type === 1 ) this.featureToImprove = this.trendToImprove;
+
+    this.marketService.enrollCourse(this.gameID, this.companyID, 
+                                    this.selectedPerson.ID, 
+                                    this.featureToImprove, 
+                                    this.courseMoneyCost[this.courseIndexCost],
+                                    this.courseHoursCost[this.courseIndexCost],
+                                    this.courseIncreaseUpTo[this.courseIndexCost],
+                                    type )
+    .subscribe ( res =>{
+      if(res['result'] === 'OK'){
+        this.notifier.notify( 'success', 'Retention Bonus succesfully assigned');
+        this.ngOnInit();
+      }
+      else
+        this.notifier.notify( 'error', 'Error while assigning the retention Bonus');
+
+      
+    })  
+  }
+
+
 }
