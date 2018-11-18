@@ -67,10 +67,16 @@
                     </div>
 
                     <div class="col-md-7">
-                        <app-charts [labels]="labels" 
-                                    [personalScore]="personalScore" 
-                                    [marketScore]="marketScore"
-                                    [lablesChart]="lablesChart"></app-charts>
+                        <div class="card">
+                            <app-charts [labels]="labels" 
+                                [personalScore]="personalScore" 
+                                [marketScore]="marketScore"
+                                [lablesChart]="lablesChart">
+                            </app-charts>
+                        </div>
+
+
+
                     </div>
                 </div>
 

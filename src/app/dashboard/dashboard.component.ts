@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CompanyService } from '../services/company.service'
 import { CookieService } from 'ngx-cookie-service';
 import { PresalesService } from '../services/presales.service';
@@ -7,6 +7,7 @@ import { Company } from '../shared/company';
 import picasso from 'picasso.js';
 import PicassoCharts from '../shared/PicassoCharts.js';
 import { NotifierService } from 'angular-notifier';
+import { ChartsComponent } from '../charts/charts.component'
 
 @Component({
   selector: 'app-dashboard',
@@ -14,6 +15,8 @@ import { NotifierService } from 'angular-notifier';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
+  @ViewChild(ChartsComponent) child:ChartsComponent;
+
   private closeResult: string;
 
   private companyID:string=null;
@@ -22,13 +25,21 @@ export class DashboardComponent implements OnInit {
   private company:Company;
   private team=[];
   private proposals=[];
-  private marketTrends=[];
+  private marketTrends={};
   private avgSatisfaction;
   private notifier;
   private labelBAM="Enable BAM";
   private labelTOP="Enable TOP";
   private hoursToInvest:number=0;
   private moneyToInvest:number=0;
+  private userDetails:number=0;
+  private selectedPerson;
+  private labels=[];
+  private personalScore=[];
+  private marketScore=[];
+  private lablesChart=[];
+  private isTrends:boolean=true;
+  private meritIncrease:number;
 
   constructor(private companyService: CompanyService,
               private cookieService: CookieService,
@@ -39,6 +50,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.companyID = this.cookieService.get('companyID');
     this.gameID = this.cookieService.get('gameID');
+    this.userDetails=0;
 
 
     this.marketService.getTeamAvgSatisfaction(this.gameID, this.companyID)
@@ -55,6 +67,8 @@ export class DashboardComponent implements OnInit {
         this.presalesService.getPresale(p,this.gameID)
         .subscribe( person =>{
           this.team.push(person['data']['person']);
+          this.marketTrends=person['data']['marketTrends'];
+          this.selectedPerson=this.team[0];
         })
       })
       
@@ -152,4 +166,55 @@ export class DashboardComponent implements OnInit {
     
   }
 
+  toggleCourses(person, status){
+
+    this.labels=[];
+    this.personalScore=[];
+    this.marketScore=[];
+
+
+
+    if(this.isTrends){
+      person.PersonTrends.forEach( t=> {
+        this.labels.push(t.name);
+        this.personalScore.push(t.score);
+        this.marketScore.push(this.marketTrends[t.name]);
+      })
+      this.lablesChart=["Personal Trends","Market Trends"];
+    } else {
+
+      let featuresTranscode={};
+      person.features.forEach( s=> {
+        featuresTranscode[s.name]=s.score;
+      })      
+      console.log(featuresTranscode);
+
+      this.company['productFeatures'].forEach( f =>{
+      this.labels.push(f.name);
+      this.personalScore.push(featuresTranscode[f.name]);
+      this.marketScore.push(f.score);
+
+      })
+      this.lablesChart=["Personal Features","Product Features"];
+      console.log(this.personalScore);
+    }
+
+    
+
+    var _this=this;
+    setTimeout( function(){_this.child.updateChart()},250);
+    this.selectedPerson=person;    
+    this.userDetails=status;
+  }
+
+  toggleChart(){
+    
+    this.isTrends= !this.isTrends;
+    console.log("Toggle Chart ",this.isTrends);
+    this.toggleCourses(this.selectedPerson,this.userDetails);
+  }
+
+  giveMeritIncrease(){
+    console.log("You are givince merit increase : ", this.meritIncrease);
+  }
 }

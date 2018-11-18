@@ -243,28 +243,31 @@
                                                         <img src="assets/img/{{person.icon}}.png" alt="Circle Image" class="img-circle img-no-padding img-responsive">
                                                     </div>
                                                 </div>
-                                                <div class="col-xs-6">
-                                                    {{person.name}}
-                                                    <br />
+                                                <div class="col-xs-4">
+                                                    <h3>{{person.name}}</h3>
                                                     <span class="text-success"><small>Satisfaction : {{person.satisfactionLevel}}</small></span>
                                                 </div>
-                                                <div class="col-xs-3">
-                                                    <div class="col-xs-4">
-                                                            <div class="icon-big icon-danger text-center">
-                                                                    <i class="ti-hummer"></i>
+                                                <div class="col-xs-5">
+                                                    <div class="col-xs-3">
+                                                            <div class="icon-big icon-warning text-center">
+                                                                    <i class="ti-medall" (click)="toggleCourses(person,1)"></i>
                                                             </div>
                                                     </div>
-                                                    <div class="col-xs-4">
-                                                            <div class="icon-big icon-danger text-center">
-                                                                    <i class="ti-hummer"></i>
+                                                    <div class="col-xs-3">
+                                                            <div class="icon-big icon-success text-center">
+                                                                    <i class="ti-gift" (click)="toggleCourses(person,2)"></i>
                                                                 </div> 
                                                     </div>
-                                                    <div class="col-xs-4">
-                                                            <div class="icon-big icon-danger text-center">
-                                                                    <i class="ti-hummer"></i>
+                                                    <div class="col-xs-3">
+                                                            <div class="icon-big icon-info text-center">
+                                                                    <i class="ti-briefcase" (click)="toggleCourses(person,3)"></i>
                                                                 </div> 
                                                     </div>
-
+                                                    <div class="col-xs-3">
+                                                            <div class="icon-big icon-danger text-center">
+                                                                    <i class="ti-stats-up" (click)="toggleCourses(person,4)"></i>
+                                                                </div> 
+                                                    </div>
                                                    
                                                 </div>
                                             </div>
@@ -285,7 +288,7 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="card">
+                    <div class="card" [hidden]="userDetails != 0">
                         <div class="header">
                             <h4 class="title">Proposal placed</h4>
                         </div>
@@ -311,6 +314,172 @@
                         </div>
                     
                     </div>
+
+                    <div class="card" [hidden]="userDetails != 1">
+                            <div class="header">
+                                <h4 class="title">Merit increase</h4>
+                                <p (click)="toggleCourses(selectedPerson,0)">Click here to show the proposal placed </p>
+                            </div>
+                            <div class="content">
+                                <ul class="list-unstyled team-members">
+
+                                                <div class="row">
+                                                    <div class="col-xs-2">
+                                                        <div class="avatar">
+                                                            <img src="assets/img/{{selectedPerson.icon}}.png" alt="Circle Image" class="img-circle img-no-padding img-responsive">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-7">
+                                                            <dl class="dl-horizontal">
+                                                                    <dt>ID</dt>
+                                                                    <dd>{{selectedPerson.ID}}</dd>
+                            
+                                                                    <dt>Name</dt>
+                                                                    <dd>{{selectedPerson.name}}</dd>
+                                                                    
+                                                                    <dt>cost</dt>
+                                                                    <dd>{{selectedPerson.cost}} K€</dd>
+
+                                                                    <dt>Satisfactional Level</dt>
+                                                                    <dd>{{selectedPerson.satisfactionLevel}}</dd>
+
+                                                                    
+                                                                    <hr>
+                                                                    <dt>Courses enrolled</dt>
+                                                                    <dd *ngFor="let course of selectedPerson.courses">{{course}}</dd>     
+                                                                    
+                                                                    <hr>
+                                                                    <dt>Merit increase earned</dt>
+                                                                    <dd *ngFor="let merit of selectedPerson.meritIncreases">{{merit}}</dd>  
+
+                                                                    <hr>
+                                                                    <dt>Retention bonus Gained</dt>
+                                                                    <dd *ngFor="let retention of selectedPerson.retentionBonuses">{{retention}}</dd>  
+                                                                    
+                                                            </dl>
+                                                    </div>
+                                                    <div class="col-xs-3">
+                                                            <button type="button" class="btn btn-outline-primary" (click)="toggleChart()">Features</button>
+                                                    </div>
+                                                    
+    
+                                                </div>
+                                                
+                                                <div class="row">
+                                                        <app-charts [labels]="labels" 
+                                                        [personalScore]="personalScore" 
+                                                        [marketScore]="marketScore"
+                                                        [lablesChart]="lablesChart"></app-charts>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="container">
+                                                        <form>
+                                                                <div class="row" >
+                                                                    <div class="col-md-4">
+                                                                        <div class="form-group">
+                                                                            <label>Merit increase</label>
+                                                                            <input type="number" class="form-control border-input"  placeholder="Insert the " [(ngModel)]="meritIncrease" name="meritIncrease" required />
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-md-4">
+                                                                        <br>
+                                                                        <button type="button" class="btn btn-outline-primary" (click)="giveMeritIncrease()">Invest</button>
+                                                                    </div>                                                     
+                                                                </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+    
+                                        </ul>
+                            </div>
+                        
+                        </div>         
+                        
+                        <div class="card" [hidden]="userDetails != 2">
+                                <div class="header">
+                                    <h4 class="title">Retention Bonus</h4>
+                                    <p (click)="toggleCourses(selectedPerson,0)">Click here to show the proposal placed </p>
+                                </div>
+                                <div class="content">
+                                    <ul class="list-unstyled team-members">
+                                                <li *ngFor="let person of proposals">
+                                                    <div class="row">
+                                                        <div class="col-xs-3">
+                                                            <div class="avatar">
+                                                                <img src="assets/img/{{person.icon}}.png" alt="Circle Image" class="img-circle img-no-padding img-responsive">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xs-6">
+                                                            {{person.name}}
+                                                            <br />
+                                                            <span class="text-success"><small>Satisfaction : {{person.satisfactionLevel}}</small></span>
+                                                        </div>
+        
+                                                    </div>
+                                                </li>
+        
+                                            </ul>
+                                </div>
+                            
+                            </div>     
+
+                            <div class="card" [hidden]="userDetails != 3">
+                                    <div class="header">
+                                        <h4 class="title">Feature's Courses</h4>
+                                        <p (click)="toggleCourses(selectedPerson,0)">Click here to show the proposal placed </p>
+                                    </div>
+                                    <div class="content">
+                                        <ul class="list-unstyled team-members">
+                                                    <li *ngFor="let person of proposals">
+                                                        <div class="row">
+                                                            <div class="col-xs-3">
+                                                                <div class="avatar">
+                                                                    <img src="assets/img/{{person.icon}}.png" alt="Circle Image" class="img-circle img-no-padding img-responsive">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xs-6">
+                                                                {{person.name}}
+                                                                <br />
+                                                                <span class="text-success"><small>Satisfaction : {{person.satisfactionLevel}}</small></span>
+                                                            </div>
+            
+                                                        </div>
+                                                    </li>
+            
+                                                </ul>
+                                    </div>
+                                
+                                </div>            
+                                
+                                <div class="card" [hidden]="userDetails != 4">
+                                        <div class="header">
+                                            <h4 class="title">Market trends courses</h4>
+                                            <p (click)="toggleCourses(selectedPerson,0)">Click here to show the proposal placed </p>
+                                        </div>
+                                        <div class="content">
+                                            <ul class="list-unstyled team-members">
+                                                        <li *ngFor="let person of proposals">
+                                                            <div class="row">
+                                                                <div class="col-xs-3">
+                                                                    <div class="avatar">
+                                                                        <img src="assets/img/{{person.icon}}.png" alt="Circle Image" class="img-circle img-no-padding img-responsive">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-xs-6">
+                                                                    {{person.name}}
+                                                                    <br />
+                                                                    <span class="text-success"><small>Satisfaction : {{person.satisfactionLevel}}</small></span>
+                                                                </div>
+                
+                                                            </div>
+                                                        </li>
+                
+                                                    </ul>
+                                        </div>
+                                    
+                                    </div>                                   
                 </div>
             </div>
         </div>

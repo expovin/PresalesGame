@@ -142,7 +142,7 @@ export class PeopleComponent implements OnInit {
 
 
     var _this=this;
-    setTimeout( function(){_this.child.updateChart()},0)
+    setTimeout( function(){_this.child.updateChart()},250)
     
 
   }
