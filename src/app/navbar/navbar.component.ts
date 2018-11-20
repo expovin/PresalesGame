@@ -3,6 +3,9 @@ import { CompanyService } from '../services/company.service';
 import { NotifierService } from 'angular-notifier';
 import { CookieService } from 'ngx-cookie-service';
 
+
+
+
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -20,14 +23,16 @@ export class NavbarComponent implements OnInit {
 
   constructor(private notifierService: NotifierService,
               private companyService: CompanyService,
+              
               private cookieService: CookieService) { 
               this.notifier = this.notifierService;
+
               }
 
   ngOnInit() {      
     this.gameID = this.cookieService.get('gameID');
     this.companyID = this.cookieService.get('companyID');
-    
+    console.log("companyID from cookie : "+this.companyID);
   }
 
   toggleNotification(){
@@ -41,9 +46,7 @@ export class NavbarComponent implements OnInit {
       _this.stepNotify = setInterval(function(){ 
         _this.companyService.getMessage(_this.companyID,_this.gameID)
         .subscribe( res =>{
-          console.log(res);
           if(res['data']){
-            console.log(res['data']['type']+" - "+ res['data']['msg'])
             _this.notifier.notify( res['data']['type'], res['data']['msg'] );
           }
             

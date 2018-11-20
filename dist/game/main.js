@@ -1175,7 +1175,7 @@ var routes = [
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ""
+module.exports = "\n.wrapperDisabled {\n    display: none;\n    position: absolute;\n    width: 100px;\n    height: 100px;\n    background-color: gray;\n    top: 50px;\n    left: 50px;\n    padding: 10px;\n    opacity: .8;\n  }"
 
 /***/ }),
 
@@ -1186,7 +1186,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--The content below is only a placeholder and can be replaced.-->\n    <notifier-container></notifier-container>\n    <div class=\"wrapper\"> \n\n                <app-sidebar></app-sidebar>\n                    \n                \n                    <app-navbar></app-navbar>\n            \n                    <router-outlet></router-outlet> <!--<app-dashboard></app-dashboard> --> \n                    \n                    <app-footer></app-footer>\n\n            \n    </div>        \n\n\n\n\n"
+module.exports = "<!--The content below is only a placeholder and can be replaced.-->\n    <notifier-container></notifier-container>\n    <div [ngClass]=\"{'wrapper': true}\"> \n\n                <app-sidebar></app-sidebar>\n                    \n                \n                    <app-navbar></app-navbar>\n            \n                    <div [ngClass]=\"{'wrapperDisabled': isElaborating}\">\n                        <router-outlet></router-outlet> <!--<app-dashboard></app-dashboard> --> \n                        <app-footer></app-footer>\n                    </div>\n                    \n                    <app-elaboration [hidden]=\"!isElaborating\"></app-elaboration>\n                    \n                    \n\n            \n    </div>        \n\n\n\n\n"
 
 /***/ }),
 
@@ -1201,23 +1201,45 @@ module.exports = "<!--The content below is only a placeholder and can be replace
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppComponent", function() { return AppComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _services_websocket_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./services/websocket.service */ "./src/app/services/websocket.service.ts");
+/* harmony import */ var _services_chat_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./services/chat.service */ "./src/app/services/chat.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
 
 var AppComponent = /** @class */ (function () {
-    function AppComponent() {
+    function AppComponent(chatService) {
+        var _this = this;
+        this.chatService = chatService;
         this.title = 'The Presales Game';
+        this.isElaborating = false;
+        chatService.messages.subscribe(function (msg) {
+            console.log("Response from websocket: " + msg['type'] + " - " + msg['msg']);
+            if (msg['type'] === 'start') {
+                _this.isElaborating = true;
+            }
+            if (msg['type'] === 'end') {
+                console.log("Finish , still wait 5 sec.");
+                setTimeout(function () { this.isElaborating = false; window.location.reload(); }, 5000);
+            }
+        });
     }
     AppComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-root',
             template: __webpack_require__(/*! ./app.component.html */ "./src/app/app.component.html"),
-            styles: [__webpack_require__(/*! ./app.component.css */ "./src/app/app.component.css")]
-        })
+            styles: [__webpack_require__(/*! ./app.component.css */ "./src/app/app.component.css")],
+            providers: [_services_websocket_service__WEBPACK_IMPORTED_MODULE_1__["WebsocketService"], _services_chat_service__WEBPACK_IMPORTED_MODULE_2__["ChatService"]]
+        }),
+        __metadata("design:paramtypes", [_services_chat_service__WEBPACK_IMPORTED_MODULE_2__["ChatService"]])
     ], AppComponent);
     return AppComponent;
 }());
@@ -1261,12 +1283,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var angular_notifier__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! angular-notifier */ "./node_modules/angular-notifier/esm5/angular-notifier.js");
 /* harmony import */ var angular_highcharts__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! angular-highcharts */ "./node_modules/angular-highcharts/angular-highcharts.es5.js");
 /* harmony import */ var _charts_charts_component__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./charts/charts.component */ "./src/app/charts/charts.component.ts");
+/* harmony import */ var _shared_filter_pipe__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./shared/filter.pipe */ "./src/app/shared/filter.pipe.ts");
+/* harmony import */ var _elaboration_elaboration_component__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./elaboration/elaboration.component */ "./src/app/elaboration/elaboration.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
+
 
 
 
@@ -1308,7 +1334,9 @@ var AppModule = /** @class */ (function () {
                 _people_people_component__WEBPACK_IMPORTED_MODULE_9__["PeopleComponent"],
                 _bam_bam_component__WEBPACK_IMPORTED_MODULE_10__["BamComponent"],
                 _top_top_component__WEBPACK_IMPORTED_MODULE_11__["TopComponent"],
-                _charts_charts_component__WEBPACK_IMPORTED_MODULE_24__["ChartsComponent"]
+                _shared_filter_pipe__WEBPACK_IMPORTED_MODULE_25__["MyFilterPipe"],
+                _charts_charts_component__WEBPACK_IMPORTED_MODULE_24__["ChartsComponent"],
+                _elaboration_elaboration_component__WEBPACK_IMPORTED_MODULE_26__["ElaborationComponent"]
             ],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
@@ -1453,7 +1481,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"card\">\n  <div class=\"content\">\n        <div [chart]=\"chart\"></div>\n  </div>\n  <div class=\"footer\">\n        <hr />\n        <div class=\"stats\">\n            <i class=\"ti-stats-up\"></i> {{personalScore}}\n        </div>\n  </div>    \n</div>\n\n\n"
+module.exports = "\n  <div class=\"content\">\n        <div [chart]=\"chart\"></div>\n  </div>\n\n\n\n"
 
 /***/ }),
 
@@ -1581,7 +1609,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"main-panel\">\n    <div class=\"content\">\n        <div class=\"container-fluid\">\n            <div class=\"row\">\n                <div class=\"col-lg-3 col-sm-6\">\n                    <div class=\"card\">\n                        <div class=\"content\">\n                            <div class=\"row\">\n                                <div class=\"col-xs-5\">\n                                    <div class=\"icon-big icon-warning text-center\">\n                                        <i class=\"ti-cup\"></i>\n                                    </div>\n                                </div>\n                                <div class=\"col-xs-7\">\n                                    <div class=\"numbers\">\n                                        <p>Brend Recognition</p>\n                                       {{company.brendRecognition}} %\n                                    </div>\n                                </div>\n                            </div>\n                            <div class=\"footer\">\n                                <hr />\n                                <div class=\"stats\">\n                                    <i class=\"ti-stats-up\"></i> Increase\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"col-lg-3 col-sm-6\">\n                    <div class=\"card\">\n                        <div class=\"content\">\n                            <div class=\"row\">\n                                <div class=\"col-xs-5\">\n                                    <div class=\"icon-big icon-success text-center\">\n                                        <i class=\"ti-wallet\"></i>\n                                    </div>\n                                </div>\n                                <div class=\"col-xs-7\">\n                                    <div class=\"numbers\">\n                                        <p>Budget</p>\n                                        € {{company.budget}}\n                                    </div>\n                                </div>\n                            </div>\n                            <div class=\"footer\">\n                                <hr />\n                                <div class=\"stats\">\n                                    <i class=\"ti-view-list\"></i> List details\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"col-lg-3 col-sm-6\">\n                    <div class=\"card\">\n                        <div class=\"content\">\n                            <div class=\"row\">\n                                <div class=\"col-xs-5\">\n                                    <div class=\"icon-big icon-info text-center\">\n                                        <i class=\"ti-ruler-pencil\"></i>\n                                    </div>\n                                </div>\n                                <div class=\"col-xs-7\">\n                                    <div class=\"numbers\">\n                                        <p>AVG Team Satisf</p>\n                                        {{avgSatisfaction}}\n                                    </div>\n                                </div>\n                            </div>\n                            <div class=\"footer\">\n                                <hr />\n                                <div class=\"stats\">\n                                    <i class=\"ti-stats-up\"></i> Improve\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"col-lg-3 col-sm-6\">\n                        <div class=\"card\">\n                            <div class=\"content\">\n                                <div class=\"row\">\n                                    <div class=\"col-xs-5\">\n                                        <div class=\"icon-big icon-danger text-center\">\n                                            <i class=\"ti-hummer\"></i>\n                                        </div>\n                                    </div>\n                                    <div class=\"col-xs-7\">\n                                        <div class=\"numbers\">\n                                            <p>Working Hours</p>\n                                            {{company.totalHours}}\n                                        </div>\n                                    </div>\n                                </div>\n                                <div class=\"footer\">\n                                    <hr />\n                                    <div class=\"stats\">\n                                        <i class=\"ti-timer\"></i> In the last hour\n                                    </div>\n                                </div>\n                            </div>\n                        </div>\n                    </div>            \n            </div>\n\n            <div class=\"row\">\n                <div class=\"col-md-6\">\n                    <div class=\"card\">\n                        <div class=\"header\">\n                            <h4 class=\"title\">My Product Features</h4>\n                            <p class=\"category\">Sorted by Relevance</p>\n                        </div>\n                        <div class=\"content\">\n                            <div id=\"chartProductFeatures\" class=\"ct-chart\"></div>\n                            <div class=\"footer\">\n                                <div class=\"chart-legend\">\n                                    <i class=\"fa fa-circle text-info\"></i> Open\n                                    <i class=\"fa fa-circle text-danger\"></i> Click\n                                    <i class=\"fa fa-circle text-warning\"></i> Click Second Time\n                                </div>\n                                <hr>\n                                <div class=\"stats\">\n                                    <i class=\"ti-stats-up\"></i> Improve\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                </div>\n\n                <div class=\"col-md-6\">\n                    <div class=\"card \">\n                        <div class=\"header\">\n                            <h4 class=\"title\">Report Settings</h4>\n                            <p class=\"category\">Managing sub system BAM e TOP</p>\n                        </div>\n                        <div class=\"content\">\n\n                            <div class=\"row\" >\n                                <div class=\"BAM_TOP\">\n                                    <div class=\"col-md-4\">\n                                        <div class=\"row\">\n                                                <h3 class=\"sistemLable sistemLableActive\" [hidden]=\"!company.isBAMEnabled\">BAM Enabled</h3>\n                                                <h3 class=\"sistemLable sistemLableDeactive\" [hidden]=\"company.isBAMEnabled\">BAM Disabled</h3>\n                                        </div>\n\n                                        <div class=\"row\">\n                                            <button type=\"button\" class=\"btn btn-outline-primary\" (click)=\"toggleBAM()\">{{labelBAM}}</button>\n                                        </div>\n                                    </div>\n                                    <div class=\"col-md-8\">\n                                            <p class=\"text-warning\">\n                                                BAM cna give you more insights on the opportunities you face in the previous quarter.\n                                                Enabling BAM now you can find out several information which might help you to better\n                                                setting your company. <br>\n                                                BAM require an initial cost in terms of effort to implement (hours) and in terms of money\n                                                and a recoursive cost each quarter (hours + money). You can disable this feature any time avoiding\n                                                the recoursive cost.\n                                            </p>\n                                    </div>\n                                </div>\n                            </div>\n\n                            <hr>\n\n                            <div class=\"row\" >\n                                <div class=\"BAM_TOP\">\n                                    <div class=\"col-md-4\">\n                                        <div class=\"row\">\n                                                <h3 class=\"sistemLable sistemLableActive\" [hidden]=\"!company.isTOPEnabled\">TOP Enabled</h3>\n                                                <h3 class=\"sistemLable sistemLableDeactive\" [hidden]=\"company.isTOPEnabled\">TOP Disabled</h3>\n                                        </div>\n\n                                        <div class=\"row\">\n                                            <button type=\"button\" class=\"btn btn-outline-primary\" (click)=\"toggleTOP()\">{{labelTOP}}</button>\n                                        </div>\n                                    </div>\n                                    <div class=\"col-md-8\">\n                                            <p class=\"text-warning\">\n                                                TOP is a system to allow your cmpany in a better planning the big opportunities and find out\n                                                the product's strength and weakness. This may help to better address the product improvements.<br>\n                                                TOP require an initial cost in terms of effort to implement (hours) and in terms of money\n                                                and a recoursive cost each quarter (hours + money). You can disable this feature any time avoiding\n                                                the recoursive cost.\n                                            </p>\n                                    </div>\n                                </div>\n                            </div>\n\n                            <hr>\n\n                            <div class=\"row\" >\n                                    <div class=\"BAM_TOP\">\n                                        <div class=\"col-md-4\">\n                                            <h3>Brend Recognition</h3>\n                                        </div>\n                                        <div class=\"col-md-8\">\n                                            <form>\n                                                    <div class=\"row\" >\n                                                        <div class=\"col-md-4\">\n                                                            <div class=\"form-group\">\n                                                                <label>Hours</label>\n                                                                <input type=\"number\" class=\"form-control border-input\"  placeholder=\"Insert the #Hours to invest\" [(ngModel)]=\"hoursToInvest\" name=\"hoursToInvest\" required />\n                                                                \n                                                            </div>\n                                                        </div>\n                                                        <div class=\"col-md-4\">\n                                                            <div class=\"form-group\">\n                                                                <label>Cost</label>\n                                                                <input type=\"number\" [(ngModel)]=\"moneyToInvest\" class=\"form-control border-input\" placeholder=\"Insert the amount to invest\" name=\"moneyToInvest\" required />\n                                                            </div>\n                                                        </div>\n                                                        <div class=\"col-md-4\">\n                                                            <br>\n                                                            <button type=\"button\" class=\"btn btn-outline-primary\" (click)=\"getCampain()\">Invest</button>\n                                                        </div>                                                     \n                                                    </div>\n                                            </form>\n                                        </div>\n                                        \n                                    </div>\n                                </div>\n\n                        </div>\n                    </div>\n                </div>\n            </div>\n\n\n            <div class=\"row\">\n                <div class=\"col-md-6\">\n                    <div class=\"card\">\n                        <div class=\"header\">\n                            <h4 class=\"title\">Team Members</h4>\n                        </div>\n                        <div class=\"content\">\n                            <ul class=\"list-unstyled team-members\">\n                                        <li *ngFor=\"let person of team\">\n                                            <div class=\"row\">\n                                                <div class=\"col-xs-3\">\n                                                    <div class=\"avatar\">\n                                                        <img src=\"assets/img/{{person.icon}}.png\" alt=\"Circle Image\" class=\"img-circle img-no-padding img-responsive\">\n                                                    </div>\n                                                </div>\n                                                <div class=\"col-xs-6\">\n                                                    {{person.name}}\n                                                    <br />\n                                                    <span class=\"text-success\"><small>Satisfaction : {{person.satisfactionLevel}}</small></span>\n                                                </div>\n\n                                            </div>\n                                        </li>\n\n                                    </ul>\n                        </div>\n                        <div class=\"footer\">\n                            <div class=\"container\">\n                                    <hr />\n                                    <div class=\"stats\">\n                                        <a routerLink=\"/people\"><i class=\"ti-timer\"></i> Hire People</a>\n                                    </div>\n                            </div>\n\n\n                        </div>                        \n                    </div>\n                </div>\n                <div class=\"col-md-6\">\n                    <div class=\"card\">\n                        <div class=\"header\">\n                            <h4 class=\"title\">Proposal placed</h4>\n                        </div>\n                        <div class=\"content\">\n                            <ul class=\"list-unstyled team-members\">\n                                        <li *ngFor=\"let person of proposals\">\n                                            <div class=\"row\">\n                                                <div class=\"col-xs-3\">\n                                                    <div class=\"avatar\">\n                                                        <img src=\"assets/img/{{person.icon}}.png\" alt=\"Circle Image\" class=\"img-circle img-no-padding img-responsive\">\n                                                    </div>\n                                                </div>\n                                                <div class=\"col-xs-6\">\n                                                    {{person.name}}\n                                                    <br />\n                                                    <span class=\"text-success\"><small>Satisfaction : {{person.satisfactionLevel}}</small></span>\n                                                </div>\n\n                                            </div>\n                                        </li>\n\n                                    </ul>\n                        </div>\n                        <div class=\"footer\">\n                            <div class=\"container\">\n                                    <hr />\n                                    <div class=\"stats\">\n                                        <a routerLink=\"/people\"><i class=\"ti-timer\"></i> Hire People</a>\n                                    </div>\n                            </div>\n\n\n                        </div>                        \n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>"
+module.exports = "<div class=\"main-panel\">\n    <div class=\"content\">\n        <div class=\"container-fluid\">\n            <div class=\"row\">\n                <div class=\"col-lg-3 col-sm-6\">\n                    <div class=\"card\">\n                        <div class=\"content\">\n                            <div class=\"row\">\n                                <div class=\"col-xs-5\">\n                                    <div class=\"icon-big icon-warning text-center\">\n                                        <i class=\"ti-cup\"></i>\n                                    </div>\n                                </div>\n                                <div class=\"col-xs-7\">\n                                    <div class=\"numbers\">\n                                        <p>Brend Recognition</p>\n                                       {{company.brendRecognition}} %\n                                    </div>\n                                </div>\n                            </div>\n                            <div class=\"footer\">\n                                <hr />\n\n                                <div class=\"stats\">\n                                    <i class=\"ti-stats-up\"></i> Increase\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"col-lg-3 col-sm-6\">\n                    <div class=\"card\">\n                        <div class=\"content\">\n                            <div class=\"row\">\n                                <div class=\"col-xs-5\">\n                                    <div class=\"icon-big icon-success text-center\">\n                                        <i class=\"ti-wallet\"></i>\n                                    </div>\n                                </div>\n                                <div class=\"col-xs-7\">\n                                    <div class=\"numbers\">\n                                        <p>Budget</p>\n                                        € {{company.budget}}\n                                    </div>\n                                </div>\n                            </div>\n                            <div class=\"footer\">\n                                <hr />\n                                <div class=\"stats\">\n                                    <i class=\"ti-view-list\"></i> List details\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"col-lg-3 col-sm-6\">\n                    <div class=\"card\">\n                        <div class=\"content\">\n                            <div class=\"row\">\n                                <div class=\"col-xs-5\">\n                                    <div class=\"icon-big icon-info text-center\">\n                                        <i class=\"ti-ruler-pencil\"></i>\n                                    </div>\n                                </div>\n                                <div class=\"col-xs-7\">\n                                    <div class=\"numbers\">\n                                        <p>AVG Team Satisf</p>\n                                        {{avgSatisfaction | number : '1.2-2'}} %\n                                    </div>\n                                </div>\n                            </div>\n                            <div class=\"footer\">\n                                <hr />\n                                <div class=\"stats\">\n                                    <i class=\"ti-stats-up\"></i> Improve\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"col-lg-3 col-sm-6\">\n                        <div class=\"card\">\n                            <div class=\"content\">\n                                <div class=\"row\">\n                                    <div class=\"col-xs-5\">\n                                        <div class=\"icon-big icon-danger text-center\">\n                                            <i class=\"ti-hummer\"></i>\n                                        </div>\n                                    </div>\n                                    <div class=\"col-xs-7\">\n                                        <div class=\"numbers\">\n                                            <p>Working Hours</p>\n                                            {{company.totalHours}}\n                                        </div>\n                                    </div>\n                                </div>\n                                <div class=\"footer\">\n                                    <hr />\n                                    <div class=\"stats\">\n                                        <i class=\"ti-timer\"></i> In the last hour\n                                    </div>\n                                </div>\n                            </div>\n                        </div>\n                    </div>            \n            </div>\n\n            <div class=\"row\">\n                <div class=\"col-md-6\">\n                    <div class=\"card\">\n                        <div class=\"header\">\n                            <h4 class=\"title\">My Product Features</h4>\n                            <p class=\"category\">Sorted by Relevance</p>\n                        </div>\n                        <div class=\"content\">\n                            <div id=\"chartProductFeatures\" class=\"ct-chart\"></div>\n                            <div class=\"footer\">\n                                <div class=\"chart-legend\">\n                                    <i class=\"fa fa-circle text-info\"></i> Open\n                                    <i class=\"fa fa-circle text-danger\"></i> Click\n                                    <i class=\"fa fa-circle text-warning\"></i> Click Second Time\n                                </div>\n                                <hr>\n                                <div class=\"stats\">\n                                    <i class=\"ti-stats-up\"></i> Improve\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                </div>\n\n                <div class=\"col-md-6\">\n                    <div class=\"card \">\n                        <div class=\"header\">\n                            <h4 class=\"title\">Report Settings</h4>\n                            <p class=\"category\">Managing sub system BAM e TOP</p>\n                        </div>\n                        <div class=\"content\">\n\n                            <div class=\"row\" >\n                                <div class=\"BAM_TOP\">\n                                    <div class=\"col-md-4\">\n                                        <div class=\"row\">\n                                                <h3 class=\"sistemLable sistemLableActive\" [hidden]=\"!company.isBAMEnabled\">BAM Enabled</h3>\n                                                <h3 class=\"sistemLable sistemLableDeactive\" [hidden]=\"company.isBAMEnabled\">BAM Disabled</h3>\n                                        </div>\n\n                                        <div class=\"row\">\n                                            <button type=\"button\" class=\"btn btn-outline-primary\" (click)=\"toggleBAM()\">{{labelBAM}}</button>\n                                        </div>\n                                    </div>\n                                    <div class=\"col-md-8\">\n                                            <p class=\"text-warning\">\n                                                BAM cna give you more insights on the opportunities you face in the previous quarter.\n                                                Enabling BAM now you can find out several information which might help you to better\n                                                setting your company. <br>\n                                                BAM require an initial cost in terms of effort to implement (hours) and in terms of money\n                                                and a recoursive cost each quarter (hours + money). You can disable this feature any time avoiding\n                                                the recoursive cost.\n                                            </p>\n                                    </div>\n                                </div>\n                            </div>\n\n                            <hr>\n\n                            <div class=\"row\" >\n                                <div class=\"BAM_TOP\">\n                                    <div class=\"col-md-4\">\n                                        <div class=\"row\">\n                                                <h3 class=\"sistemLable sistemLableActive\" [hidden]=\"!company.isTOPEnabled\">TOP Enabled</h3>\n                                                <h3 class=\"sistemLable sistemLableDeactive\" [hidden]=\"company.isTOPEnabled\">TOP Disabled</h3>\n                                        </div>\n\n                                        <div class=\"row\">\n                                            <button type=\"button\" class=\"btn btn-outline-primary\" (click)=\"toggleTOP()\">{{labelTOP}}</button>\n                                        </div>\n                                    </div>\n                                    <div class=\"col-md-8\">\n                                            <p class=\"text-warning\">\n                                                TOP is a system to allow your cmpany in a better planning the big opportunities and find out\n                                                the product's strength and weakness. This may help to better address the product improvements.<br>\n                                                TOP require an initial cost in terms of effort to implement (hours) and in terms of money\n                                                and a recoursive cost each quarter (hours + money). You can disable this feature any time avoiding\n                                                the recoursive cost.\n                                            </p>\n                                    </div>\n                                </div>\n                            </div>\n\n                            <hr>\n\n                            <div class=\"row\" >\n                                    <div class=\"BAM_TOP\">\n                                        <div class=\"col-md-4\">\n                                            <h3>Brend Recognition</h3>\n                                        </div>\n                                        <div class=\"col-md-8\">\n                                            <form>\n                                                    <div class=\"row\" >\n                                                        <div class=\"col-md-4\">\n                                                            <div class=\"form-group\">\n                                                                <label>Hours</label>\n                                                                <input type=\"number\" class=\"form-control border-input\"  placeholder=\"Insert the #Hours to invest\" [(ngModel)]=\"hoursToInvest\" name=\"hoursToInvest\" required />\n                                                                \n                                                            </div>\n                                                        </div>\n                                                        <div class=\"col-md-4\">\n                                                            <div class=\"form-group\">\n                                                                <label>Cost</label>\n                                                                <input type=\"number\" [(ngModel)]=\"moneyToInvest\" class=\"form-control border-input\" placeholder=\"Insert the amount to invest\" name=\"moneyToInvest\" required />\n                                                            </div>\n                                                        </div>\n                                                        <div class=\"col-md-4\">\n                                                            <br>\n                                                            <button type=\"button\" class=\"btn btn-outline-primary\" (click)=\"getCampain()\">Invest</button>\n                                                        </div>                                                     \n                                                    </div>\n                                            </form>\n                                        </div>\n                                        \n                                    </div>\n                                </div>\n\n                        </div>\n                    </div>\n                </div>\n            </div>\n\n\n            <div class=\"row\">\n                <div class=\"col-md-6\">\n                    <div class=\"card\">\n                        <div class=\"header\">\n                            <h4 class=\"title\">Team Members</h4>\n                        </div>\n                        <div class=\"content\">\n                            <ul class=\"list-unstyled team-members\">\n                                        <li *ngFor=\"let person of team\">\n                                            <div class=\"row\">\n                                                <div class=\"col-xs-3\">\n                                                    <div class=\"avatar\">\n                                                        <img src=\"assets/img/{{person.icon}}.png\" alt=\"Circle Image\" class=\"img-circle img-no-padding img-responsive\">\n                                                    </div>\n                                                </div>\n                                                <div class=\"col-xs-4\">\n                                                    <h3>{{person.name}}</h3>\n                                                    <span class=\"text-success\"><small>Satisfaction : {{person.satisfactionLevel | number : '1.2-2'}} %</small></span>\n                                                </div>\n                                                <div class=\"col-xs-5\">\n                                                    <div class=\"col-xs-3\">\n                                                            <div class=\"icon-big icon-warning text-center\">\n                                                                    <i class=\"ti-medall\" (click)=\"toggleCourses(person,1)\"></i>\n                                                            </div>\n                                                    </div>\n                                                    <div class=\"col-xs-3\">\n                                                            <div class=\"icon-big icon-success text-center\">\n                                                                    <i class=\"ti-gift\" (click)=\"toggleCourses(person,2)\"></i>\n                                                                </div> \n                                                    </div>\n                                                    <div class=\"col-xs-3\">\n                                                            <div class=\"icon-big icon-info text-center\">\n                                                                    <i class=\"ti-briefcase\" (click)=\"toggleCourses(person,3);isTrends=true;\"></i>\n                                                                </div> \n                                                    </div>\n                                                    <div class=\"col-xs-3\">\n                                                            <div class=\"icon-big icon-danger text-center\">\n                                                                    <i class=\"ti-stats-up\" (click)=\"toggleCourses(person,4);isTrends=false\"></i>\n                                                                </div> \n                                                    </div>\n                                                   \n                                                </div>\n                                            </div>\n                                        </li>\n\n                                    </ul>\n                        </div>\n                        <div class=\"footer\">\n                                <div class=\"container\">\n                                        <hr />\n                                        <div class=\"stats\">\n                                            <a routerLink=\"/people\"><i class=\"ti-timer\"></i> Hire People</a>\n                                        </div>\n                                </div>\n    \n    \n                            </div>    \n                    </div>\n                </div>\n                <div class=\"col-md-6\">\n                    <div class=\"card\" [hidden]=\"userDetails != 0\">\n                        <div class=\"header\">\n                            <h4 class=\"title\">Proposal placed</h4>\n                        </div>\n                        <div class=\"content\">\n                            <ul class=\"list-unstyled team-members\">\n                                        <li *ngFor=\"let person of proposals\">\n                                            <div class=\"row\">\n                                                <div class=\"col-xs-3\">\n                                                    <div class=\"avatar\">\n                                                        <img src=\"assets/img/{{person.icon}}.png\" alt=\"Circle Image\" class=\"img-circle img-no-padding img-responsive\">\n                                                    </div>\n                                                </div>\n                                                <div class=\"col-xs-6\">\n                                                    {{person.name}}\n                                                    <br />\n                                                    <span class=\"text-success\"><small>Satisfaction : {{person.satisfactionLevel}}</small></span>\n                                                </div>\n\n                                            </div>\n                                        </li>\n\n                                    </ul>\n                        </div>\n                    \n                    </div>\n\n                    <div class=\"card\">\n                            <div class=\"header\">\n                                <h4 class=\"title\" [hidden]=\"userDetails != 1\">Merit increase</h4>\n                                <h4 class=\"title\" [hidden]=\"userDetails != 2\">Retention Bonus</h4>\n                                <h4 class=\"title\" [hidden]=\"userDetails != 3\">Improve features skills</h4>\n                                <h4 class=\"title\" [hidden]=\"userDetails != 4\">Improve Market Trends skill</h4>\n                                <p (click)=\"toggleCourses(selectedPerson,0)\">Click here to show the proposal placed </p>\n                            </div>\n                            <div class=\"content\">\n                                <ul class=\"list-unstyled team-members\">\n\n                                                <div class=\"row\">\n                                                    <div class=\"col-xs-2\">\n                                                        <div class=\"avatar\">\n                                                            <img src=\"assets/img/{{selectedPerson.icon}}.png\" alt=\"Circle Image\" class=\"img-circle img-no-padding img-responsive\">\n                                                        </div>\n                                                    </div>\n                                                    <div class=\"col-xs-7\">\n                                                            <dl class=\"dl-horizontal\">\n                                                                    <dt>ID</dt>\n                                                                    <dd>{{selectedPerson.ID}}</dd>\n                            \n                                                                    <dt>Name</dt>\n                                                                    <dd>{{selectedPerson.name}}</dd>\n                                                                    \n                                                                    <dt>cost</dt>\n                                                                    <dd>{{selectedPerson.cost}} K€</dd>\n\n                                                                    <dt>Satisfactional Level</dt>\n                                                                    <dd>{{selectedPerson.satisfactionLevel}}</dd>\n\n                                                                    \n                                                                    <hr>\n                                                                    <dt>Courses enrolled</dt>\n                                                                    <dd *ngFor=\"let course of selectedPerson.courses\">{{course.period}} - {{course.feature}} {{course.marketTrend}} : {{course.hours}} hours spent</dd>     \n                                                                    \n                                                                    <hr>\n                                                                    <dt>Merit increase earned</dt>\n                                                                    <dd *ngFor=\"let merit of selectedPerson.meritIncreases\">{{merit}}</dd>  \n\n                                                                    <hr>\n                                                                    <dt>Retention bonus Gained</dt>\n                                                                    <dd *ngFor=\"let retention of selectedPerson.retentionBonuses\">{{retention.period}} - {{retention.money}} K€</dd>  \n                                                                    \n                                                            </dl>\n                                                    </div>\n                                                    <div class=\"col-xs-3\">\n                                                            <button type=\"button\" class=\"btn btn-outline-primary\" (click)=\"toggleChart()\">Features</button>\n                                                    </div>\n                                                    \n    \n                                                </div>\n                                                \n                                                <div class=\"row\">\n                                                        <app-charts [labels]=\"labels\" \n                                                        [personalScore]=\"personalScore\" \n                                                        [marketScore]=\"marketScore\"\n                                                        [lablesChart]=\"lablesChart\"></app-charts>\n                                                </div>\n\n                                                <div class=\"row\">\n                                                    <!--<div class=\"container\">-->\n\n                                                        <form [hidden]=\"userDetails != 1\">\n                                                                    <div class=\"row\" >\n                                                                        <div class=\"col-md-4\">\n                                                                            <div class=\"form-group\">\n                                                                                <label>Merit Increase</label>\n                                                                                <input type=\"number\" class=\"form-control border-input\"  placeholder=\"Insert the Merit Increase in %\" [(ngModel)]=\"meritIncrease\" name=\"meritIncrease\" required />\n                                                                            </div>\n                                                                        </div>\n    \n                                                                        <div class=\"col-md-4\">\n                                                                            <br>\n                                                                            <button type=\"button\" class=\"btn btn-outline-primary\" (click)=\"giveMeritIncrease()\">Submit</button>\n                                                                        </div>                                                     \n                                                                    </div>\n                                                        </form>\n\n                                                        <form [hidden]=\"userDetails != 2\">\n                                                                <div class=\"row\" >\n                                                                    <div class=\"col-md-4\">\n                                                                        <div class=\"form-group\">\n                                                                            <label>Retention Bonus</label>\n                                                                            <input type=\"number\" class=\"form-control border-input\"  placeholder=\"Insert the retention bonus in K€\" [(ngModel)]=\"retentionBonus\" name=\"meritIncrease\" required />\n                                                                        </div>\n                                                                    </div>\n\n                                                                    <div class=\"col-md-4\">\n                                                                        <br>\n                                                                        <button type=\"button\" class=\"btn btn-outline-primary\" (click)=\"giveRetentiononus()\">Submit</button>\n                                                                    </div>                                                     \n                                                                </div>\n                                                        </form>\n\n                                                        <form [hidden]=\"userDetails != 3\">\n                                                                <div class=\"row\" >\n                                                                    <div class=\"col-md-4\">\n                                                                        <div class=\"form-group\">\n                                                                            <label>Select the Feature to improve</label>\n                                                                            <input type=\"text\" class=\"form-control border-input\"  placeholder=\"Insert the feature to improve\" \n                                                                                    [(ngModel)]=\"featureToImprove\" name=\"featureToImprove\" (ngModelChange)=\"featureSuggestion($event)\" required />\n                                                                            <ul [hidden]=\"!isFeatureSuggestion\">\n                                                                                <li *ngFor=\"let feature of company.productFeatures | myfilter:featureToImprove\" (click)=\"featureToImprove=feature.name;isFeatureSuggestion=false\"> {{feature.name}}</li>\n                                                                            </ul>\n                                                                        </div>\n                                                                        <div class=\"form-group\">\n                                                                                <label>Course Level</label><br>\n                                                                                <div class=\"btn-group\" role=\"group\" aria-label=\"...\">\n                                                                                        \n                                                                                        <button type=\"button\" class=\"btn btn-default\" (click)=\"courseIndexCost=0\">Base</button>\n                                                                                        <button type=\"button\" class=\"btn btn-default\" (click)=\"courseIndexCost=1\">Advance</button>\n                                                                                        <button type=\"button\" class=\"btn btn-default\" (click)=\"courseIndexCost=2\">Intensive</button>\n                                                                                      </div>\n                                                                            </div>\n\n                                                                    </div>\n                                                                    <div class=\"col-md-2\"></div>\n                                                                    <div class=\"col-md-6\" [hidden]=\"courseIndexCost < 0\">\n                                                                            <h4>Course Details ({{featureToImprove}}) </h4>\n                                                                            <hr>\n                                                                            <dl class=\"dl-horizontal\">\n                                                                                    <dt>Course Cost</dt>\n                                                                                    <dd>{{courseMoneyCost[courseIndexCost]}} K€</dd>\n\n                                                                                    <dt>Required hours</dt>\n                                                                                    <dd>{{courseHoursCost[courseIndexCost]}} hours</dd>   \n                                                                                    \n                                                                                    <dt>Knowledge Increase</dt>\n                                                                                    <dd>up to {{courseIncreaseUpTo[courseIndexCost]}} %</dd>\n                                                                            </dl>\n                                                                    </div> \n                                                  \n                                                                </div>\n                                                                <div class=\"row\">\n                                                                        <div class=\"col-md-4\">\n                                                                                <br>\n                                                                                <button type=\"button\" class=\"btn btn-outline-primary\" (click)=\"enrollCourse(0)\">Get Course</button>\n                                                                            </div>   \n                                                                </div>\n                                                        </form>         \n                                                        \n                                                        <form [hidden]=\"userDetails != 4\">\n                                                                <div class=\"row\" >\n                                                                    <div class=\"col-md-4\">\n                                                                        <div class=\"form-group\">\n                                                                            <label>Select the Trend to improve</label>\n                                                                            <input type=\"text\" class=\"form-control border-input\"  placeholder=\"Insert the trend to improve\" \n                                                                                    [(ngModel)]=\"trendToImprove\" name=\"trendToImprove\" (ngModelChange)=\"trendSuggestion($event)\" required />\n                                                                            <ul [hidden]=\"!isTrendSuggestion\">\n                                                                                <li *ngFor=\"let trend of marketTrendsList | myfilter:trendToImprove\" (click)=\"trendToImprove=trend.name;isTrendSuggestion=false\"> {{trend.name}}</li>\n                                                                            </ul>\n                                                                        </div>\n                                                                        <div class=\"form-group\">\n                                                                                <label>Course Level</label><br>\n                                                                                <div class=\"btn-group\" role=\"group\" aria-label=\"...\">\n                                                                                        \n                                                                                        <button type=\"button\" class=\"btn btn-default\" (click)=\"courseIndexCost=0\">Base</button>\n                                                                                        <button type=\"button\" class=\"btn btn-default\" (click)=\"courseIndexCost=1\">Advance</button>\n                                                                                        <button type=\"button\" class=\"btn btn-default\" (click)=\"courseIndexCost=2\">Intensive</button>\n                                                                                      </div>\n                                                                            </div>\n\n                                                                    </div>\n                                                                    <div class=\"col-md-2\"></div>\n                                                                    <div class=\"col-md-6\" [hidden]=\"courseIndexCost < 0\">\n                                                                            <h4>Course Details ({{trendToImprove}}) </h4>\n                                                                            <hr>\n                                                                            <dl class=\"dl-horizontal\">\n                                                                                    <dt>Course Cost</dt>\n                                                                                    <dd>{{courseMoneyCost[courseIndexCost]}} K€</dd>\n\n                                                                                    <dt>Required hours</dt>\n                                                                                    <dd>{{courseHoursCost[courseIndexCost]}} hours</dd>   \n                                                                                    \n                                                                                    <dt>Knowledge Increase</dt>\n                                                                                    <dd>up to {{courseIncreaseUpTo[courseIndexCost]}} %</dd>\n                                                                            </dl>\n                                                                    </div> \n                                                  \n                                                                </div>\n                                                                <div class=\"row\">\n                                                                        <div class=\"col-md-4\">\n                                                                                <br>\n                                                                                <button type=\"button\" class=\"btn btn-outline-primary\" (click)=\"enrollCourse(1)\">Get Course</button>\n                                                                            </div>   \n                                                                </div>\n                                                        </form> \n                                                    <!--</div>-->\n                                                </div>\n    \n                                        </ul>\n                            </div>\n                        \n                        </div>                                           \n                </div>\n            </div>\n        </div>\n    </div>\n</div>"
 
 /***/ }),
 
@@ -1604,6 +1632,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _shared_PicassoCharts_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../shared/PicassoCharts.js */ "./src/app/shared/PicassoCharts.js");
 /* harmony import */ var _shared_PicassoCharts_js__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_shared_PicassoCharts_js__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var angular_notifier__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! angular-notifier */ "./node_modules/angular-notifier/esm5/angular-notifier.js");
+/* harmony import */ var _charts_charts_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../charts/charts.component */ "./src/app/charts/charts.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1613,6 +1642,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -1632,111 +1662,224 @@ var DashboardComponent = /** @class */ (function () {
         this.gameID = null;
         this.team = [];
         this.proposals = [];
-        this.marketTrends = [];
+        this.marketTrends = {};
+        this.marketTrendsList = [];
         this.labelBAM = "Enable BAM";
         this.labelTOP = "Enable TOP";
         this.hoursToInvest = 0;
         this.moneyToInvest = 0;
+        this.userDetails = 0;
+        this.labels = [];
+        this.personalScore = [];
+        this.marketScore = [];
+        this.lablesChart = [];
+        this.isTrends = true;
+        this.isFeatureSuggestion = false;
+        this.isTrendSuggestion = false;
+        this.courseHoursCost = [10, 20, 40];
+        this.courseMoneyCost = [2, 4, 8];
+        this.courseIncreaseUpTo = [10, 20, 40];
+        this.courseIndexCost = -1;
         this.notifier = this.notifierService;
     }
     DashboardComponent.prototype.ngOnInit = function () {
-        var _this = this;
+        var _this_1 = this;
+        console.log("Dashboard.component --> ON-INIT");
         this.companyID = this.cookieService.get('companyID');
         this.gameID = this.cookieService.get('gameID');
+        this.userDetails = 0;
         this.marketService.getTeamAvgSatisfaction(this.gameID, this.companyID)
             .subscribe(function (res) {
-            _this.avgSatisfaction = res['data'];
+            _this_1.avgSatisfaction = res['data'];
         });
         this.companyService.getDetails(this.companyID, this.gameID)
             .subscribe(function (CompanyDet) {
-            _this.company = CompanyDet['data'];
+            _this_1.company = CompanyDet['data'];
+            _this_1.team = [];
             CompanyDet['data']['presalesTeam'].forEach(function (p) {
-                _this.presalesService.getPresale(p, _this.gameID)
+                _this_1.presalesService.getPresale(p, _this_1.gameID)
                     .subscribe(function (person) {
-                    _this.team.push(person['data']['person']);
+                    _this_1.team.push(person['data']['person']);
+                    _this_1.marketTrends = person['data']['marketTrends'];
+                    _this_1.selectedPerson = _this_1.team[0];
+                    var _this = _this_1;
+                    Object.keys(_this_1.marketTrends).forEach(function (trend) {
+                        _this.marketTrendsList.push({ name: trend, score: _this.marketTrends[trend] });
+                    });
                 });
             });
+            _this_1.proposals = [];
             CompanyDet['data']['proposal'].forEach(function (p) {
-                _this.presalesService.getPresale(p, _this.gameID)
+                _this_1.presalesService.getPresale(p, _this_1.gameID)
                     .subscribe(function (person) {
-                    _this.proposals.push(person['data']['person']);
+                    _this_1.proposals.push(person['data']['person']);
                 });
             });
             picasso_js__WEBPACK_IMPORTED_MODULE_5__["default"].chart({
                 element: document.querySelector('#chartProductFeatures'),
                 data: [{
                         type: 'matrix',
-                        data: _this.company['productFeatures']
+                        data: _this_1.company['productFeatures']
                     }],
                 settings: _shared_PicassoCharts_js__WEBPACK_IMPORTED_MODULE_6___default.a.barchart
             });
         });
     };
     DashboardComponent.prototype.toggleBAM = function () {
-        var _this = this;
+        var _this_1 = this;
         if (!this.company['isBAMEnabled']) {
             this.companyService.enableBAM(this.companyID, this.gameID)
                 .subscribe(function (res) {
                 if (res['result'] === 'OK') {
-                    _this.labelBAM = "Disable BAM";
-                    _this.notifier.notify('success', 'BAM has been enabled');
+                    _this_1.labelBAM = "Disable BAM";
+                    _this_1.notifier.notify('success', 'BAM has been enabled');
                 }
                 else
-                    _this.notifier.notify('error', 'Error while enabling BAM');
+                    _this_1.notifier.notify('error', 'Error while enabling BAM');
             });
         }
         else {
             this.companyService.disableBAM(this.companyID, this.gameID)
                 .subscribe(function (res) {
                 if (res['result'] === 'OK') {
-                    _this.labelBAM = "Enable BAM";
-                    _this.notifier.notify('success', 'BAM has been disabled');
+                    _this_1.labelBAM = "Enable BAM";
+                    _this_1.notifier.notify('success', 'BAM has been disabled');
                 }
                 else
-                    _this.notifier.notify('error', 'Error while disabling BAM');
+                    _this_1.notifier.notify('error', 'Error while disabling BAM');
             });
         }
         this.ngOnInit();
     };
     DashboardComponent.prototype.toggleTOP = function () {
-        var _this = this;
+        var _this_1 = this;
         if (!this.company['isTOPEnabled']) {
             this.companyService.enableTOP(this.companyID, this.gameID)
                 .subscribe(function (res) {
                 if (res['result'] === 'OK') {
-                    _this.labelTOP = "Disable TOP";
-                    _this.notifier.notify('success', 'TOP has been enabled');
+                    _this_1.labelTOP = "Disable TOP";
+                    _this_1.notifier.notify('success', 'TOP has been enabled');
                 }
                 else
-                    _this.notifier.notify('error', 'Error while enabling TOP');
+                    _this_1.notifier.notify('error', 'Error while enabling TOP');
             });
         }
         else {
             this.companyService.disableTOP(this.companyID, this.gameID)
                 .subscribe(function (res) {
                 if (res['result'] === 'OK') {
-                    _this.labelTOP = "Enable TOP";
-                    _this.notifier.notify('success', 'TOP has been disabled');
+                    _this_1.labelTOP = "Enable TOP";
+                    _this_1.notifier.notify('success', 'TOP has been disabled');
                 }
                 else
-                    _this.notifier.notify('error', 'Error while disabling TOP');
+                    _this_1.notifier.notify('error', 'Error while disabling TOP');
             });
         }
         this.ngOnInit();
     };
     DashboardComponent.prototype.getCampain = function () {
-        var _this = this;
+        var _this_1 = this;
         console.log("hours: ", this.hoursToInvest, " Money : ", this.moneyToInvest);
         this.companyService.getCampain(this.companyID, this.gameID, this.hoursToInvest, this.moneyToInvest)
             .subscribe(function (res) {
             if (res['result'] === 'OK') {
-                _this.notifier.notify('success', 'Marketing Campain has succesfully run');
+                _this_1.notifier.notify('success', 'Marketing Campain has succesfully run');
             }
             else
-                _this.notifier.notify('error', 'Error while getting Marketing Campain');
-            _this.ngOnInit();
+                _this_1.notifier.notify('error', 'Error while getting Marketing Campain');
+            _this_1.ngOnInit();
         });
     };
+    DashboardComponent.prototype.toggleCourses = function (person, status) {
+        var _this_1 = this;
+        this.labels = [];
+        this.personalScore = [];
+        this.marketScore = [];
+        if (this.isTrends) {
+            person.PersonTrends.forEach(function (t) {
+                _this_1.labels.push(t.name);
+                _this_1.personalScore.push(t.score);
+                _this_1.marketScore.push(_this_1.marketTrends[t.name]);
+            });
+            this.lablesChart = ["Personal Trends", "Market Trends"];
+        }
+        else {
+            var featuresTranscode_1 = {};
+            person.features.forEach(function (s) {
+                featuresTranscode_1[s.name] = s.score;
+            });
+            this.company['productFeatures'].forEach(function (f) {
+                _this_1.labels.push(f.name);
+                _this_1.marketScore.push(f.score);
+                if (featuresTranscode_1[f.name] !== undefined)
+                    _this_1.personalScore.push(featuresTranscode_1[f.name]);
+                else
+                    _this_1.personalScore.push(0);
+            });
+            this.lablesChart = ["Personal Features", "Product Features"];
+            console.log(this.personalScore);
+        }
+        var _this = this;
+        setTimeout(function () { _this.child.updateChart(); }, 250);
+        this.selectedPerson = person;
+        this.userDetails = status;
+    };
+    DashboardComponent.prototype.toggleChart = function () {
+        this.isTrends = !this.isTrends;
+        this.toggleCourses(this.selectedPerson, this.userDetails);
+    };
+    DashboardComponent.prototype.giveMeritIncrease = function () {
+        console.log("You are givince merit increase : ", this.meritIncrease);
+    };
+    DashboardComponent.prototype.giveRetentiononus = function () {
+        var _this_1 = this;
+        console.log("You are givince retention Bonus : ", this.retentionBonus);
+        this.marketService.offerRetentionBonus(this.gameID, this.companyID, this.selectedPerson.ID, this.retentionBonus)
+            .subscribe(function (res) {
+            if (res['result'] === 'OK') {
+                _this_1.notifier.notify('success', 'Retention Bonus succesfully assigned');
+            }
+            else
+                _this_1.notifier.notify('error', 'Error while assigning the retention Bonus');
+            _this_1.ngOnInit();
+        });
+    };
+    DashboardComponent.prototype.featureSuggestion = function () {
+        if (this.featureToImprove.length > 1) {
+            this.filterargs = { name: this.featureToImprove };
+            this.isFeatureSuggestion = true;
+        }
+        else {
+            this.isFeatureSuggestion = false;
+        }
+    };
+    DashboardComponent.prototype.trendSuggestion = function () {
+        if (this.trendToImprove.length > 1) {
+            this.filterargs = { name: this.trendToImprove };
+            this.isTrendSuggestion = true;
+        }
+        else {
+            this.isTrendSuggestion = false;
+        }
+    };
+    DashboardComponent.prototype.enrollCourse = function (type) {
+        var _this_1 = this;
+        if (type === 1)
+            this.featureToImprove = this.trendToImprove;
+        this.marketService.enrollCourse(this.gameID, this.companyID, this.selectedPerson.ID, this.featureToImprove, this.courseMoneyCost[this.courseIndexCost], this.courseHoursCost[this.courseIndexCost], this.courseIncreaseUpTo[this.courseIndexCost], type)
+            .subscribe(function (res) {
+            if (res['result'] === 'OK') {
+                _this_1.notifier.notify('success', 'Retention Bonus succesfully assigned');
+                _this_1.ngOnInit();
+            }
+            else
+                _this_1.notifier.notify('error', 'Error while assigning the retention Bonus');
+        });
+    };
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])(_charts_charts_component__WEBPACK_IMPORTED_MODULE_8__["ChartsComponent"]),
+        __metadata("design:type", _charts_charts_component__WEBPACK_IMPORTED_MODULE_8__["ChartsComponent"])
+    ], DashboardComponent.prototype, "child", void 0);
     DashboardComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-dashboard',
@@ -1750,6 +1893,79 @@ var DashboardComponent = /** @class */ (function () {
             _services_market_service__WEBPACK_IMPORTED_MODULE_4__["MarketService"]])
     ], DashboardComponent);
     return DashboardComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/elaboration/elaboration.component.css":
+/*!*******************************************************!*\
+  !*** ./src/app/elaboration/elaboration.component.css ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "#ElaborationModal{\n    height: 500px;\n    background-color: white;\n    position: fixed;\n    top: 50%;\n    left: 50%;\n    /* bring your own prefixes */\n    -webkit-transform: translate(-50%, -50%);\n            transform: translate(-50%, -50%);\n    z-index: 1000;\n}\n"
+
+/***/ }),
+
+/***/ "./src/app/elaboration/elaboration.component.html":
+/*!********************************************************!*\
+  !*** ./src/app/elaboration/elaboration.component.html ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div id=\"ElaborationModal\">\n    <div class=\"container\">\n            <h1> ELABORATION IN PROGRESS</h1>\n            <p> Interval : {{interval}}, progress : {{progress}}</p>\n\n            <div class=\"row\">\n                <div class=\"container\">\n                    <div class=\"progress\">\n                            <div class=\"progress-bar\" role=\"progressbar\" [ngStyle]=\"{'width.%': progress}\" aria-valuenow=\"progress\" aria-valuemin=\"0\" aria-valuemax=\"100\">{{progress}}</div>\n                    </div>\n                </div>\n            </div>\n\n    </div>\n</div>\n"
+
+/***/ }),
+
+/***/ "./src/app/elaboration/elaboration.component.ts":
+/*!******************************************************!*\
+  !*** ./src/app/elaboration/elaboration.component.ts ***!
+  \******************************************************/
+/*! exports provided: ElaborationComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ElaborationComponent", function() { return ElaborationComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var ElaborationComponent = /** @class */ (function () {
+    function ElaborationComponent() {
+        this.progress = 0;
+        this.step = 5;
+        this.totTime = 4000;
+    }
+    ElaborationComponent.prototype.ngOnInit = function () {
+        this.interval = this.totTime * this.step / 100;
+        this.int = setInterval(function () {
+            this.progress += this.step;
+            console.log("Aumento progress: ", this.progress);
+        }, this.interval);
+        if (this.progress === 100)
+            clearImmediate(this.int);
+    };
+    ElaborationComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-elaboration',
+            template: __webpack_require__(/*! ./elaboration.component.html */ "./src/app/elaboration/elaboration.component.html"),
+            styles: [__webpack_require__(/*! ./elaboration.component.css */ "./src/app/elaboration/elaboration.component.css")]
+        }),
+        __metadata("design:paramtypes", [])
+    ], ElaborationComponent);
+    return ElaborationComponent;
 }());
 
 
@@ -1837,7 +2053,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"main-panel\">\n        <div class=\"content\">\n            <div class=\"container-fluid\">\n                <div class=\"row\">\n                    <div class=\"col-md-12\">\n                        <div class=\"card\">\n                            <div class=\"header\">\n                                <h4 class=\"title\">Market</h4>\n                                <p class=\"category\">Here is a subtitle for this table</p>\n                            </div>\n                            <div class=\"content table-responsive table-full-width\">\n                                <table class=\"table table-striped\">\n                                    <thead>\n                                        <th>ID</th>\n                                    \t<th>Name</th>\n                                    \t<th>Salary</th>\n                                    \t<th>Country</th>\n                                    \t<th>City</th>\n                                    </thead>\n                                    <tbody>\n                                        <tr>\n                                        \t<td>1</td>\n                                        \t<td>Dakota Rice</td>\n                                        \t<td>$36,738</td>\n                                        \t<td>Niger</td>\n                                        \t<td>Oud-Turnhout</td>\n                                        </tr>\n                                        <tr>\n                                        \t<td>2</td>\n                                        \t<td>Minerva Hooper</td>\n                                        \t<td>$23,789</td>\n                                        \t<td>Curaçao</td>\n                                        \t<td>Sinaai-Waas</td>\n                                        </tr>\n                                        <tr>\n                                        \t<td>3</td>\n                                        \t<td>Sage Rodriguez</td>\n                                        \t<td>$56,142</td>\n                                        \t<td>Netherlands</td>\n                                        \t<td>Baileux</td>\n                                        </tr>\n                                        <tr>\n                                        \t<td>4</td>\n                                        \t<td>Philip Chaney</td>\n                                        \t<td>$38,735</td>\n                                        \t<td>Korea, South</td>\n                                        \t<td>Overland Park</td>\n                                        </tr>\n                                        <tr>\n                                        \t<td>5</td>\n                                        \t<td>Doris Greene</td>\n                                        \t<td>$63,542</td>\n                                        \t<td>Malawi</td>\n                                        \t<td>Feldkirchen in Kärnten</td>\n                                        </tr>\n                                        <tr>\n                                        \t<td>6</td>\n                                        \t<td>Mason Porter</td>\n                                        \t<td>$78,615</td>\n                                        \t<td>Chile</td>\n                                        \t<td>Gloucester</td>\n                                        </tr>\n                                    </tbody>\n                                </table>\n\n                            </div>\n                        </div>\n                    </div>\n\n\n                    <div class=\"col-md-12\">\n                        <div class=\"card card-plain\">\n                            <div class=\"header\">\n                                <h4 class=\"title\">Table on Plain Background</h4>\n                                <p class=\"category\">Here is a subtitle for this table</p>\n                            </div>\n                            <div class=\"content table-responsive table-full-width\">\n                                <table class=\"table table-hover\">\n                                    <thead>\n                                        <th>ID</th>\n                                    \t<th>Name</th>\n                                    \t<th>Salary</th>\n                                    \t<th>Country</th>\n                                    \t<th>City</th>\n                                    </thead>\n                                    <tbody>\n                                        <tr>\n                                        \t<td>1</td>\n                                        \t<td>Dakota Rice</td>\n                                        \t<td>$36,738</td>\n                                        \t<td>Niger</td>\n                                        \t<td>Oud-Turnhout</td>\n                                        </tr>\n                                        <tr>\n                                        \t<td>2</td>\n                                        \t<td>Minerva Hooper</td>\n                                        \t<td>$23,789</td>\n                                        \t<td>Curaçao</td>\n                                        \t<td>Sinaai-Waas</td>\n                                        </tr>\n                                        <tr>\n                                        \t<td>3</td>\n                                        \t<td>Sage Rodriguez</td>\n                                        \t<td>$56,142</td>\n                                        \t<td>Netherlands</td>\n                                        \t<td>Baileux</td>\n                                        </tr>\n                                        <tr>\n                                        \t<td>4</td>\n                                        \t<td>Philip Chaney</td>\n                                        \t<td>$38,735</td>\n                                        \t<td>Korea, South</td>\n                                        \t<td>Overland Park</td>\n                                        </tr>\n                                        <tr>\n                                        \t<td>5</td>\n                                        \t<td>Doris Greene</td>\n                                        \t<td>$63,542</td>\n                                        \t<td>Malawi</td>\n                                        \t<td>Feldkirchen in Kärnten</td>\n                                        </tr>\n                                        <tr>\n                                        \t<td>6</td>\n                                        \t<td>Mason Porter</td>\n                                        \t<td>$78,615</td>\n                                        \t<td>Chile</td>\n                                        \t<td>Gloucester</td>\n                                        </tr>\n                                    </tbody>\n                                </table>\n\n                            </div>\n                        </div>\n                    </div>\n\n\n                </div>\n            </div>\n        </div>"
+module.exports = "<div class=\"main-panel\">\n        <div class=\"content\">\n            <div class=\"container-fluid\">\n                <div class=\"row\">\n                    <div class=\"col-md-8\">\n\t\t\t\t\t\t\t<div class=\"card\">\n\t\t\t\t\t\t\t\t\t<div class=\"header\">\n\t\t\t\t\t\t\t\t\t\t<h4 class=\"title\">Market Trends</h4>\n\t\t\t\t\t\t\t\t\t\t<p class=\"category\">Sorted by Relevance</p>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"content\">\n\t\t\t\t\t\t\t\t\t\t<div id=\"chartMarketTrends\" class=\"ct-chart\"></div>\n\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n                    </div>\n                </div>\n            </div>\n        </div>"
 
 /***/ }),
 
@@ -1852,6 +2068,11 @@ module.exports = "<div class=\"main-panel\">\n        <div class=\"content\">\n 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MarketComponent", function() { return MarketComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _services_presales_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/presales.service */ "./src/app/services/presales.service.ts");
+/* harmony import */ var ngx_cookie_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ngx-cookie-service */ "./node_modules/ngx-cookie-service/index.js");
+/* harmony import */ var picasso_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! picasso.js */ "./node_modules/picasso.js/dist/picasso.esm.js");
+/* harmony import */ var _shared_PicassoCharts_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../shared/PicassoCharts.js */ "./src/app/shared/PicassoCharts.js");
+/* harmony import */ var _shared_PicassoCharts_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_shared_PicassoCharts_js__WEBPACK_IMPORTED_MODULE_4__);
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1862,10 +2083,36 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
+
+
+
 var MarketComponent = /** @class */ (function () {
-    function MarketComponent() {
+    function MarketComponent(presalesService, cookieService) {
+        this.presalesService = presalesService;
+        this.cookieService = cookieService;
+        this.marketTrends = [];
     }
     MarketComponent.prototype.ngOnInit = function () {
+        var _this_1 = this;
+        this.gameID = this.cookieService.get('gameID');
+        this.companyID = this.cookieService.get('companyID');
+        this.presalesService.getPresales(this.gameID)
+            .subscribe(function (res) {
+            var _this = _this_1;
+            Object.keys(res['data'][Object.keys(res['data'])[0]]['marketTrends']).forEach(function (trend) {
+                _this.marketTrends.push({ name: trend, score: res['data'][Object.keys(res['data'])[0]]['marketTrends'][trend] });
+            });
+            console.log(_this_1.marketTrends);
+            picasso_js__WEBPACK_IMPORTED_MODULE_3__["default"].chart({
+                element: document.querySelector('#chartMarketTrends'),
+                data: [{
+                        type: 'matrix',
+                        data: _this_1.marketTrends
+                    }],
+                settings: _shared_PicassoCharts_js__WEBPACK_IMPORTED_MODULE_4___default.a.barchart
+            });
+        });
     };
     MarketComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -1873,7 +2120,8 @@ var MarketComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./market.component.html */ "./src/app/market/market.component.html"),
             styles: [__webpack_require__(/*! ./market.component.css */ "./src/app/market/market.component.css")]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [_services_presales_service__WEBPACK_IMPORTED_MODULE_1__["PresalesService"],
+            ngx_cookie_service__WEBPACK_IMPORTED_MODULE_2__["CookieService"]])
     ], MarketComponent);
     return MarketComponent;
 }());
@@ -1945,6 +2193,7 @@ var NavbarComponent = /** @class */ (function () {
     NavbarComponent.prototype.ngOnInit = function () {
         this.gameID = this.cookieService.get('gameID');
         this.companyID = this.cookieService.get('companyID');
+        console.log("companyID from cookie : " + this.companyID);
     };
     NavbarComponent.prototype.toggleNotification = function () {
         this.isEnabledNotification = !this.isEnabledNotification;
@@ -1956,9 +2205,7 @@ var NavbarComponent = /** @class */ (function () {
             _this.stepNotify = setInterval(function () {
                 _this.companyService.getMessage(_this.companyID, _this.gameID)
                     .subscribe(function (res) {
-                    console.log(res);
                     if (res['data']) {
-                        console.log(res['data']['type'] + " - " + res['data']['msg']);
                         _this.notifier.notify(res['data']['type'], res['data']['msg']);
                     }
                 });
@@ -2005,7 +2252,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"main-panel\">\n    <div class=\"content\">\n        <div class=\"container-fluid\">\n        <div class=\"row\">\n            <div class=\"col-md-8\">\n                        <div class=\"card\">\n                            <div class=\"header\">\n                                <h4 class=\"title\">Opportunities</h4>\n                                <p class=\"category\">by Values</p>\n                            </div>\n                            <div class=\"content\">\n                                <div id=\"chartOpportunities\" class=\"ct-chart\"></div>\n                            </div>\n                        </div>\n            </div>\n        </div>\n        <div class=\"row\">\n                <div class=\"col-md-8\">\n                        <div class=\"card card-plain\">\n                            <div class=\"header\">\n                                <h4 class=\"title\">Market Opportunities</h4>\n                                <p class=\"category\">Click on the id for more details</p>\n                            </div>\n                            <div class=\"content table-responsive table-full-width\">\n                                <table class=\"table table-hover\">\n                                    <thead>\n                                      <th>ID</th>\n                                      <th>Company Name</th>\n                                      <th>Estimated Value</th>\n                                      <th>Qualification level</th>\n                                      <th>status</th>\n                                    </thead>\n                                    <tbody>\n                                        <tr *ngFor=\"let oppy of opportunities\">\n                                          <td>{{oppy.ID}}</td>\n                                          <td>{{oppy.CompanyName}}</td>\n                                          <td>{{oppy.teoricalValue}}</td>\n                                          <td>{{oppy.qualificationLevel}}</td>\n                                          <td>{{oppy.status}}</td>\n                                        </tr>\n                                    </tbody>\n                                </table>\n    \n                            </div>\n                        </div>\n                    </div>\n                    <div class=\"col-md-4\">\n                        <div class=\"card card-plain\">\n                                <div class=\"header\">\n                                    <h4 class=\"title\">Filter Pane</h4>\n                                    <p class=\"category\">Select the opportunities</p>\n                                </div>\n                                <div class=\"content\">\n                                        Filter by price interval: <b>€ 10</b> \n                                        <input id=\"ex2\" type=\"text\" class=\"span2\" value=\"\" \n                                        data-slider-min=\"10\" data-slider-max=\"1000\" data-slider-step=\"5\" \n                                        data-slider-value=\"[250,450]\"/> <b>€ 1000</b>                                \n                                </div>\n                        </div>\n                    </div>\n        </div>\n\n\n\n            </div>\n        </div>\n    </div>"
+module.exports = "<div class=\"main-panel\">\n    <div class=\"content\">\n        <div class=\"container-fluid\">\n        <div class=\"row\">\n            <div class=\"col-md-8\">\n                        <div class=\"card\">\n                            <div class=\"header\">\n                                <h4 class=\"title\">Opportunities</h4>\n                                <p class=\"category\">by Values</p>\n                            </div>\n                            <div class=\"content\">\n                                <div id=\"chartOpportunities\" class=\"ct-chart\"></div>\n                            </div>\n                        </div>\n            </div>\n            <div class=\"col-md-4\" [hidden]=\"!isOppySelected\">\n                    <div class=\"card card-plain\">\n                        <div class=\"header\">\n                            <h4 class=\"title\">Opportunities details</h4>\n                            <p class=\"category\">Included companies</p>\n                        </div>\n                        <div class=\"content\">\n                                <dl class=\"dl-horizontal\">\n                                        <dt>ID</dt>\n                                        <dd>{{selectedOppy.ID}}</dd>\n\n                                        <dt>Company Name</dt>\n                                        <dd>{{selectedOppy.CompanyName}}</dd>\n                                        \n                                        <dt>Value</dt>\n                                        <dd>{{selectedOppy.teoricalValue}} K€</dd>\n                                        <hr>\n                                        <dt>Trend required</dt>\n                                        <dd *ngFor=\"let trend of selectedOppy.TrendsRequired\" >{{trend}}</dd>   \n                                        <hr>\n                                        <dt>Feature required</dt>\n                                        <dd *ngFor=\"let feat of selectedOppy.features\">{{feat.name}} @{{feat.score}}%</dd>                                          \n                                </dl>\n                        </div>\n                    </div>\n            </div>\n        </div>\n        <div class=\"row\">\n                <div class=\"col-md-8 table-Fix\">\n                        <div class=\"card card-plain\">\n                            <div class=\"header\">\n                                <h4 class=\"title\">Market Opportunities</h4>\n                                <p class=\"category\">Click on the id for more details</p>\n                            </div>\n                            <div class=\"content table-responsive table-full-width\">\n                                <table class=\"table table-hover\">\n                                    <thead>\n                                      <th>ID</th>\n                                      <th>Company Name</th>\n                                      <th>Estimated Value</th>\n                                      <th>Qualification level</th>\n                                      <th>status</th>\n                                    </thead>\n                                    <tbody>\n                                        <tr *ngFor=\"let oppy of opportunities\">\n                                          <td (click)=\"SelectOppy(oppy)\">{{oppy.ID}}</td>\n                                          <td>{{oppy.CompanyName}}</td>\n                                          <td>{{oppy.teoricalValue}}</td>\n                                          <td>{{oppy.qualificationLevel}}</td>  \n                                          <td>{{oppy.status}}</td>\n                                        </tr>\n                                    </tbody>\n                                </table>\n    \n                            </div>\n                        </div>\n                    </div>\n                    <div class=\"col-md-4\">\n                        <div class=\"row\">\n                            <div class=\"row\">\n                                    <h4>Filters Pane  </h4>\n                                    <hr>\n\n                                    <div class=\"panel panel-default\">\n                                            <div class=\"panel-heading\"><h5>Opportunity Value</h5></div>\n                                            <div class=\"panel-body\">\n                                                <div class=\"row\">\n                                                        <form>\n                                                                <div class=\"col-md-4\">\n                                                                        <div class=\"btn-group-vertical\" role=\"group\" aria-label=\"...\">\n                                                                                <button type=\"button\" class=\"btn btn-outline-primary\" (click)=\"toggleConstraint(0)\">{{lblValue}}</button>\n                                                                                <button type=\"button\" class=\"btn btn-outline-primary\" (click)=\"changeConstraint(0)\" [disabled]=\"!company.oppyConstraint.flgValue\">Submit</button>\n                                                                        </div>\n\n                                                                </div>\n                                                                        <div class=\"col-md-4\">\n                                                                                <div class=\"form-group\">\n                                                                                        <label>From</label>\n                                                                                        <input type=\"number\" class=\"form-control border-input\"  \n                                                                                                placeholder=\"Insert the Merit Increase in %\" \n                                                                                                [(ngModel)]=\"company.oppyConstraint.Value[0]\" \n                                                                                                name=\"valueMin\" \n                                                                                                [disabled]=\"!company.oppyConstraint.flgValue\"\n                                                                                                required />\n                                                                                </div>\n                                                                        </div>\n                                                                        <div class=\"col-md-4\">\n                                                                                <div class=\"form-group\">\n                                                                                        <label>To</label>\n                                                                                        <input type=\"number\" class=\"form-control border-input\"  \n                                                                                            placeholder=\"Insert the Merit Increase in %\" \n                                                                                            [(ngModel)]=\"company.oppyConstraint.Value[1]\" \n                                                                                            name=\"valueMax\" \n                                                                                            [disabled]=\"!company.oppyConstraint.flgValue\"\n                                                                                            required />\n                                                                                </div>\n                                                                        </div>\n                                                            </form>\n                                                </div>\n                                            </div>\n                                    </div>\n\n                                    <div class=\"panel panel-default\">\n                                            <div class=\"panel-heading\"><h5>Qualification Level</h5></div>\n                                            <div class=\"panel-body\">\n                                                <div class=\"row\">\n                                                        <form>\n                                                                <div class=\"col-md-4\">\n                                                                        <div class=\"btn-group-vertical\" role=\"group\" aria-label=\"...\">\n                                                                                <button type=\"button\" class=\"btn btn-outline-primary\" (click)=\"toggleConstraint(1)\">{{lblQualification}}</button>\n                                                                                <button type=\"button\" class=\"btn btn-outline-primary\" (click)=\"changeConstraint(1)\" [disabled]=\"!company.oppyConstraint.flgQualification\">Submit</button>\n                                                                        </div>\n\n                                                                </div>\n                                                                        <div class=\"col-md-8\">\n                                                                                <div class=\"row\">\n                                                                                    <label>Qualification Level</label>\n                                                                                </div>\n                                                                                <div class=\"row\">\n                                                                                        <div class=\"btn-group\" role=\"group\" aria-label=\"...\" >\n                                                                                                <button type=\"button\" [ngClass]=\"btnClassArray['1B']\" (click)=\"modifyQualificationArray(1)\" [disabled]=\"!company.oppyConstraint.flgQualification\">1</button>\n                                                                                                <button type=\"button\" [ngClass]=\"btnClassArray['2B']\" (click)=\"modifyQualificationArray(2)\" [disabled]=\"!company.oppyConstraint.flgQualification\">2</button>\n                                                                                                <button type=\"button\" [ngClass]=\"btnClassArray['3B']\" (click)=\"modifyQualificationArray(3)\" [disabled]=\"!company.oppyConstraint.flgQualification\">3</button>\n                                                                                                <button type=\"button\" [ngClass]=\"btnClassArray['4B']\" (click)=\"modifyQualificationArray(4)\" [disabled]=\"!company.oppyConstraint.flgQualification\">4</button>\n                                                                                                <button type=\"button\" [ngClass]=\"btnClassArray['5B']\" (click)=\"modifyQualificationArray(5)\" [disabled]=\"!company.oppyConstraint.flgQualification\">5</button>\n                                                                                        </div>\n                                                                                </div>\n                                                                        </div>\n                                                            </form>\n                                                </div>\n                                            </div>\n                                    </div>\n                                </div>\n\n\n                        </div>\n                    </div>\n        </div>\n\n\n\n            </div>\n        </div>\n    </div>"
 
 /***/ }),
 
@@ -2025,6 +2272,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var picasso_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! picasso.js */ "./node_modules/picasso.js/dist/picasso.esm.js");
 /* harmony import */ var _shared_PicassoCharts_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../shared/PicassoCharts.js */ "./src/app/shared/PicassoCharts.js");
 /* harmony import */ var _shared_PicassoCharts_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_shared_PicassoCharts_js__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _services_company_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../services/company.service */ "./src/app/services/company.service.ts");
+/* harmony import */ var angular_notifier__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! angular-notifier */ "./node_modules/angular-notifier/esm5/angular-notifier.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2039,51 +2288,131 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
+
 var OpportunitiesComponent = /** @class */ (function () {
-    function OpportunitiesComponent(opportunitiesService, cookieService) {
+    function OpportunitiesComponent(opportunitiesService, companyService, notifierService, cookieService) {
         this.opportunitiesService = opportunitiesService;
+        this.companyService = companyService;
+        this.notifierService = notifierService;
         this.cookieService = cookieService;
         this.gameID = null;
         this.opportunities = [];
+        this.plottigPoint = [];
+        this.selectedOppy = {};
+        this.isOppySelected = false;
+        this.lblValue = "Enable";
+        this.lblQualification = "Enable";
+        this.btnClassArray = {};
+        this.notifier = this.notifierService;
     }
     OpportunitiesComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.gameID = this.cookieService.get('gameID');
+        this.companyID = this.cookieService.get('companyID');
+        this.companyService.getDetails(this.companyID, this.gameID)
+            .subscribe(function (CompanyDet) {
+            _this.company = CompanyDet['data'];
+            _this.modifyQualificationArray(0);
+        });
         this.opportunitiesService.getOpportunities(this.gameID)
             .subscribe(function (res) {
             _this.opportunities = res['data'];
+            _this.plottigPoint.push(['Year', 'Month', 'Sales', 'Margin']);
+            _this.opportunities.forEach(function (o) {
+                _this.plottigPoint.push(["FIX", o['CompanyName'], o['teoricalValue'], o['qualificationLevel']]);
+            });
             picasso_js__WEBPACK_IMPORTED_MODULE_3__["default"].chart({
                 element: document.querySelector('#chartOpportunities'),
                 data: [{
                         type: 'matrix',
-                        data: [
-                            ['Year', 'Month', 'Sales', 'Margin'],
-                            ['2010', 'Jan', 1106, 7],
-                            ['2010', 'Feb', 5444, 53],
-                            ['2010', 'Mar', 147, 64],
-                            ['2010', 'Apr', 7499, 47],
-                            ['2010', 'May', 430, 62],
-                            ['2010', 'June', 9735, 13],
-                            ['2010', 'July', 7435, 15],
-                            ['2011', 'Jan', 1482, 45],
-                            ['2011', 'Feb', 2659, 76],
-                            ['2011', 'Mar', 1261, 73],
-                            ['2011', 'Apr', 3085, 56],
-                            ['2011', 'May', 3035, 91],
-                            ['2011', 'June', 7691, 88],
-                            ['2011', 'July', 3012, 81],
-                            ['2012', 'Jan', 7980, 61],
-                            ['2012', 'Feb', 2564, 22],
-                            ['2012', 'Mar', 7957, 98],
-                            ['2012', 'Apr', 5809, 1],
-                            ['2012', 'May', 429, 2],
-                            ['2012', 'June', 6757, 77],
-                            ['2012', 'July', 9415, 92]
-                        ]
+                        data: _this.plottigPoint
                     }],
                 settings: _shared_PicassoCharts_js__WEBPACK_IMPORTED_MODULE_4___default.a.scatterplot
             });
         });
+    };
+    OpportunitiesComponent.prototype.SelectOppy = function (oppy) {
+        this.isOppySelected = true;
+        this.selectedOppy = oppy;
+    };
+    OpportunitiesComponent.prototype.toggleConstraint = function (type) {
+        var _this = this;
+        if (type === 0) {
+            if (!this.company.oppyConstraint.flgValue)
+                this.lblValue = "Disable";
+            else
+                this.lblValue = "Enable";
+            this.companyService.toggleValueConstraint(this.companyID, this.gameID)
+                .subscribe(function (res) {
+                if (res['result'] === 'OK') {
+                    _this.notifier.notify('success', 'Retention Bonus succesfully assigned');
+                }
+                else
+                    _this.notifier.notify('error', 'Error while assigning the retention Bonus');
+                _this.ngOnInit();
+            });
+        }
+        else {
+            if (!this.company.oppyConstraint.flgQualification)
+                this.lblQualification = "Disable";
+            else
+                this.lblQualification = "Enable";
+            this.companyService.toggleValueQualification(this.companyID, this.gameID)
+                .subscribe(function (res) {
+                if (res['result'] === 'OK') {
+                    _this.notifier.notify('success', 'Retention Bonus succesfully assigned');
+                }
+                else
+                    _this.notifier.notify('error', 'Error while assigning the retention Bonus');
+                _this.ngOnInit();
+            });
+        }
+    };
+    OpportunitiesComponent.prototype.changeConstraint = function (type) {
+        var _this = this;
+        if (type === 0) {
+            this.companyService.changeValueConstraint(this.companyID, this.gameID, this.company.oppyConstraint.Value)
+                .subscribe(function (res) {
+                if (res['result'] === 'OK') {
+                    _this.notifier.notify('success', 'Retention Bonus succesfully assigned');
+                }
+                else
+                    _this.notifier.notify('error', 'Error while assigning the retention Bonus');
+                _this.ngOnInit();
+            });
+        }
+        else {
+            console.log(this.company.oppyConstraint.Qualification);
+            this.companyService.changeValueQualification(this.companyID, this.gameID, this.company.oppyConstraint.Qualification)
+                .subscribe(function (res) {
+                if (res['result'] === 'OK') {
+                    _this.notifier.notify('success', 'Retention Bonus succesfully assigned');
+                }
+                else
+                    _this.notifier.notify('error', 'Error while assigning the retention Bonus');
+                _this.ngOnInit();
+            });
+        }
+    };
+    OpportunitiesComponent.prototype.modifyQualificationArray = function (level) {
+        if (level !== 0) {
+            var index = this.company.oppyConstraint.Qualification.indexOf(level);
+            if (index > -1) {
+                this.company.oppyConstraint.Qualification.splice(index, 1);
+            }
+            else {
+                this.company.oppyConstraint.Qualification.push(level);
+            }
+        }
+        this.btnClassArray = {};
+        for (var i = 1; i < 6; i++) {
+            if (this.company.oppyConstraint.Qualification.indexOf(i) !== -1)
+                this.btnClassArray[i + "B"] = "btn btn-success";
+            else
+                this.btnClassArray[i + "B"] = "btn btn-danger";
+        }
+        console.log(this.company.oppyConstraint.Qualification);
     };
     OpportunitiesComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -2092,6 +2421,8 @@ var OpportunitiesComponent = /** @class */ (function () {
             styles: [__webpack_require__(/*! ./opportunities.component.css */ "./src/app/opportunities/opportunities.component.css")]
         }),
         __metadata("design:paramtypes", [_services_opportunities_service__WEBPACK_IMPORTED_MODULE_1__["OpportunitiesService"],
+            _services_company_service__WEBPACK_IMPORTED_MODULE_5__["CompanyService"],
+            angular_notifier__WEBPACK_IMPORTED_MODULE_6__["NotifierService"],
             ngx_cookie_service__WEBPACK_IMPORTED_MODULE_2__["CookieService"]])
     ], OpportunitiesComponent);
     return OpportunitiesComponent;
@@ -2119,7 +2450,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"main-panel\">\n    <div class=\"content\">\n        <div class=\"container-fluid\">\n                <div class=\"row\" [hidden]=\"!isPersonSelected\">\n                    <div class=\"col-md-5\">\n                        <div class=\"card\">\n\n                            <div class=\"content\">\n                                <div class=\"row\">\n                                        <div class=\"col-md-3\">\n                                                <img class=\"card-img-left\" src=\"../assets/img/{{selectedPerson.icon}}.png\">\n                                            </div>\n                                            <div class=\"col-md-6\">\n                                                <h4>{{selectedPerson.name}}</h4>\n                                            </div>\n                                            <div class=\"col-md-3\">\n                                                    <h3>{{selectedPerson.cost}} K€</h3>\n                                            </div>\n                                </div>\n                                <div class=\"row\">\n                                        <div class=\"progress skillsProgress\">\n                                                <div class=\"progress-bar\" role=\"progressbar\" [ngStyle]=\"{'width.%': selectedPerson.skills[0].score}\"  aria-valuenow=\"selectedPerson.skills[0].score\" aria-valuemin=\"0\" aria-valuemax=\"100\">Business Acumen</div>\n                                        </div>\n                                </div>\n                                <div class=\"row\">\n                                        <div class=\"progress skillsProgress\">\n                                                <div class=\"progress-bar\" role=\"progressbar\" [ngStyle]=\"{'width.%': selectedPerson.skills[1].score}\" aria-valuenow=\"selectedPerson.skills[1].score\" aria-valuemin=\"0\" aria-valuemax=\"100\">Willing to Learn</div>\n                                        </div>\n                                </div>\n                                <div class=\"row\">\n                                        <div class=\"progress skillsProgress\">\n                                                <div class=\"progress-bar\" role=\"progressbar\" [ngStyle]=\"{'width.%': selectedPerson.skills[2].score}\" aria-valuenow=\"selectedPerson.skills[1].score\" aria-valuemin=\"0\" aria-valuemax=\"100\">Team worker</div>\n                                        </div>\n                                </div>  \n\n                                <div class=\"row\">\n                                    <div class=\"container\">\n                                        <form>\n                                            <div class=\"col-md-2\">\n                                                <input type=\"number\" class=\"form-control border-input\"  placeholder=\"Place an offer\" [(ngModel)]=\"offer\" name=\"offer\" [attr.disabled]=\"selectedPerson.isEmployed ? '' : null\">\n                                            </div>\n                                            <div class=\"col-md-2\">\n                                                <button type=\"button\" class=\"btn btn-outline-success\" (click)=\"placeOffer()\" [attr.disabled]=\"selectedPerson.isEmployed ? '' : null\">Place an offer</button>\n                                            </div>\n                                            <div class=\"col-md-4\">\n                                                <button type=\"button\" class=\"btn btn-outline-primary\" (click)=\"toggleChart()\">{{lableButton}}</button>\n                                            </div>\n                                        </form>\n\n\n                                    </div>\n                                </div>                              \n                            </div>\n\n        \n        \n                                    <div class=\"footer\">\n                                                <hr />\n                                                <div class=\"stats\">\n                                                    <i class=\"ti-stats-up\"></i> Increase\n                                                </div>\n                                    </div>\n                           \n\n                        </div>\n                    </div>\n\n                    <div class=\"col-md-7\">\n                        <app-charts [labels]=\"labels\" \n                                    [personalScore]=\"personalScore\" \n                                    [marketScore]=\"marketScore\"\n                                    [lablesChart]=\"lablesChart\"></app-charts>\n                    </div>\n                </div>\n\n                <div class=\"row\">\n                        <div class=\"col-md-8\"  id=\"tablePresales\">\n                                <div class=\"card card-plain\">\n                                    <div class=\"header\">\n                                        <h4 class=\"title\">Presales People</h4>\n                                        <p class=\"category\">Click on the id for more details</p>\n                                    </div>\n                                    <div class=\"content table-responsive table-full-width\">\n                                        <table class=\"table table-hover table-sm\">\n                                            <thead>\n                                              <th>ID</th>\n                                              <th>Name</th>\n                                              <th>Salary</th>\n                                              <th>Employed by</th>\n                                              <th># Trends</th>\n                                              <th># Features</th>\n                                            </thead>\n                                            <tbody>\n                                                <tr *ngFor=\"let presale of presalesPeople\">\n                                                  <td (click)=\"SelectPerson(presale.person)\">{{presale.person.ID}}</td>\n                                                  <td>{{presale.person.name}}</td>\n                                                  <td>{{presale.person.cost}} K€ </td>\n                                                  <td>{{companyNameDict[presale.person.employedBy]}}</td>\n                                                  <td>{{presale.person.PersonTrends.length}}</td>\n                                                  <td>{{presale.person.features.length}}</td>\n                                                </tr>\n                                            </tbody>\n                                        </table>\n            \n                                    </div>\n                                </div>\n                            </div>\n\n                            <div class=\"col-md-4\">\n\n                                    <div class=\"content\">\n                                        <div class=\"row\">\n                                            <div class=\"col-md-6\">\n                                                <h4>Filters Pane - {{presalesPeople.length}}</h4>\n                                            </div>\n                                        </div>\n                                        <div class=\"row\">\n                                            <form>\n                                            <div class=\"checkbox\">\n                                                <label><input type=\"checkbox\" (ngModelChange)=\"onChangeShowEmpoyed()\" [ngModel]=\"showEmployed\">\n                                                    Show Employed people</label>\n                                                <button type=\"button\" class=\"btn btn-outline-primary\" (click)=\"onChangeShowEmpoyed()\">Show Employed</button>\n                                            </div>\n                                            </form>\n                                        </div>\n                                    </div>\n\n                            </div>\n                </div>\n\n\n\n            </div>\n        </div>\n    </div>"
+module.exports = "<div class=\"main-panel\">\n    <div class=\"content\">\n        <div class=\"container-fluid\">\n                <div class=\"row\" [hidden]=\"!isPersonSelected\">\n                    <div class=\"col-md-5\">\n                        <div class=\"card\">\n\n                            <div class=\"content\">\n                                <div class=\"row\">\n                                        <div class=\"col-md-3\">\n                                                <img class=\"card-img-left\" src=\"../assets/img/{{selectedPerson.icon}}.png\">\n                                            </div>\n                                            <div class=\"col-md-6\">\n                                                <h4>{{selectedPerson.name}}</h4>\n                                            </div>\n                                            <div class=\"col-md-3\">\n                                                    <h3>{{selectedPerson.cost}} K€</h3>\n                                            </div>\n                                </div>\n                               \n                                <div class=\"row\">\n                                        <div class=\"progress skillsProgress\">\n                                                <div class=\"progress-bar\" role=\"progressbar\" [ngStyle]=\"{'width.%': selectedPerson.skills[0].score}\"  aria-valuenow=\"selectedPerson.skills[0].score\" aria-valuemin=\"0\" aria-valuemax=\"100\">Business Acumen</div>\n                                        </div>\n                                </div>\n                                <div class=\"row\">\n                                        <div class=\"progress skillsProgress\">\n                                                <div class=\"progress-bar\" role=\"progressbar\" [ngStyle]=\"{'width.%': selectedPerson.skills[1].score}\" aria-valuenow=\"selectedPerson.skills[1].score\" aria-valuemin=\"0\" aria-valuemax=\"100\">Willing to Learn</div>\n                                        </div>\n                                </div>\n                                <div class=\"row\">\n                                        <div class=\"progress skillsProgress\">\n                                                <div class=\"progress-bar\" role=\"progressbar\" [ngStyle]=\"{'width.%': selectedPerson.skills[2].score}\" aria-valuenow=\"selectedPerson.skills[1].score\" aria-valuemin=\"0\" aria-valuemax=\"100\">Team worker</div>\n                                        </div>\n                                </div>  \n\n                                <div class=\"row\">\n                                    <div class=\"container\">\n                                        <form>\n                                            <div class=\"col-md-2\">\n                                                <input type=\"number\" class=\"form-control border-input\"  placeholder=\"Place an offer\" [(ngModel)]=\"offer\" name=\"offer\" [attr.disabled]=\"selectedPerson.isEmployed ? '' : null\">\n                                            </div>\n                                            <div class=\"col-md-2\">\n                                                <button type=\"button\" class=\"btn btn-outline-success\" (click)=\"placeOffer()\" [attr.disabled]=\"selectedPerson.isEmployed ? '' : null\">Place an offer</button>\n                                            </div>\n                                            <div class=\"col-md-4\">\n                                                <button type=\"button\" class=\"btn btn-outline-primary\" (click)=\"toggleChart()\">{{lableButton}}</button>\n                                            </div>\n                                        </form>\n\n\n                                    </div>\n                                </div>                              \n                            </div>\n\n        \n        \n                                    <div class=\"footer\">\n                                                <hr />\n                                                <div class=\"stats\">\n                                                    <i class=\"ti-stats-up\"></i> Increase\n                                                </div>\n                                    </div>\n                           \n\n                        </div>\n                    </div>\n\n                    <div class=\"col-md-7\">\n                        <div class=\"card\">\n                            <app-charts [labels]=\"labels\" \n                                [personalScore]=\"personalScore\" \n                                [marketScore]=\"marketScore\"\n                                [lablesChart]=\"lablesChart\">\n                            </app-charts>\n                        </div>\n\n\n\n                    </div>\n                </div>\n\n                <div class=\"row\">\n                        <div class=\"col-md-8 table-Fix\"  id=\"tablePresales\">\n                                <div class=\"card card-plain\">\n                                    <div class=\"header\">\n                                        <h4 class=\"title\">Presales People</h4>\n                                        <p class=\"category\">Click on the id for more details</p>\n                                    </div>\n                                    <div class=\"content table-responsive table-full-width\">\n                                        <table class=\"table table-hover table-sm\">\n                                            <thead>\n                                              <th>ID</th>\n                                              <th>Name</th>\n                                              <th>Salary</th>\n                                              <th>Employed by</th>\n                                              <th># Trends</th>\n                                              <th># Features</th>\n                                            </thead>\n                                            <tbody>\n                                                <tr *ngFor=\"let presale of presalesPeople\">\n                                                  <td (click)=\"SelectPerson(presale.person)\">{{presale.person.ID}}</td>\n                                                  <td>{{presale.person.name}}</td>\n                                                  <td>{{presale.person.cost}} K€ </td>\n                                                  <td>{{companyNameDict[presale.person.employedBy]}}</td>\n                                                  <td>{{presale.person.PersonTrends.length}}</td>\n                                                  <td>{{presale.person.features.length}}</td>\n                                                </tr>\n                                            </tbody>\n                                        </table>\n            \n                                    </div>\n                                </div>\n                            </div>\n\n                            <div class=\"col-md-4\">\n\n                                    <div class=\"content\">\n                                        <div class=\"row\">\n                                            <div class=\"col-md-6\">\n                                                <h4>Filters Pane - {{presalesPeople.length}}</h4>\n                                            </div>\n                                        </div>\n                                        <div class=\"row\">\n                                            <form>\n                                            <div class=\"checkbox\">\n                                                <label><input type=\"checkbox\" (ngModelChange)=\"onChangeShowEmpoyed()\" [ngModel]=\"showEmployed\">\n                                                    Show Employed people</label>\n                                                <button type=\"button\" class=\"btn btn-outline-primary\" (click)=\"onChangeShowEmpoyed()\">Show Employed</button>\n                                            </div>\n                                            </form>\n                                        </div>\n                                    </div>\n\n                            </div>\n                </div>\n\n\n\n            </div>\n        </div>\n    </div>"
 
 /***/ }),
 
@@ -2255,7 +2586,7 @@ var PeopleComponent = /** @class */ (function () {
             });
         }
         var _this = this;
-        setTimeout(function () { _this.child.updateChart(); }, 0);
+        setTimeout(function () { _this.child.updateChart(); }, 250);
     };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])(_charts_charts_component__WEBPACK_IMPORTED_MODULE_5__["ChartsComponent"]),
@@ -2274,6 +2605,53 @@ var PeopleComponent = /** @class */ (function () {
             ngx_cookie_service__WEBPACK_IMPORTED_MODULE_4__["CookieService"]])
     ], PeopleComponent);
     return PeopleComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/services/chat.service.ts":
+/*!******************************************!*\
+  !*** ./src/app/services/chat.service.ts ***!
+  \******************************************/
+/*! exports provided: ChatService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ChatService", function() { return ChatService; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _websocket_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./websocket.service */ "./src/app/services/websocket.service.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var CHAT_URL = 'ws://localhost:1337/';
+var ChatService = /** @class */ (function () {
+    function ChatService(wsService) {
+        this.messages = wsService
+            .connect(CHAT_URL)
+            .map(function (response) {
+            console.log(response.data);
+            var data = JSON.parse(response.data);
+            return (data);
+        });
+    }
+    ChatService = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
+            providedIn: 'root'
+        }),
+        __metadata("design:paramtypes", [_websocket_service__WEBPACK_IMPORTED_MODULE_1__["WebsocketService"]])
+    ], ChatService);
+    return ChatService;
 }());
 
 
@@ -2423,6 +2801,58 @@ var CompanyService = /** @class */ (function () {
         return this.http.post(_shared_baseurl__WEBPACK_IMPORTED_MODULE_3__["baseURL"] + 'companies/' + idCompany + '/Compain', { cost: cost, hours: hours }, requestOptions)
             .map(function (res) { return _this.processHTTPMsgService.extractData(res); });
     };
+    CompanyService.prototype.toggleValueConstraint = function (idCompany, gameId) {
+        var _this = this;
+        var headerDict = {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'gameID': gameId
+        };
+        var requestOptions = {
+            headers: new _angular_http__WEBPACK_IMPORTED_MODULE_2__["Headers"](headerDict),
+        };
+        return this.http.put(_shared_baseurl__WEBPACK_IMPORTED_MODULE_3__["baseURL"] + 'companies/' + idCompany + '/filter/value', {}, requestOptions)
+            .map(function (res) { return _this.processHTTPMsgService.extractData(res); });
+    };
+    CompanyService.prototype.changeValueConstraint = function (idCompany, gameId, values) {
+        var _this = this;
+        var headerDict = {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'gameID': gameId
+        };
+        var requestOptions = {
+            headers: new _angular_http__WEBPACK_IMPORTED_MODULE_2__["Headers"](headerDict),
+        };
+        return this.http.post(_shared_baseurl__WEBPACK_IMPORTED_MODULE_3__["baseURL"] + 'companies/' + idCompany + '/filter/value', { oppyValues: values }, requestOptions)
+            .map(function (res) { return _this.processHTTPMsgService.extractData(res); });
+    };
+    CompanyService.prototype.toggleValueQualification = function (idCompany, gameId) {
+        var _this = this;
+        var headerDict = {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'gameID': gameId
+        };
+        var requestOptions = {
+            headers: new _angular_http__WEBPACK_IMPORTED_MODULE_2__["Headers"](headerDict),
+        };
+        return this.http.put(_shared_baseurl__WEBPACK_IMPORTED_MODULE_3__["baseURL"] + 'companies/' + idCompany + '/filter/qualification', {}, requestOptions)
+            .map(function (res) { return _this.processHTTPMsgService.extractData(res); });
+    };
+    CompanyService.prototype.changeValueQualification = function (idCompany, gameId, values) {
+        var _this = this;
+        var headerDict = {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'gameID': gameId
+        };
+        var requestOptions = {
+            headers: new _angular_http__WEBPACK_IMPORTED_MODULE_2__["Headers"](headerDict),
+        };
+        return this.http.post(_shared_baseurl__WEBPACK_IMPORTED_MODULE_3__["baseURL"] + 'companies/' + idCompany + '/filter/qualification', { oppyQualifications: values }, requestOptions)
+            .map(function (res) { return _this.processHTTPMsgService.extractData(res); });
+    };
     CompanyService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
             providedIn: 'root'
@@ -2515,6 +2945,36 @@ var MarketService = /** @class */ (function () {
         };
         return this.http.post(_shared_baseurl__WEBPACK_IMPORTED_MODULE_3__["baseURL"] + 'market/proposal/' + CompanyId + '/' + PersonId, { value: offer }, requestOptions)
             .map(function (res) { return _this.processHTTPMsgService.extractData(res); });
+    };
+    MarketService.prototype.offerRetentionBonus = function (gameId, CompanyId, PersonId, offer) {
+        var _this = this;
+        var headerDict = {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'gameID': gameId
+        };
+        var requestOptions = {
+            headers: new _angular_http__WEBPACK_IMPORTED_MODULE_2__["Headers"](headerDict),
+        };
+        return this.http.post(_shared_baseurl__WEBPACK_IMPORTED_MODULE_3__["baseURL"] + 'market/retentionBonus/' + CompanyId + '/' + PersonId, { money: offer }, requestOptions)
+            .map(function (res) { return _this.processHTTPMsgService.extractData(res); });
+    };
+    MarketService.prototype.enrollCourse = function (gameId, CompanyId, PersonId, feature, money, hours, gain, type) {
+        var _this = this;
+        var headerDict = {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'gameID': gameId
+        };
+        var requestOptions = {
+            headers: new _angular_http__WEBPACK_IMPORTED_MODULE_2__["Headers"](headerDict),
+        };
+        if (type === 0)
+            return this.http.post(_shared_baseurl__WEBPACK_IMPORTED_MODULE_3__["baseURL"] + 'market/course/' + CompanyId + '/' + PersonId, { feature: feature, money: money, hours: hours, quantity: gain }, requestOptions)
+                .map(function (res) { return _this.processHTTPMsgService.extractData(res); });
+        else
+            return this.http.post(_shared_baseurl__WEBPACK_IMPORTED_MODULE_3__["baseURL"] + 'market/course/' + CompanyId + '/' + PersonId, { marketTrend: feature, money: money, hours: hours, quantity: gain }, requestOptions)
+                .map(function (res) { return _this.processHTTPMsgService.extractData(res); });
     };
     MarketService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
@@ -2762,6 +3222,69 @@ var ProcessHTTPMsgService = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/services/websocket.service.ts":
+/*!***********************************************!*\
+  !*** ./src/app/services/websocket.service.ts ***!
+  \***********************************************/
+/*! exports provided: WebsocketService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WebsocketService", function() { return WebsocketService; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var rxjs_Rx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs/Rx */ "./node_modules/rxjs-compat/_esm5/Rx.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var WebsocketService = /** @class */ (function () {
+    function WebsocketService() {
+    }
+    WebsocketService.prototype.connect = function (url) {
+        if (!this.subject) {
+            this.subject = this.create(url);
+            console.log("Successfully connected: " + url);
+        }
+        return this.subject;
+    };
+    WebsocketService.prototype.create = function (url) {
+        var ws = new WebSocket(url);
+        var observable = rxjs_Rx__WEBPACK_IMPORTED_MODULE_1__["Observable"].create(function (obs) {
+            ws.onmessage = obs.next.bind(obs);
+            ws.onerror = obs.error.bind(obs);
+            ws.onclose = obs.complete.bind(obs);
+            return ws.close.bind(ws);
+        });
+        var observer = {
+            next: function (data) {
+                if (ws.readyState === WebSocket.OPEN) {
+                    ws.send(JSON.stringify(data));
+                }
+            }
+        };
+        return rxjs_Rx__WEBPACK_IMPORTED_MODULE_1__["Subject"].create(observer, observable);
+    };
+    WebsocketService = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
+            providedIn: 'root'
+        }),
+        __metadata("design:paramtypes", [])
+    ], WebsocketService);
+    return WebsocketService;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/shared/PicassoCharts.js":
 /*!*****************************************!*\
   !*** ./src/app/shared/PicassoCharts.js ***!
@@ -2914,6 +3437,48 @@ module.exports = {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "baseURL", function() { return baseURL; });
 var baseURL = document.location.protocol + '//' + document.location.hostname + ':' + '3000' + '/api/'; //document.location.port+'/';
+
+
+/***/ }),
+
+/***/ "./src/app/shared/filter.pipe.ts":
+/*!***************************************!*\
+  !*** ./src/app/shared/filter.pipe.ts ***!
+  \***************************************/
+/*! exports provided: MyFilterPipe */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MyFilterPipe", function() { return MyFilterPipe; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+var MyFilterPipe = /** @class */ (function () {
+    function MyFilterPipe() {
+    }
+    MyFilterPipe.prototype.transform = function (items, filter) {
+        if (!items || !filter) {
+            return items;
+        }
+        // filter items array, items which match and return true will be
+        // kept, false will be filtered out
+        return items.filter(function (item) { return item.name.indexOf(filter) !== -1; });
+    };
+    MyFilterPipe = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Pipe"])({
+            name: 'myfilter',
+            pure: false
+        })
+    ], MyFilterPipe);
+    return MyFilterPipe;
+}());
+
 
 
 /***/ }),

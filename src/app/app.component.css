@@ -1,0 +1,12 @@
+
+.wrapperDisabled {
+    display: none;
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background-color: gray;
+    top: 50px;
+    left: 50px;
+    padding: 10px;
+    opacity: .8;
+  }

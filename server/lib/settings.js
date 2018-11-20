@@ -1,5 +1,7 @@
 module.exports = {
 
+    wsPort : 1337,
+
     MinQualificationLevel : 1,                      // Min  Rank for Oppy Qualification level
     MaxQualificationLevel : 5,                      // Max  Rank for Oppy Qualification level
 

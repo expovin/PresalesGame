@@ -9,6 +9,7 @@ const trends = require('./dictionary').trends;
 const features = require('./dictionary').features;
 const periods = require('./dictionary').periods;
 const customers = require('./dictionary').companies;
+const wsClass = require('./wsMessages');
 
 
 const QIX = require('../lib/ClassQIX');
@@ -39,6 +40,7 @@ class Market {
         this.OppyTrendsDeserialized=[],
 
         this.quarter=periods[this.periodIndex];
+        this.wsM = new wsClass();
 
     }
 
@@ -178,6 +180,10 @@ class Market {
         var CompanyScore;
         var winner=null;
         var winnerScore=0;
+        var msg="";
+
+        msg={type:'start',msg:'Starting opportunities calculation from '+periods[this.periodIndex]+" to "+periods[this.periodIndex+1]};
+        this.wsM.sendTextMessage(JSON.stringify(msg));
 
         Object.keys(this.Companies).forEach(function(companyID) {
             let totalPeopleCosts = 0;
@@ -189,6 +195,8 @@ class Market {
         // Loop for each opportunity and pass them to the companies.
         this.Opportunities.forEach( oppy => {
             if( oppy.isOpen()){
+                msg={type:'ongoing',msg:'Elaborating Opportunity '+oppy.getID()};
+                this.wsM.sendTextMessage(JSON.stringify(msg));
                 Object.keys(this.Companies).forEach(companyID => {  
                     /** If the company want to compete */
                     var gonnaCompete=_this.Companies[companyID].competeOnOpportunity(oppy, this.quarter);
@@ -244,6 +252,8 @@ class Market {
 
         /** Slightly change market trends */
         this.slightlyChangeMarketTrends();
+        msg={type:'end',msg:'Calulation completed '};
+        this.wsM.sendTextMessage(JSON.stringify(msg));
     }
 
     getCurrentQuarter() { return this.quarter }
