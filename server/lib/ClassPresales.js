@@ -225,6 +225,17 @@ class Presales  {
             this.person.proposals.push({Company:Company, Amount:Amount});
     }
 
+    removeProposal(Company){
+        let indexToRemove=-1;
+        this.person.proposals.forEach( (prop,idx) =>{
+            if(prop.Company === Company)
+                indexToRemove=idx;
+        })
+        if(indexToRemove !== -1){
+            this.person.proposals.splice(indexToRemove,1);
+        }
+    }
+
     acceptProposal(){
         var bestAmount=this.person.cost * this.person.satisfactionLevel/settings.CostSatisfactionModifier;
         var bestCompany=null;

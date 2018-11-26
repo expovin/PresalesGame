@@ -160,6 +160,33 @@ module.exports = {
             }, error => reject(error))
         })
     },    
+
+    confirmPerson : function(companyID, PersonID) {
+        options.path="/api/market/evaluate";
+        options.method="POST";
+        post_data['companyID']=companyID;
+        post_data['personID']=PersonID;
+        return new Promise ( (fulfill, reject) => {
+            genericRequest()
+            .then( res => {
+                fulfill(res);
+            }, error => reject(error))
+        })
+    },
+
+    discardPerson : function(companyID, PersonID) {
+        options.path="/api/market/evaluate";
+        options.method="PUT";
+        post_data['companyID']=companyID;
+        post_data['personID']=PersonID;        
+        return new Promise ( (fulfill, reject) => {
+            genericRequest()
+            .then( res => {
+                fulfill(res);
+            }, error => reject(error))
+        })
+    },    
+
     genOpportunities : function() {
         options.path="/api/opportunities";
         options.method="POST";
@@ -184,7 +211,7 @@ module.exports = {
     },
 
     marketCampain : function (companyID){
-        options.path="/api/companies/"+companyID+"/Compain";
+        options.path="/api/companies/"+companyID+"/Campain";
         options.method="POST";
         return new Promise ( (fulfill, reject) => {
             genericRequest()
@@ -214,6 +241,39 @@ module.exports = {
                 fulfill(res);
             }, error => reject(error))
         })
-    }
+    },
+
+    makeProposal : function(companyID, PersonID){
+        options.path="/api/market/proposal/"+companyID+"/"+PersonID+"/";
+        options.method="POST";
+        return new Promise ( (fulfill, reject) => {
+            genericRequest()
+            .then( res => {
+                fulfill(res);
+            }, error => reject(error))
+        })        
+    },
+
+    getCampain : function(companyID){
+        options.path="/api/companies/"+companyID+"/Campain";
+        options.method="POST";
+        return new Promise ( (fulfill, reject) => {
+            genericRequest()
+            .then( res => {
+                fulfill(res);
+            }, error => reject(error))
+        })    
+    },
+
+    BRShare : function(){
+        options.path="/api/market/BRShare";
+        options.method="POST";
+        return new Promise ( (fulfill, reject) => {
+            genericRequest()
+            .then( res => {
+                fulfill(res);
+            }, error => reject(error))
+        })    
+    }    
     
 }

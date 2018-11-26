@@ -83,6 +83,8 @@ module.exports = {
         Features : 25,
         BA : 20,
         BR : 20
-    }
+    },
+
+    penaltyDeclineToHire : 10
 
 }

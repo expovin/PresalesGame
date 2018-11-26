@@ -29,6 +29,7 @@ class Market {
         this.generateBaseProductFeatures();
 
         this.People={};
+        this.brendRecognitionShare=[];
 
         this.PeopleArray=[];
         this.PeopleTrends=[];
@@ -40,6 +41,7 @@ class Market {
         this.OppyTrendsDeserialized=[],
 
         this.quarter=periods[this.periodIndex];
+        this.QIncomeCompanyRanking=[];
         this.wsM = new wsClass();
 
     }
@@ -72,6 +74,38 @@ class Market {
             })
         })
     }
+
+    assignBrendRecognition(){
+        let totalInvestment=0;
+        let CompanyCampains=[];
+        this.brendRecognitionShare=[];
+        var _this=this;
+
+        Object.keys(this.Companies).forEach(function(companyID) {
+            let companyInvestment=0;
+            _this.Companies[companyID].getMarketCampain().forEach ( campain => {
+                companyInvestment += campain.money + campain.hours*10;
+                console.log(campain);
+                console.log(companyInvestment);
+            })
+            console.log("Total inv for this company",companyInvestment);
+            CompanyCampains.push({companyName : _this.Companies[companyID], cost : companyInvestment});
+            totalInvestment += companyInvestment;
+            console.log("Total Investment : ",totalInvestment)
+        });
+
+
+        console.log("--------------------------");
+        CompanyCampains.forEach( company => {
+            console.log(company);
+            let share = (company.cost / totalInvestment) * 100;
+            console.log("----> share  : ",share);
+            _this.brendRecognitionShare.push({company:company.companyName.getName(), investment: company.cost, share: share})
+            company.companyName.setBrendRecognition(share);
+        })
+    }
+
+    getBRShare(){ return (this.brendRecognitionShare)}
 
     deserializeOppy(){
         this.Opportunities.forEach (o =>{
@@ -190,6 +224,9 @@ class Market {
             _this.Companies[companyID].getPresalesTeam().forEach( personID => totalPeopleCosts += _this.People[personID].getCost())
             _this.Companies[companyID].payQuarterCosts(totalPeopleCosts);
             //_this.Companies[companyID].createOppyWonQuarter(_this.quarter);
+
+            _this.Companies[companyID].saveBudgetInfo();
+            _this.Companies[companyID].saveBrendRecognition();
           });
 
         // Loop for each opportunity and pass them to the companies.
@@ -223,6 +260,7 @@ class Market {
                     //                                    + " current budget "+this.Companies[winner].getBudget());
                 }
             }
+
         })
 
 
@@ -237,15 +275,23 @@ class Market {
             _this.Companies[companyID].saveRemainingHours(_this.quarter);
             /** Reset the total hours for each Company */
             _this.Companies[companyID].resetTotalHours();
+            _this.QIncomeCompanyRanking.push({id:companyID, rank:_this.Companies[companyID].getPercentGrow()})
             /** Lower The Teem Mood */
-            let decrease=settings.decSatisfactionQuarterPerc;
+            let decrease=(100 -_this.getAvgTeamWorkLevel(_this.Companies[companyID])); //settings.decSatisfactionQuarterPerc;
+
             if(_this.Companies[companyID].getBAMStatus()) decrease += settings.BAMSatisfactionLvlImpactPerc;
             if(_this.Companies[companyID].getTOPStatus()) decrease += settings.TOPSatisfactionLvlImpact;
             _this.Companies[companyID].getPresalesTeam().forEach( personID =>  _this.People[personID].changeSatisfactionalLevel(decrease*(-1)))
-
             /** Lower the Company brad */
-            _this.Companies[companyID].decreaseBrendRecognition(settings.decreaseBrandperQuarterPerc);
+            _this.Companies[companyID].decreaseBrendRecognition();
         });
+
+        _this.QIncomeCompanyRanking.sort(function(a,b){
+            return a.rank - b.rank
+        })
+
+        // Giving a bous on the satisfactional level and Brand recognition to the first n companies
+        //_this.Companies[_this.QIncomeCompanyRanking[0].companyID].getPresalesTeam().forEach( personID =>  _this.People[personID].changeSatisfactionalLevel(30))
 
         this.periodIndex++;
         this.quarter=periods[this.periodIndex];
@@ -256,6 +302,13 @@ class Market {
         this.wsM.sendTextMessage(JSON.stringify(msg));
     }
 
+    getQCompanyRank() {
+        this.QIncomeCompanyRanking.forEach( (company, idx) =>{
+            this.QIncomeCompanyRanking[idx]['name']=this.companies[company.companyID].name;
+        })
+        return(this.QIncomeCompanyRanking);
+    }
+    
     getCurrentQuarter() { return this.quarter }
     addPerson(person) { this.People[person.getID()]=person}
     setPeople(people){ this.People=people}
@@ -310,6 +363,18 @@ class Market {
         satisfaction /= this.Companies[companyId].presalesTeam.length;
 
         return(satisfaction);
+    }
+
+    getAvgTeamWorkLevel(Company){
+        let teamWorkLevel=0;
+        Company.presalesTeam.forEach( p => {
+            teamWorkLevel += this.People[p].getSkillTW();
+        })
+        console.log("teamWorkLevel : ",teamWorkLevel);
+        teamWorkLevel /= Company.presalesTeam.length;
+        console.log("teamWorkLevel : ",teamWorkLevel);
+
+        return(teamWorkLevel);
     }
 
     generateBaseProductFeatures(){

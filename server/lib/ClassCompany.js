@@ -9,9 +9,12 @@ class Company {
         this.name=name;
         this.budget=settings.companyInitialBudget,
         this.presalesTeam=[];
+        this.peopleToConfirm=[];
         this.proposal=[];
         this.brendRecognition=settings.companyInitialbrendRecognition;
         this.totalHours=0;
+        this.lastQBudget=0;
+        this.lastQbrendRecognition=0;
         this.messages=[];
         this.isBAMEnabled=false;
         this.isTOPEnabled=false;
@@ -20,9 +23,11 @@ class Company {
         this.productFeatures=[];
         this.improvablePointsFeatures=settings.DMaxImprovableFeaturePerQuarter;
         this.isBankrupt=false;
+        this.brandRecognInvestments=[];
         this.oppyCompeted={};
         this.oppyNotCompeted=[];
         this.endQuarterRemainingHours=[];
+        
 
 
         this.oppyConstraint ={
@@ -57,6 +62,12 @@ class Company {
     resetTotalHours(){
         this.totalHours = settings.timePerQuarterPerPerson * this.presalesTeam.length;
     }
+    saveBudgetInfo(){this.lastQBudget=this.budget}
+    saveBrendRecognition(){this.lastQbrendRecognition=this.brendRecognition}
+    getAbsoluteIncome(){ return (this.lastQBudget - this.budget) }
+    getPercentGrow(){ return (  ((this.budget/this.lastQBudget)*100) -1)}
+    getPercBrendRecog() { return (((this.brendRecognition/this.lastQbrendRecognition)*100) -1) }
+
 
     cashIn( oppyValue ) { this.budget += oppyValue }
     payQuarterCosts(totalPeopleCosts){
@@ -186,6 +197,27 @@ class Company {
     disableTOP(){ this.isTOPEnabled=false}
     getTOPStatus() { return this.isTOPEnabled }
 
+    addPeopleToConfirm(person){
+        this.peopleToConfirm.push(person.getID());
+        this.proposal=[];
+    }
+
+    declineProposal(person){
+
+        var index = this.peopleToConfirm.indexOf(person);
+        if (index > -1) 
+            this.peopleToConfirm.splice(index, 1);
+
+        /** Pay the penalty */
+        this.budget -= settings.penaltyDeclineToHire;
+    }
+
+    acceptProposal(personId){
+        var index = this.peopleToConfirm.indexOf(personId);
+        if (index > -1) 
+            this.peopleToConfirm.splice(index, 1);
+    }
+
     hirePerson(person){
         if (typeof person !== 'undefined' && person !== null) {
             if(this.budget - person.getCost() < 0)
@@ -227,6 +259,13 @@ class Company {
         return (true);
     }
 
+    deleteProposal(personID){
+        var index = this.proposal.indexOf(personID);
+        if (index > -1) {
+            this.proposal.splice(index, 1);
+        }
+    }
+
     getProposal() { return this.proposal}
 
     marketingCampain(cost, hours){
@@ -237,18 +276,32 @@ class Company {
         this.budget -=cost;
         this.totalHours -=hours;
 
-
+/*
         if(cost > 0) {
             this.brendRecognition += cost / settings.campainCostBrandRatio   + 
             Math.floor(cost / (settings.campainCostHourRatio * hours)) * settings.campainOverflow +     // Overflow Cost
             Math.floor((settings.campainCostHourRatio * hours) / cost) * settings.campainOverflow;      // Overflow Hours
         }
+*/
 
+        this.brandRecognInvestments.push({money: cost, hours:hours});
         
         return (true)
     }
 
-    decreaseBrendRecognition(p){ this.brendRecognition *= (1-p/100)}
+    getMarketCampain() { return (this.brandRecognInvestments)}
+    deleteMarketCampain(idx) { this.brandRecognInvestments.splice(idx,1)}
+    
+    setBrendRecognition(share) {
+        this.brendRecognition = share;
+        this.brandRecognInvestments=[];
+    }
+
+    decreaseBrendRecognition(){ 
+        console.log("BR pre : ",this.brendRecognition);
+        this.brendRecognition /= 2;
+        console.log("BR post : ",this.brendRecognition);
+    } //(1-p/100)}
 
     payHours(hours) { 
         if(this.totalHours - hours < 0)
