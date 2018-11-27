@@ -42,7 +42,7 @@
             <h1 class="mb-5">The Presales Game</h1>
           </div>
           <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
-            <form name='companyName' class='companyName'>
+            <form name='companyName' id='companyNameForm'>
               <div class="form-row">
                 <div class="col-12 col-md-9 mb-2 mb-md-0">
                   <input type="text" id="txtCompanyName" class="form-control form-control-lg" placeholder="Enter your company name here...">
@@ -115,8 +115,11 @@
   </body>
   <script src="./cookie.js"></script>
   <script>
-    $('.companyName').submit(function() {
+    $('#companyNameForm').submit(function(event) {
         
+      event.preventDefault();
+        
+        let hostname="http://itmil-ves:3000";
         console.log("Form Submitted");
         console.log($('#txtCompanyName').val());
 
@@ -136,6 +139,9 @@
             Cookies.set("companyID",data.id);
             Cookies.set("companyName",$('#txtCompanyName').val());
             window.location.replace("/game");
+          },
+          error : function (error){
+            console.log("Error while creating Company : ",error);
           }
         });        
 

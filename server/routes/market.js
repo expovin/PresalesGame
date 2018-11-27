@@ -49,6 +49,27 @@ router.route('/nextPeriod')
     res.status(200).json({result:'OK', message:'Ready to fight for the net Quarter'});
 })
 
+router.route('/rank')
+.get( function(req, res, next) {
+    res.status(200).json({result:'OK', data:m[req.headers.gameid].getQCompanyRank()});
+})
+
+router.route('/oppy/flush')
+.post( function(req, res, next) {
+    m[req.headers.gameid].saveQuarterResultToFile(req.body.quarter, m[req.headers.gameid].getOpportunities())
+    res.status(200).json({result:'OK', message:"Statistics exported to file"});
+})
+
+
+router.route('/BRShare')
+.get( function(req, res, next) {
+    res.status(200).json({result:'OK', data:m[req.headers.gameid].getBRShare()});
+})
+.post( function(req, res, next) {
+    m[req.headers.gameid].assignBrendRecognition();
+    res.status(200).json({result:'OK', message:"Brend recognition assigned"});
+})
+
 /* get all presales */
 router.route('/evaluate')
 .get( function(req, res, next) {
@@ -97,36 +118,45 @@ router.route('/evaluate')
 
       Object.keys(Deals).forEach(companyID => {
           Deals[companyID].forEach( personID =>{
-
-              if(!m[req.headers.gameid]
-              .getCompany(companyID)
-              .hirePerson(m[req.headers.gameid].getPerson(personID))){
-                    m[req.headers.gameid]
-                        .getPerson(personID)
-                        .dismiss();
-                    m[req.headers.gameid]
-                        .getCompany(companyID)
-                        .sendMessage({type:'warning', msg:"Sorry, you did not hired "+m[req.headers.gameid].getPerson(personID).getName()+" because you run out of budget"});
-              }
-                    
+            // Add this person to the list of people to confirm
+            m[req.headers.gameid].getCompany(companyID).addPeopleToConfirm(m[req.headers.gameid].getPerson(personID));
           })
       });
 
     res.status(200).json({result:'OK', data: Deals, resigned : resignedPeople});
 })
 .post( function (req, res, next){
-    res.status(209).json({result:'WARNING', message:'This function has not been implemented yet'});
+
+    if(!m[req.headers.gameid]
+        .getCompany(req.body.companyID)
+        .hirePerson(m[req.headers.gameid].getPerson(req.body.personID))){
+              m[req.headers.gameid]
+                  .getPerson(req.body.personID)
+                  .dismiss();
+              m[req.headers.gameid]
+                  .getCompany(req.body.companyID)
+                  .sendMessage({type:'warning', msg:"Sorry, you did not hired "+m[req.headers.gameid].getPerson(req.body.personID).getName()+" because you run out of budget"});
+    } else {
+        m[req.headers.gameid].getCompany(req.body.companyID).acceptProposal(req.body.personID);
+    }
+
+    res.status(209).json({result:'OK', message:'Person Hired!'});
 })
 .put( function (req, res, next){
-    res.status(209).json({result:'WARNING', message:'This function has not been implemented yet'});
-})
-.delete( function (req, res, next){
-    res.status(209).json({result:'WARNING', message:'This function has not been implemented yet'});
+    m[req.headers.gameid].getPerson(req.body.personID).dismiss();
+    m[req.headers.gameid].getCompany(req.body.companyID).declineProposal(req.body.personID);
+
+    res.status(209).json({result:'OK', message:'Person discarded'});
 })
 
 router.route('/avgSatisfaction/:companyID/')
 .get( function(req, res, next) {
     res.status(209).json({result:'OK', data:m[req.headers.gameid].getAvgSatisfactionalLevel(req.params.companyID)});
+});
+
+router.route('/avgTeamWork/:companyID/')
+.get( function(req, res, next) {
+    res.status(209).json({result:'OK', data:m[req.headers.gameid].getAvgTeamWorkLevel(req.params.companyID)});
 });
 
 router.route('/proposal/:companyID/:presalesID')
@@ -145,8 +175,12 @@ router.route('/proposal/:companyID/:presalesID')
     }
 })
 .delete( function (req, res, next){
-    MarketTrends=[];
-    res.status(209).json({result:'WARNING', message:'This function has not been implemented yet'});
+    var p = m[req.headers.gameid].getPerson(req.params.presalesID);
+    var c = m[req.headers.gameid].getCompany(req.params.companyID);
+
+    p.removeProposal( c.getID());
+    c.deleteProposal( p.getID());
+    res.status(209).json({result:'OK', message:'Proposal to '+c.getName()+' has been removed!'});
 })
 
 router.route('/course/:companyID/:presalesID')

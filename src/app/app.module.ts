@@ -24,6 +24,8 @@ import { NotifierModule } from 'angular-notifier';
 import { ChartModule } from 'angular-highcharts';
 import { ChartsComponent } from './charts/charts.component';
 import { MyFilterPipe } from './shared/filter.pipe';
+import { PeopleProposal } from './shared/filter.pipe.peopleproposal';
+
 import { ElaborationComponent } from './elaboration/elaboration.component';
 
 @NgModule({
@@ -39,6 +41,7 @@ import { ElaborationComponent } from './elaboration/elaboration.component';
     BamComponent,
     TopComponent,
     MyFilterPipe,
+    PeopleProposal,
     ChartsComponent,
     ElaborationComponent
   ],

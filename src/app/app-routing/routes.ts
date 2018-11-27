@@ -14,6 +14,6 @@ export const routes: Routes = [
   { path: 'people',     component: PeopleComponent },
   { path: 'bam',     component: BamComponent },
   { path: 'top',     component: TopComponent },
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full' }
+  { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
 
 ];

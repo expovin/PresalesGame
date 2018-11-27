@@ -143,9 +143,25 @@ export class CompanyService {
       headers: new Headers(headerDict), 
     };
 
-    return this.http.post(baseURL + 'companies/'+idCompany+'/Compain',{cost:cost, hours:hours}, requestOptions)
+    return this.http.post(baseURL + 'companies/'+idCompany+'/Campain',{cost:cost, hours:hours}, requestOptions)
             .map(res => { return this.processHTTPMsgService.extractData(res); });
   }    
+
+  delCampain(idCompany,gameId, idx) : Observable <Object[]> {
+
+    const headerDict = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'gameID' : gameId
+    }
+    
+    const requestOptions = {                                                                                                                                                                                 
+      headers: new Headers(headerDict), 
+    };
+
+    return this.http.put(baseURL + 'companies/'+idCompany+'/Campain',{idx:idx}, requestOptions)
+            .map(res => { return this.processHTTPMsgService.extractData(res); });
+  }   
 
   toggleValueConstraint(idCompany,gameId){
     const headerDict = {

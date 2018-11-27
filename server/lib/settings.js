@@ -85,6 +85,7 @@ module.exports = {
         BR : 20
     },
 
-    penaltyDeclineToHire : 10
+    penaltyDeclineToHire : 10,
+    quarterLogFilePath : "qLog/"
 
 }

@@ -24,9 +24,7 @@ export class AppComponent {
         
 
       if(msg['type'] === 'end'){
-        console.log("Finish , still wait 5 sec.");
         setTimeout(function(){this.isElaborating=false;window.location.reload();}, 5000);
-        
       }
         
     });

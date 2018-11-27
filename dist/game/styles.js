@@ -369,10 +369,10 @@ module.exports = "/*!\n * Bootstrap v3.3.7 (http://getbootstrap.com)\n * Copyrig
 
 /***/ }),
 
-/***/ "./node_modules/raw-loader/index.js!./node_modules/postcss-loader/lib/index.js?!./src/TemplateAssets/css/animate.min.css":
-/*!**********************************************************************************************************************!*\
-  !*** ./node_modules/raw-loader!./node_modules/postcss-loader/lib??embedded!./src/TemplateAssets/css/animate.min.css ***!
-  \**********************************************************************************************************************/
+/***/ "./node_modules/raw-loader/index.js!./node_modules/postcss-loader/lib/index.js?!./src/assets/css/animate.min.css":
+/*!**************************************************************************************************************!*\
+  !*** ./node_modules/raw-loader!./node_modules/postcss-loader/lib??embedded!./src/assets/css/animate.min.css ***!
+  \**************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -380,10 +380,10 @@ module.exports = "@charset \"UTF-8\";/*!\nAnimate.css - http://daneden.me/animat
 
 /***/ }),
 
-/***/ "./node_modules/raw-loader/index.js!./node_modules/postcss-loader/lib/index.js?!./src/TemplateAssets/css/demo.css":
-/*!***************************************************************************************************************!*\
-  !*** ./node_modules/raw-loader!./node_modules/postcss-loader/lib??embedded!./src/TemplateAssets/css/demo.css ***!
-  \***************************************************************************************************************/
+/***/ "./node_modules/raw-loader/index.js!./node_modules/postcss-loader/lib/index.js?!./src/assets/css/demo.css":
+/*!*******************************************************************************************************!*\
+  !*** ./node_modules/raw-loader!./node_modules/postcss-loader/lib??embedded!./src/assets/css/demo.css ***!
+  \*******************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -391,10 +391,10 @@ module.exports = "@media (min-width: 992px){\n    .typo-line{\n        padding-l
 
 /***/ }),
 
-/***/ "./node_modules/raw-loader/index.js!./node_modules/postcss-loader/lib/index.js?!./src/TemplateAssets/css/paper-dashboard.css":
-/*!**************************************************************************************************************************!*\
-  !*** ./node_modules/raw-loader!./node_modules/postcss-loader/lib??embedded!./src/TemplateAssets/css/paper-dashboard.css ***!
-  \**************************************************************************************************************************/
+/***/ "./node_modules/raw-loader/index.js!./node_modules/postcss-loader/lib/index.js?!./src/assets/css/paper-dashboard.css":
+/*!******************************************************************************************************************!*\
+  !*** ./node_modules/raw-loader!./node_modules/postcss-loader/lib??embedded!./src/assets/css/paper-dashboard.css ***!
+  \******************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -402,10 +402,10 @@ module.exports = "/*!\n\n ======================================================
 
 /***/ }),
 
-/***/ "./node_modules/raw-loader/index.js!./node_modules/postcss-loader/lib/index.js?!./src/TemplateAssets/css/themify-icons.css":
-/*!************************************************************************************************************************!*\
-  !*** ./node_modules/raw-loader!./node_modules/postcss-loader/lib??embedded!./src/TemplateAssets/css/themify-icons.css ***!
-  \************************************************************************************************************************/
+/***/ "./node_modules/raw-loader/index.js!./node_modules/postcss-loader/lib/index.js?!./src/assets/css/themify-icons.css":
+/*!****************************************************************************************************************!*\
+  !*** ./node_modules/raw-loader!./node_modules/postcss-loader/lib??embedded!./src/assets/css/themify-icons.css ***!
+  \****************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -915,15 +915,15 @@ module.exports = function (css) {
 
 /***/ }),
 
-/***/ "./src/TemplateAssets/css/animate.min.css":
-/*!************************************************!*\
-  !*** ./src/TemplateAssets/css/animate.min.css ***!
-  \************************************************/
+/***/ "./src/assets/css/animate.min.css":
+/*!****************************************!*\
+  !*** ./src/assets/css/animate.min.css ***!
+  \****************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(/*! !../../../node_modules/raw-loader!../../../node_modules/postcss-loader/lib??embedded!./animate.min.css */ "./node_modules/raw-loader/index.js!./node_modules/postcss-loader/lib/index.js?!./src/TemplateAssets/css/animate.min.css");
+var content = __webpack_require__(/*! !../../../node_modules/raw-loader!../../../node_modules/postcss-loader/lib??embedded!./animate.min.css */ "./node_modules/raw-loader/index.js!./node_modules/postcss-loader/lib/index.js?!./src/assets/css/animate.min.css");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -945,15 +945,15 @@ if(false) {}
 
 /***/ }),
 
-/***/ "./src/TemplateAssets/css/demo.css":
-/*!*****************************************!*\
-  !*** ./src/TemplateAssets/css/demo.css ***!
-  \*****************************************/
+/***/ "./src/assets/css/demo.css":
+/*!*********************************!*\
+  !*** ./src/assets/css/demo.css ***!
+  \*********************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(/*! !../../../node_modules/raw-loader!../../../node_modules/postcss-loader/lib??embedded!./demo.css */ "./node_modules/raw-loader/index.js!./node_modules/postcss-loader/lib/index.js?!./src/TemplateAssets/css/demo.css");
+var content = __webpack_require__(/*! !../../../node_modules/raw-loader!../../../node_modules/postcss-loader/lib??embedded!./demo.css */ "./node_modules/raw-loader/index.js!./node_modules/postcss-loader/lib/index.js?!./src/assets/css/demo.css");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -975,15 +975,15 @@ if(false) {}
 
 /***/ }),
 
-/***/ "./src/TemplateAssets/css/paper-dashboard.css":
-/*!****************************************************!*\
-  !*** ./src/TemplateAssets/css/paper-dashboard.css ***!
-  \****************************************************/
+/***/ "./src/assets/css/paper-dashboard.css":
+/*!********************************************!*\
+  !*** ./src/assets/css/paper-dashboard.css ***!
+  \********************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(/*! !../../../node_modules/raw-loader!../../../node_modules/postcss-loader/lib??embedded!./paper-dashboard.css */ "./node_modules/raw-loader/index.js!./node_modules/postcss-loader/lib/index.js?!./src/TemplateAssets/css/paper-dashboard.css");
+var content = __webpack_require__(/*! !../../../node_modules/raw-loader!../../../node_modules/postcss-loader/lib??embedded!./paper-dashboard.css */ "./node_modules/raw-loader/index.js!./node_modules/postcss-loader/lib/index.js?!./src/assets/css/paper-dashboard.css");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -1005,15 +1005,15 @@ if(false) {}
 
 /***/ }),
 
-/***/ "./src/TemplateAssets/css/themify-icons.css":
-/*!**************************************************!*\
-  !*** ./src/TemplateAssets/css/themify-icons.css ***!
-  \**************************************************/
+/***/ "./src/assets/css/themify-icons.css":
+/*!******************************************!*\
+  !*** ./src/assets/css/themify-icons.css ***!
+  \******************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(/*! !../../../node_modules/raw-loader!../../../node_modules/postcss-loader/lib??embedded!./themify-icons.css */ "./node_modules/raw-loader/index.js!./node_modules/postcss-loader/lib/index.js?!./src/TemplateAssets/css/themify-icons.css");
+var content = __webpack_require__(/*! !../../../node_modules/raw-loader!../../../node_modules/postcss-loader/lib??embedded!./themify-icons.css */ "./node_modules/raw-loader/index.js!./node_modules/postcss-loader/lib/index.js?!./src/assets/css/themify-icons.css");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -1066,9 +1066,9 @@ if(false) {}
 /***/ }),
 
 /***/ 2:
-/*!*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./src/styles.css ./node_modules/bootstrap/dist/css/bootstrap.css ./node_modules/angular-notifier/styles/themes/theme-material.css ./node_modules/angular-notifier/styles/types/type-default.css ./node_modules/angular-notifier/styles/types/type-error.css ./node_modules/angular-notifier/styles/types/type-info.css ./node_modules/angular-notifier/styles/types/type-success.css ./node_modules/angular-notifier/styles/types/type-warning.css ./node_modules/angular-notifier/styles/core.css ./src/TemplateAssets/css/animate.min.css ./src/TemplateAssets/css/paper-dashboard.css ./node_modules/bootstrap-slider/dist/css/bootstrap-slider.css ./src/TemplateAssets/css/demo.css ./src/TemplateAssets/css/themify-icons.css ***!
-  \*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./src/styles.css ./node_modules/bootstrap/dist/css/bootstrap.css ./node_modules/angular-notifier/styles/themes/theme-material.css ./node_modules/angular-notifier/styles/types/type-default.css ./node_modules/angular-notifier/styles/types/type-error.css ./node_modules/angular-notifier/styles/types/type-info.css ./node_modules/angular-notifier/styles/types/type-success.css ./node_modules/angular-notifier/styles/types/type-warning.css ./node_modules/angular-notifier/styles/core.css ./src/assets/css/animate.min.css ./src/assets/css/paper-dashboard.css ./node_modules/bootstrap-slider/dist/css/bootstrap-slider.css ./src/assets/css/demo.css ./src/assets/css/themify-icons.css ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1081,11 +1081,11 @@ __webpack_require__(/*! /opt/Dev/PresalesGame/node_modules/angular-notifier/styl
 __webpack_require__(/*! /opt/Dev/PresalesGame/node_modules/angular-notifier/styles/types/type-success.css */"./node_modules/angular-notifier/styles/types/type-success.css");
 __webpack_require__(/*! /opt/Dev/PresalesGame/node_modules/angular-notifier/styles/types/type-warning.css */"./node_modules/angular-notifier/styles/types/type-warning.css");
 __webpack_require__(/*! /opt/Dev/PresalesGame/node_modules/angular-notifier/styles/core.css */"./node_modules/angular-notifier/styles/core.css");
-__webpack_require__(/*! /opt/Dev/PresalesGame/src/TemplateAssets/css/animate.min.css */"./src/TemplateAssets/css/animate.min.css");
-__webpack_require__(/*! /opt/Dev/PresalesGame/src/TemplateAssets/css/paper-dashboard.css */"./src/TemplateAssets/css/paper-dashboard.css");
+__webpack_require__(/*! /opt/Dev/PresalesGame/src/assets/css/animate.min.css */"./src/assets/css/animate.min.css");
+__webpack_require__(/*! /opt/Dev/PresalesGame/src/assets/css/paper-dashboard.css */"./src/assets/css/paper-dashboard.css");
 __webpack_require__(/*! /opt/Dev/PresalesGame/node_modules/bootstrap-slider/dist/css/bootstrap-slider.css */"./node_modules/bootstrap-slider/dist/css/bootstrap-slider.css");
-__webpack_require__(/*! /opt/Dev/PresalesGame/src/TemplateAssets/css/demo.css */"./src/TemplateAssets/css/demo.css");
-module.exports = __webpack_require__(/*! /opt/Dev/PresalesGame/src/TemplateAssets/css/themify-icons.css */"./src/TemplateAssets/css/themify-icons.css");
+__webpack_require__(/*! /opt/Dev/PresalesGame/src/assets/css/demo.css */"./src/assets/css/demo.css");
+module.exports = __webpack_require__(/*! /opt/Dev/PresalesGame/src/assets/css/themify-icons.css */"./src/assets/css/themify-icons.css");
 
 
 /***/ })

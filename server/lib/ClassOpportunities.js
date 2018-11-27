@@ -98,7 +98,6 @@ class Opportunities  {
     }
 
     addPretender(vendor) { this.pretenders.push(vendor)} 
-
 }
 
 module.exports = Opportunities;

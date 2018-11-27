@@ -14,7 +14,7 @@
                                 <div class="col-xs-7">
                                     <div class="numbers">
                                         <p>Brend Recognition</p>
-                                       {{company.brendRecognition}} %
+                                       {{company.brendRecognition | number : '1.2-2'}} %
                                     </div>
                                 </div>
                             </div>
@@ -40,7 +40,7 @@
                                 <div class="col-xs-7">
                                     <div class="numbers">
                                         <p>Budget</p>
-                                        € {{company.budget}}
+                                        K€ {{company.budget | number : '1.2-2' }}
                                     </div>
                                 </div>
                             </div>
@@ -193,30 +193,54 @@
                             <div class="row" >
                                     <div class="BAM_TOP">
                                         <div class="col-md-4">
-                                            <h3>Brend Recognition</h3>
+                                            <h3>Brand Recognition</h3>
                                         </div>
                                         <div class="col-md-8">
-                                            <form>
-                                                    <div class="row" >
-                                                        <div class="col-md-4">
-                                                            <div class="form-group">
-                                                                <label>Hours</label>
-                                                                <input type="number" class="form-control border-input"  placeholder="Insert the #Hours to invest" [(ngModel)]="hoursToInvest" name="hoursToInvest" required />
-                                                                
+                                            <div class="row">
+                                                    <form>
+                                                            <div class="row" >
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label>Hours</label>
+                                                                        <input type="number" class="form-control border-input"  placeholder="Insert the #Hours to invest" [(ngModel)]="hoursToInvest" name="hoursToInvest" required />
+                                                                        
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label>Cost</label>
+                                                                        <input type="number" [(ngModel)]="moneyToInvest" class="form-control border-input" placeholder="Insert the amount to invest" name="moneyToInvest" required />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <br>
+                                                                    <button type="button" class="btn btn-outline-primary" (click)="getCampain()">Invest</button>
+                                                                </div>                                                     
                                                             </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <div class="form-group">
-                                                                <label>Cost</label>
-                                                                <input type="number" [(ngModel)]="moneyToInvest" class="form-control border-input" placeholder="Insert the amount to invest" name="moneyToInvest" required />
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <br>
-                                                            <button type="button" class="btn btn-outline-primary" (click)="getCampain()">Invest</button>
-                                                        </div>                                                     
-                                                    </div>
-                                            </form>
+                                                    </form>
+                                            </div>
+                                            <div class="row">
+                                                    <table class="table">
+                                                            <thead>
+                                                              <tr>
+                                                                <th scope="col">Money</th>
+                                                                <th scope="col">Hours</th>
+                                                                <th scope="col">Delete</th>
+                                                              </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                    <tr *ngFor="let investment of company.brandRecognInvestments; let i = index">
+                                                                        <td>{{investment.money}}</td>
+                                                                        <td>{{investment.hours}}</td>
+                                                                        <td>
+                                                                                <div class="icon-big icon-danger text-center">
+                                                                                        <i class="ti-close" (click)="removeCampain(i)"></i>
+                                                                                </div>
+                                                                        </td>
+                                                                    </tr>
+                                                            </tbody>
+                                                        </table>
+                                            </div>
                                         </div>
                                         
                                     </div>
@@ -272,7 +296,31 @@
                                                 </div>
                                             </div>
                                         </li>
-
+                                        <li *ngFor="let person of peopleToConfirm">
+                                            <div class="row">
+                                                <div class="col-xs-3">
+                                                    <div class="avatar">
+                                                        <img src="assets/img/{{person.icon}}.png" alt="Circle Image" class="img-circle img-no-padding img-responsive">
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-4">
+                                                    <h3>{{person.name}}</h3>
+                                                    <span class="text-success"><small>Satisfaction : {{person.satisfactionLevel | number : '1.2-2'}} %</small></span>
+                                                </div>
+                                                <div class="col-xs-5">
+                                                    <div class="col-xs-5">
+                                                        <button type="button" class="btn btn-outline-success" (click)="confirmPerson(person.ID)">Confirm</button>
+                                                    </div>
+                                                    <div class="col-xs-2">
+                                                        
+                                                    </div>
+                                                    <div class="col-xs-5">
+                                                        <button type="button" class="btn btn-outline-danger" (click)="discardPerson(person.ID)">Discard</button>
+                                                    </div>
+                                                   
+                                                </div>
+                                            </div>
+                                        </li>
                                     </ul>
                         </div>
                         <div class="footer">
@@ -288,7 +336,7 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="card" [hidden]="userDetails != 0">
+                    <div class="card" [hidden]="userDetails != 0 || proposals.length === 0">
                         <div class="header">
                             <h4 class="title">Proposal placed</h4>
                         </div>
@@ -304,22 +352,24 @@
                                                 <div class="col-xs-6">
                                                     {{person.name}}
                                                     <br />
-                                                    <span class="text-success"><small>Satisfaction : {{person.satisfactionLevel}}</small></span>
+                                                    <span class="text-success" *ngFor="let prop of person.proposals | proposal:companyID"><small>Amount proposed : {{prop.Amount}}</small></span>
                                                 </div>
-
+                                                <div class="icon-big icon-danger text-center">
+                                                    <i class="ti-close" (click)="removeOffer(person.ID)"></i>
+                                                </div> 
                                             </div>
                                         </li>
 
-                                    </ul>
+                            </ul>
                         </div>
                     
                     </div>
 
-                    <div class="card">
+                    <div class="card" [hidden]="selectedPerson === null">
                             <div class="header">
                                 <h4 class="title" [hidden]="userDetails != 1">Merit increase</h4>
                                 <h4 class="title" [hidden]="userDetails != 2">Retention Bonus</h4>
-                                <h4 class="title" [hidden]="userDetails != 3">Improve features skills</h4>
+                                <!--<h4 class="title" [hidden]="userDetails != 3">Improve features skills</h4> -->
                                 <h4 class="title" [hidden]="userDetails != 4">Improve Market Trends skill</h4>
                                 <p (click)="toggleCourses(selectedPerson,0)">Click here to show the proposal placed </p>
                             </div>
@@ -346,7 +396,7 @@
                                                                     <dt>Satisfactional Level</dt>
                                                                     <dd>{{selectedPerson.satisfactionLevel}}</dd>
 
-                                                                    
+                                                                    <!--
                                                                     <hr>
                                                                     <dt>Courses enrolled</dt>
                                                                     <dd *ngFor="let course of selectedPerson.courses">{{course.period}} - {{course.feature}} {{course.marketTrend}} : {{course.hours}} hours spent</dd>     
@@ -358,6 +408,7 @@
                                                                     <hr>
                                                                     <dt>Retention bonus Gained</dt>
                                                                     <dd *ngFor="let retention of selectedPerson.retentionBonuses">{{retention.period}} - {{retention.money}} K€</dd>  
+                                                                    -->
                                                                     
                                                             </dl>
                                                     </div>
@@ -410,6 +461,7 @@
                                                                 </div>
                                                         </form>
 
+                                                        <!--
                                                         <form [hidden]="userDetails != 3">
                                                                 <div class="row" >
                                                                     <div class="col-md-4">
@@ -456,7 +508,8 @@
                                                                             </div>   
                                                                 </div>
                                                         </form>         
-                                                        
+                                                        -->
+
                                                         <form [hidden]="userDetails != 4">
                                                                 <div class="row" >
                                                                     <div class="col-md-4">

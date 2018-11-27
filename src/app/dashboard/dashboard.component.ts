@@ -24,6 +24,7 @@ export class DashboardComponent implements OnInit {
 
   private company:Company;
   private team=[];
+  private peopleToConfirm=[];
   private proposals=[];
   private marketTrends={};
   private marketTrendsList=[];
@@ -34,7 +35,7 @@ export class DashboardComponent implements OnInit {
   private hoursToInvest:number=0;
   private moneyToInvest:number=0;
   private userDetails:number=0;
-  private selectedPerson;
+  private selectedPerson=null;
   private labels=[];
   private personalScore=[];
   private marketScore=[];
@@ -62,7 +63,6 @@ export class DashboardComponent implements OnInit {
               private marketService: MarketService) { this.notifier = this.notifierService; }
 
   ngOnInit() {
-    console.log("Dashboard.component --> ON-INIT");
     this.companyID = this.cookieService.get('companyID');
     this.gameID = this.cookieService.get('gameID');
     this.userDetails=0;
@@ -79,12 +79,13 @@ export class DashboardComponent implements OnInit {
       this.company=CompanyDet['data'];
 
       this.team=[];
+      
       CompanyDet['data']['presalesTeam'].forEach( p =>{
         this.presalesService.getPresale(p,this.gameID)
         .subscribe( person =>{
           this.team.push(person['data']['person']);
           this.marketTrends=person['data']['marketTrends'];
-          this.selectedPerson=this.team[0];
+          //this.selectedPerson=this.team[0];
 
           var _this=this;
           Object.keys(this.marketTrends).forEach(function(trend) {
@@ -93,12 +94,19 @@ export class DashboardComponent implements OnInit {
           });
         })
       })
-
+      this.peopleToConfirm=[];
+      CompanyDet['data']['peopleToConfirm'].forEach( p =>{
+        this.presalesService.getPresale(p,this.gameID)
+        .subscribe( person =>{
+          this.peopleToConfirm.push(person['data']['person']);
+        })
+      })
       
       this.proposals=[];
       CompanyDet['data']['proposal'].forEach( p =>{
         this.presalesService.getPresale(p,this.gameID)
         .subscribe( person =>{
+
           this.proposals.push(person['data']['person']);
         })
       })
@@ -185,6 +193,8 @@ export class DashboardComponent implements OnInit {
       else
         this.notifier.notify( 'error', 'Error while getting Marketing Campain');
 
+      this.hoursToInvest=0;
+      this.moneyToInvest=0;
       this.ngOnInit();
     })
     
@@ -257,6 +267,19 @@ export class DashboardComponent implements OnInit {
     })    
   }
 
+  removeOffer(candidateId){
+    this.marketService.removeOffer(this.gameID, this.companyID, candidateId)
+    .subscribe ( res =>{
+      if(res['result'] === 'OK'){
+        this.notifier.notify( 'success', 'Retention Bonus succesfully assigned');
+      }
+      else
+        this.notifier.notify( 'error', 'Error while assigning the retention Bonus');
+
+      this.ngOnInit();
+    })    
+  }
+
   featureSuggestion(){
 
     if(this.featureToImprove.length > 1){
@@ -299,5 +322,41 @@ export class DashboardComponent implements OnInit {
     })  
   }
 
+  confirmPerson(person){
+    this.marketService.confirmOffer(this.gameID, this.companyID, person)
+    .subscribe( res =>{
+      if(res['result'] === 'OK'){
+        this.notifier.notify( 'success', 'Person succesfully confirmed');
+        this.ngOnInit();
+      }
+      else
+        this.notifier.notify( 'error', 'Error while Confirming this person');
+    })
+  }
+
+  discardPerson(person){
+    this.marketService.declineOffer(this.gameID, this.companyID, person)
+    .subscribe( res =>{
+      if(res['result'] === 'OK'){
+        this.notifier.notify( 'warning', 'Person succesfully declined, You payed the penalty');
+        this.ngOnInit();
+      }
+      else
+        this.notifier.notify( 'error', 'Error while declined this person');
+    })
+  }
+
+  removeCampain(idx){
+    console.log("Remove campain having index : ",idx);
+    this.companyService.delCampain(this.companyID, this.gameID, idx)
+    .subscribe( res =>{
+      if(res['result'] === 'OK'){
+        this.notifier.notify( 'warning', 'Campain removed');
+        this.ngOnInit();
+      }
+      else
+        this.notifier.notify( 'error', 'Error while removing campain');
+    })    
+  }
 
 }

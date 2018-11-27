@@ -64,6 +64,21 @@ export class MarketService {
               .map(res => { return this.processHTTPMsgService.extractData(res); });
     }
 
+    removeOffer(gameId, CompanyId, PersonId){
+      const headerDict = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'gameID' : gameId
+      }
+      
+      const requestOptions = {                                                                                                                                                                                 
+        headers: new Headers(headerDict), 
+      };
+
+      return this.http.delete(baseURL + 'market/proposal/'+CompanyId+'/'+PersonId,requestOptions)
+              .map(res => { return this.processHTTPMsgService.extractData(res); });
+    }
+
     offerRetentionBonus(gameId, CompanyId, PersonId, offer){
       const headerDict = {
         'Content-Type': 'application/json',
@@ -96,6 +111,37 @@ export class MarketService {
       else
         return this.http.post(baseURL + 'market/course/'+CompanyId+'/'+PersonId, {marketTrend:feature, money:money, hours:hours, quantity:gain},requestOptions)
                 .map(res => { return this.processHTTPMsgService.extractData(res); });              
-    }       
+    }      
+    
+    
+    confirmOffer(gameId, CompanyId, PersonId){
+      const headerDict = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'gameID' : gameId
+      }
+      
+      const requestOptions = {                                                                                                                                                                                 
+        headers: new Headers(headerDict), 
+      };
+
+      return this.http.post(baseURL + 'market/evaluate', {personID:PersonId, companyID:CompanyId},requestOptions)
+              .map(res => { return this.processHTTPMsgService.extractData(res); });
+    }    
+
+    declineOffer(gameId, CompanyId, PersonId){
+      const headerDict = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'gameID' : gameId
+      }
+      
+      const requestOptions = {                                                                                                                                                                                 
+        headers: new Headers(headerDict), 
+      };
+
+      return this.http.put(baseURL + 'market/evaluate/', {personID:PersonId, companyID:CompanyId},requestOptions)
+              .map(res => { return this.processHTTPMsgService.extractData(res); });
+    }    
   }
 

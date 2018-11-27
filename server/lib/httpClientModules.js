@@ -9,13 +9,12 @@ var post_data = {
     name: "Qlik",
     message: "Wellcome to the game!",
     value: 86,
-    oppyValues: [0,1400],
+    oppyValues: [0,14000],
     cost:150,
     hours:15,
     feature: "Open API",
     points: 3,
-    percentage: 25,
-    oppyValues:[30,150],
+    percentage: 25
 
 };
 
@@ -274,6 +273,19 @@ module.exports = {
                 fulfill(res);
             }, error => reject(error))
         })    
-    }    
-    
+    },
+
+    nextPeriod : function(){
+        options.path="/api/market/nextPeriod";
+        options.method="GET";
+        return new Promise ( (fulfill, reject) => {
+            getRequest()
+            .then( res => {
+                fulfill(res);
+            }, error => reject(error))
+            .catch( err =>{
+                console.log("Error : ",err);
+            })
+        })    
+    }   
 }

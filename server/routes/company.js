@@ -89,7 +89,15 @@ router.route('/:companyID/TOP')
     res.status(200).json({result:'OK', message:'TOP has been disabled'});
 })
 
-router.route('/:companyID/Compain')
+router.route('/:companyID/flush')
+.post( function(req, res, next) {
+    if(m[req.headers.gameid].getCompany(req.params.companyID).saveQuarterResultToFile(req.body.quarter))
+        res.status(200).json({result:'OK', message:'Quarter logs suffesfully saved'});
+    else
+        res.status(200).json({result:'WARNING', message:'Error while save quarter logs'});
+})
+
+router.route('/:companyID/Campain')
 .get( function(req, res, next) {
     res.status(209).json({result:'WARNING', message:'This function has not been implemented yet'});
 })
@@ -100,10 +108,12 @@ router.route('/:companyID/Compain')
         res.status(200).json({result:'WARNING', message:'Sorry, you have not enought budget nor hours for this campain'})
 })
 .put( function (req, res, next){
-    res.status(209).json({result:'WARNING', message:'This function has not been implemented yet'});
+    m[req.headers.gameid].getCompany(req.params.companyID).deleteMarketCampain(req.body.idx);
+    res.status(209).json({result:'OK', message:'Campain removed'});
 })
 .delete( function (req, res, next){
-    res.status(209).json({result:'WARNING', message:'This function has not been implemented yet'});
+    m[req.headers.gameid].getCompany(req.params.companyID).deleteMarketCampain(req.body.idx);
+    res.status(209).json({result:'OK', message:'Campain removed'});
 })
 
 router.route('/:companyID/ProductFeature')

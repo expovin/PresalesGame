@@ -111,6 +111,10 @@ var peopleToHire={};
             console.log(" ---> All campain run. Calculate the BR share <---");
             return ( httpClient.BRShare())
         })
+        .then( () =>{
+            console.log(" --> Market campain run for all companies");
+            return (httpClient.nextPeriod())
+        })
 
 
 /*

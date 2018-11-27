@@ -2,6 +2,7 @@ var settings = require("./settings");
 var crypto = require('crypto');
 //const Market = require('./ClassMarket');
 const helper = require('./helper');
+const fs = require('fs');
 
 class Company {
     constructor(name, ProductBasicFeatures){
@@ -80,11 +81,11 @@ class Company {
     }
 
     createOppyWonQuarter(quarter) { this.oppyCompeted[quarter]={}}
-    addOppy(oppyID,quarter,value,TTC,Cost,won) { 
+    addOppy(oppyID,quarter,value,realValue,TTC,Cost,idx,won) { 
         if(won)
-            this.oppyCompeted[oppyID]={quarter:quarter, value:value, TTC:TTC,Cost:Cost,outcome:"WON"}
+            this.oppyCompeted[oppyID]={quarter:quarter, InitialValue:value, closeValue:realValue, TTC:TTC,Cost:Cost,budget:this.budget,hoursLeft:this.totalHours,idx:idx,outcome:"WON"}
         else
-            this.oppyCompeted[oppyID]={quarter:quarter, value:value, TTC:TTC,Cost:Cost,outcome:"LOST"}
+            this.oppyCompeted[oppyID]={quarter:quarter, InitialValue:value, closeValue:0, TTC:TTC, Cost:Cost, budget:this.budget, hoursLeft:this.totalHours, idx:idx, outcome:"LOST"}
     }
     addOppyNotCompeted(oppyID, quarter) { this.oppyNotCompeted.push({quarter:quarter, oppy:oppyID})}
     saveRemainingHours(quarter) { this.endQuarterRemainingHours.push({quarter: quarter, hours:this.totalHours})}
@@ -104,6 +105,7 @@ class Company {
         }
 
         /** Check Trends Constraint*/
+        /*
         if(this.oppyConstraint.flgTrend){
             let trendFound=false;
             oppy.getTrends().forEach( t =>{
@@ -112,8 +114,9 @@ class Company {
             })
             join=trendFound;
         }
-
+        */
         /** Check Features constraint to implement */
+        /*
         if(this.oppyConstraint.flgFeature){
             let featureFound=false;
             oppy.getFeatures().forEach( f =>{
@@ -122,36 +125,21 @@ class Company {
             })
             join=trendFound;
         }
-
+        */
         /** Check Workers to implement */
         /** Check Industry to implement */
             
+        /** Check left hours */
+        if( this.totalHours < oppy.getTTC()  ){
+            this.totalHours=0;
+            join=false;
+        }
 
         if(join){
             /** Decrement Opportunity hours and Budget */
-            this.budget -= oppy.getAssociatedCost();
+            //this.budget -= oppy.getAssociatedCost();
             this.totalHours -= oppy.getTTC();
 
-            /** If this opportunity require more hours or budget then the company's have
-             *  The attrib will be set to zero and the company cannot compete
-             */
-            if(this.budget <= 0 || isNaN(this.budget)) { 
-                this.budget = 0;
-                this.isBankrupt=true;
-                join=false;
-            }
-
-            if( this.totalHours <= 0) { 
-                this.totalHours = 0;
-                join=false;
-            }
-        }
-
-        /** If this company has run out of hours or budget cannot compete! */
-        if(( this.budget === 0 ) || (this.totalHours === 0) || isNaN(this.budget)){
-            this.sendMessage({type:'warning', msg:"Sorry, you can't compete on the oppy "+oppy.getID()+" because you run out of budget or hours.Current budget : "+this.budget+" current hours : "+this.totalHours});
-            this.addOppyNotCompeted(oppy.getID(), quarter);
-            join=false;
         }
 
         return(join);
@@ -298,9 +286,7 @@ class Company {
     }
 
     decreaseBrendRecognition(){ 
-        console.log("BR pre : ",this.brendRecognition);
         this.brendRecognition /= 2;
-        console.log("BR post : ",this.brendRecognition);
     } //(1-p/100)}
 
     payHours(hours) { 
@@ -312,12 +298,10 @@ class Company {
     }
 
     payMoney(money) {
-        console.log("Budget pre operation : ", this.budget, "Money to pay : ",money);
         if(this.budget - money < 0)
             return (false);
 
         this.budget-=money 
-        console.log("Budget after operation : ", this.budget);
         return (true);
     }
 
@@ -357,6 +341,44 @@ class Company {
     setOppyIndustry(industries){ this.oppyConstraint.Industry=industries}
     /********************** */
 
+    saveQuarterResultToFile(quarter){        
+        let fileName=this.id+"_"+quarter+"_OppyCompleted.csv";
+        let data="CompanyId;OpportunitiesId;quarter;InitialValue;ClosedValue;TTC;budget;hoursLeft;idx;outcome\r\n";
+        console.log("Saving data to file : ",fileName);
+        Object.keys(this.oppyCompeted).forEach((oppyId, index) => {
+            data += this.id+";"+oppyId+","+this.oppyCompeted[oppyId].quarter+";"+this.oppyCompeted[oppyId].InitialValue+
+                    ";"+this.oppyCompeted[oppyId].closeValue+";"+this.oppyCompeted[oppyId].TTC+";"+this.oppyCompeted[oppyId].budget+
+                    ";"+this.oppyCompeted[oppyId].hoursLeft+";"+this.oppyCompeted[oppyId].idx+";"+this.oppyCompeted[oppyId].outcome+"\r\n";
+
+
+            if(index === Object.keys(this.oppyCompeted).length -1){
+                fs.writeFile(settings.quarterLogFilePath+fileName,data, function(err){
+                    if(err){
+                        console.log("Error while writing the file ",fileName, " : ", err);
+                        return (false);
+                    }
+                    console.log("File ",fileName," succesfully saved");
+                    return (true);
+                })
+            }
+        })
+
+        let productFeatureFileName=this.id+"_"+quarter+"_ProductFeatures.csv";
+        let prodFeaturesData="CompanyId;quarter;ProductFeatureName;ProductFeatureScore\r\n";
+        Object.keys(this.productFeatures).forEach((feature, index) => {
+            prodFeaturesData += this.id+";"+quarter+";"+this.productFeatures[feature].name+";"+this.productFeatures[feature].score+"\r\n";
+            if(index === Object.keys(this.productFeatures).length -1){
+                fs.writeFile(settings.quarterLogFilePath+productFeatureFileName,prodFeaturesData, function(err){
+                    if(err){
+                        console.log("Error while writing the file ",productFeatureFileName, " : ", err);
+                        return (false);
+                    }
+                    console.log("File ",productFeatureFileName," succesfully saved");
+                    return (true);
+                })
+            }
+        })
+    }
 
     getValues(){ return(this) }
 }

@@ -10,7 +10,7 @@ const features = require('./dictionary').features;
 const periods = require('./dictionary').periods;
 const customers = require('./dictionary').companies;
 const wsClass = require('./wsMessages');
-
+const fs = require('fs');
 
 const QIX = require('../lib/ClassQIX');
 
@@ -50,11 +50,9 @@ class Market {
         return new Promise ( (fulfill, reject) =>{
             this.qix.createApp()
             .then (appID =>{
-                console.log("Document created")
                 return (this.qix.openDoc(appID.qAppId))
             })
             .then(result =>{
-                console.log("Document opened");
                 this.qix.addTable(this.MarketTrends,"MarketTrends");
                 this.qix.addTable(this.OppyDeserialized,"Opportunities");
                 this.qix.addTable(this.OppyTrendsDeserialized,"OpportunityTrends");
@@ -65,11 +63,9 @@ class Market {
                 return (this.qix.reloadApp())         
             })
             .then( () =>{
-                console.log("App reloaded");
                 fulfill(true);
             })
             .catch( error =>{
-                console.log("Error while loading data to QIX ",error);
                 reject(error);
             })
         })
@@ -85,21 +81,12 @@ class Market {
             let companyInvestment=0;
             _this.Companies[companyID].getMarketCampain().forEach ( campain => {
                 companyInvestment += campain.money + campain.hours*10;
-                console.log(campain);
-                console.log(companyInvestment);
             })
-            console.log("Total inv for this company",companyInvestment);
             CompanyCampains.push({companyName : _this.Companies[companyID], cost : companyInvestment});
             totalInvestment += companyInvestment;
-            console.log("Total Investment : ",totalInvestment)
         });
-
-
-        console.log("--------------------------");
         CompanyCampains.forEach( company => {
-            console.log(company);
             let share = (company.cost / totalInvestment) * 100;
-            console.log("----> share  : ",share);
             _this.brendRecognitionShare.push({company:company.companyName.getName(), investment: company.cost, share: share})
             company.companyName.setBrendRecognition(share);
         })
@@ -222,7 +209,7 @@ class Market {
         Object.keys(this.Companies).forEach(function(companyID) {
             let totalPeopleCosts = 0;
             _this.Companies[companyID].getPresalesTeam().forEach( personID => totalPeopleCosts += _this.People[personID].getCost())
-            _this.Companies[companyID].payQuarterCosts(totalPeopleCosts);
+            _this.Companies[companyID].payQuarterCosts(totalPeopleCosts/4);
             //_this.Companies[companyID].createOppyWonQuarter(_this.quarter);
 
             _this.Companies[companyID].saveBudgetInfo();
@@ -230,15 +217,17 @@ class Market {
           });
 
         // Loop for each opportunity and pass them to the companies.
-        this.Opportunities.forEach( oppy => {
+        this.Opportunities.forEach( (oppy,oppyNum) => {
             if( oppy.isOpen()){
+                winner=null;
                 msg={type:'ongoing',msg:'Elaborating Opportunity '+oppy.getID()};
                 this.wsM.sendTextMessage(JSON.stringify(msg));
-                Object.keys(this.Companies).forEach(companyID => {  
+                Object.keys(this.Companies).forEach(companyID => {
+                    
                     /** If the company want to compete */
-                    var gonnaCompete=_this.Companies[companyID].competeOnOpportunity(oppy, this.quarter);
+                    var gonnaCompete =_this.Companies[companyID].competeOnOpportunity(oppy, this.quarter);
                     if(gonnaCompete){
-                        this.Companies[companyID].addOppy(oppy.getID(), this.quarter, oppy.getValue(), oppy.getTTC(), oppy.getAssociatedCost(),false)
+                        this.Companies[companyID].addOppy(oppy.getID(), this.quarter, oppy.getValue(), 0, oppy.getTTC(), oppy.getAssociatedCost(),oppyNum, false)
                         /** Let's make the calcolation */
                         var CompanyRecord = _this.scoreCalculus(companyID, oppy);
                         oppy.addPretender(CompanyRecord);       // Add the company as pretender
@@ -248,11 +237,15 @@ class Market {
                             winner = companyID;
                         }
                     }
+                    else{
+                        this.Companies[companyID].sendMessage({type:'warning', msg:"Sorry, you can't compete on the oppy "+oppy.getID()+" because you run out of hours."});
+                        this.Companies[companyID].addOppyNotCompeted(oppy.getID(), this.quarter);
+                    }
                 })
                 if(winner !== null){
                     oppy.close();
                     oppy.setWinner(winner);         // Set the Winner on the Company record
-                    this.Companies[winner].addOppy(oppy.getID(), this.quarter, oppy.getValue(), oppy.getTTC(), oppy.getAssociatedCost(),true)
+                    this.Companies[winner].addOppy(oppy.getID(), this.quarter, oppy.getValue(), oppy.getRealValue(), oppy.getTTC(), oppy.getAssociatedCost(),oppyNum,true)
                     this.Companies[winner].cashIn(oppy.getRealValue())
                     //this.Companies[winner].sendMessage("Congratulation, you won the oppy ID "+oppy.getID()+
                     //                                    " original value was "+oppy.getValue()+" the real income value is "+oppy.getRealValue()
@@ -265,12 +258,14 @@ class Market {
 
 
 
-        /** Ending Fight, get start with the next Quarter */
-        
+        /** Saving Opportunities statistics */
+        this.saveQuarterResultToFile(this.quarter,this.getOpportunities())
         
 
         /** Move forward to the next Quarter */
         Object.keys(this.Companies).forEach(function(companyID) {
+            /** Save Company statistics */
+            _this.Companies[companyID].saveQuarterResultToFile(_this.quarter);
             /** Save the amount of hours left */
             _this.Companies[companyID].saveRemainingHours(_this.quarter);
             /** Reset the total hours for each Company */
@@ -370,9 +365,7 @@ class Market {
         Company.presalesTeam.forEach( p => {
             teamWorkLevel += this.People[p].getSkillTW();
         })
-        console.log("teamWorkLevel : ",teamWorkLevel);
         teamWorkLevel /= Company.presalesTeam.length;
-        console.log("teamWorkLevel : ",teamWorkLevel);
 
         return(teamWorkLevel);
     }
@@ -452,7 +445,90 @@ class Market {
         return 0;
       }    
 
+    saveQuarterResultToFile(quarter,data){
+        let generalFileName="General_"+quarter+"_Opportunities.csv";
+        let dataGeneral="OpportunityId;CompanyName;Quarter;TeoricalValue;VariationPerc;RealValue;QualificationLevel;TTC;Winner;Status\r\n";
 
+        data.forEach((oppy,index) =>{
+            dataGeneral += oppy.ID+";"+oppy.CompanyName+";"+quarter+";"+oppy.teoricalValue+";"+oppy.variationPerc+";"+oppy.realOppyValue+
+                            ";"+oppy.qualificationLevel+";"+oppy.TTC+";"+oppy.winner+";"+oppy.status+"\r\n";
+
+            if(index === data.length -1){
+                fs.writeFile(settings.quarterLogFilePath+generalFileName,dataGeneral, function(err){
+                    if(err){
+                        console.log("Error while writing the file ",generalFileName, " : ", err);
+                        return (false);
+                    }
+                    console.log("File ",generalFileName," succesfully saved");
+                    return (true);
+                })
+            }
+            this.saveFeatures(oppy.ID,quarter,oppy.features);
+            this.savePretenders(oppy.ID,quarter,oppy.pretenders);
+            this.saveTrends(oppy.ID, quarter, oppy.TrendsRequired);
+        })
+    }
+
+    saveFeatures(id,quarter,data){
+        let featureFileName=id+"_"+quarter+"_Features.csv";
+        let dataFeatures="OpportunityId;quarter;FeatureName;FeatureScore\r\n";
+        console.log(data);
+        data.forEach((f,index) =>{
+            dataFeatures += id+";"+quarter+";"+f.name+";"+f.score+"\r\n";
+
+            if(index === data.length -1){
+                fs.writeFile(settings.quarterLogFilePath+featureFileName,dataFeatures, function(err){
+                    if(err){
+                        console.log("Error while writing the file ",featureFileName, " : ", err);
+                        return (false);
+                    }
+                    console.log("File ",featureFileName," succesfully saved");
+                    return (true);
+                })
+            }
+        })
+    }
+
+    savePretenders(id,quarter,data){
+        let pretendersFileName=id+"_"+quarter+"_Pretenders.csv";
+        let dataPretenders="OpportunityId;quarter;CompanyId;TrendScore;FeatureScore;BA;BR\r\n";
+
+        data.forEach((pretender,index) =>{
+            dataPretenders += id+";"+quarter+";"+pretender.companyID+";"+pretender.TrendScore+";"+pretender.FeatureScore+
+                            ";"+pretender.BA+";"+pretender.BR+"\r\n";
+
+            if(index === data.length -1){
+                fs.writeFile(settings.quarterLogFilePath+pretendersFileName,dataPretenders, function(err){
+                    if(err){
+                        console.log("Error while writing the file ",pretendersFileName, " : ", err);
+                        return (false);
+                    }
+                    console.log("File ",pretendersFileName," succesfully saved");
+                    return (true);
+                })
+            }
+        })
+    }
+
+    saveTrends(id,quarter,data){
+        let trendsFileName=id+"_"+quarter+"_Trends.csv";
+        let dataTrends="OpportunityId;quarter;Trend\r\n";
+
+        data.forEach((trend,index) =>{
+            dataTrends += id+";"+quarter+";"+trend+"\r\n";
+
+            if(index === data.length -1){
+                fs.writeFile(settings.quarterLogFilePath+trendsFileName,dataTrends, function(err){
+                    if(err){
+                        console.log("Error while writing the file ",trendsFileName, " : ", err);
+                        return (false);
+                    }
+                    console.log("File ",trendsFileName," succesfully saved");
+                    return (true);
+                })
+            }
+        })
+    }
 }
 
 

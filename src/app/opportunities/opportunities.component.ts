@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { OpportunitiesService } from '../services/opportunities.service'
 import { CookieService } from 'ngx-cookie-service';
 import { MessageService } from '../services/message.service'
-import { Opportunity } from '../shared/oppy';
+import { Config } from '../shared/config.js';
 import picasso from 'picasso.js';
 import PicassoCharts from '../shared/PicassoCharts.js';
 import { CompanyService } from '../services/company.service';
@@ -26,6 +26,7 @@ export class OpportunitiesComponent implements OnInit {
   private lblValue="Enable";
   private lblQualification="Enable";
   private btnClassArray={};
+  private config=Config;
 
 
   constructor(private opportunitiesService: OpportunitiesService, 
@@ -35,6 +36,7 @@ export class OpportunitiesComponent implements OnInit {
 
   ngOnInit() {
 
+    console.log(this.config.showOpportunities);
     this.gameID = this.cookieService.get('gameID');
     this.companyID = this.cookieService.get('companyID');
 

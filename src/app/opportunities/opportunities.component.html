@@ -41,7 +41,7 @@
             </div>
         </div>
         <div class="row">
-                <div class="col-md-8 table-Fix">
+                <div class="col-md-7 table-Fix" [hidden]="!config.showOpportunities">
                         <div class="card card-plain">
                             <div class="header">
                                 <h4 class="title">Market Opportunities</h4>
@@ -70,6 +70,7 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-1"></div>
                     <div class="col-md-4">
                         <div class="row">
                             <div class="row">
