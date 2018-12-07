@@ -5,10 +5,10 @@
 		Tip 2: you can change the color of the active button using the data-active-color="primary | info | success | warning | danger"
 	-->
 
-    	<div class="sidebar-wrapper">
+    	<div class="sidebar-wrapper" *ngIf="companyDetails !== undefined">
             <div class="logo">
                 <a href="http://www.creative-tim.com" class="simple-text">
-                    {{companyName}}
+                    {{companyDetails.name}}
                 </a>
             </div>
 
@@ -38,28 +38,16 @@
                         <p>Opportunities</p>
                     </a>
                 </li>
-                <li routerLinkActive="active">
+                <li routerLinkActive="active" *ngIf="companyDetails.isBAMEnabled">
                     <a routerLink="bam">
                         <i class="ti-pencil-alt2"></i>
                         <p>BAM</p>
                     </a>
                 </li>
-                <li routerLinkActive="active">
-                    <a href="top">
+                <li routerLinkActive="active" *ngIf="companyDetails.isTOPEnabled">
+                    <a routerLink="top">
                         <i class="ti-map"></i>
                         <p>TOP</p>
-                    </a>
-                </li>
-                <li routerLinkActive="active">
-                    <a href="notifications.html">
-                        <i class="ti-bell"></i>
-                        <p>Notifications</p>
-                    </a>
-                </li>
-				<li class="active-pro">
-                    <a href="upgrade.html">
-                        <i class="ti-export"></i>
-                        <p>Upgrade to PRO</p>
                     </a>
                 </li>
             </ul>

@@ -11,6 +11,7 @@ const periods = require('./dictionary').periods;
 const customers = require('./dictionary').companies;
 const wsClass = require('./wsMessages');
 const fs = require('fs');
+const Oppy = require('../lib/ClassOpportunities');
 
 const QIX = require('../lib/ClassQIX');
 
@@ -44,6 +45,12 @@ class Market {
         this.QIncomeCompanyRanking=[];
         this.wsM = new wsClass();
 
+        this.oppyMinValue;
+        this.oppyMaxValue;
+        this.oppyTTCmin;
+        this.oppyTTCmax;
+        this.oppyNum;
+
     }
 
     initQIX(m){
@@ -69,6 +76,14 @@ class Market {
                 reject(error);
             })
         })
+    }
+
+    setOppyParameters(num, MinValue, MaxValue, TTCMin, TTCMax){
+        this.oppyMinValue=MinValue;
+        this.oppyMaxValue=MaxValue;
+        this.oppyTTCmin=TTCMin;
+        this.oppyTTCmax=TTCMax;
+        this.oppyNum=num;
     }
 
     assignBrendRecognition(){
@@ -150,43 +165,45 @@ class Market {
             featureScoreNormalized=0,
             avgBANormalized=0,
             brandRecognitionNormalized=0;
+            
+        /** Trend Score */
         let trendScore =0;
         oppy.getTrends().forEach( (trend, index) => {
-            let maxTrendScore=0;
+            let sumTrendScore=0;
             this.Companies[companyID].getPresalesTeam().forEach( personID => {
                 this.People[personID].getTrends().forEach( t => {
-                    if((trend === t.name) && (t.score > maxTrendScore))
-                        maxTrendScore=t.score
+                    if((trend === t.name))
+                        sumTrendScore += settings.TrendWeight[index];
                 })
             })
-            trendScore += settings.TrendWeight[index]*maxTrendScore;
-            trendScoreNormalized = trendScore/14 * settings.weighCompetition.Trends | 0;
+            //trendScore /= this.Companies[companyID].getPresalesTeam().length; //settings.TrendWeight[index]*maxTrendScore;
+            trendScoreNormalized = (sumTrendScore  * settings.weighCompetition.Trends)/12 | 0;
 
         })
 
         /** Get the feature weight */
         let featureScore=0;
         oppy.getFeatures().forEach( (feature, index) => {
-            let maxFeatureScore=0;
+            let sumFeatureScore=0;
             this.Companies[companyID].getPresalesTeam().forEach( personID => {
                 this.People[personID].getFeatures().forEach( f => {
-                    if((feature.name === f.name) && (f.score > maxFeatureScore))
-                        maxFeatureScore=f.score
+                    if((feature.name === f.name))
+                        sumFeatureScore += settings.FeatureWeigh[index];
                 })
             })
-            featureScore += feature.score*maxFeatureScore;
-            featureScoreNormalized = featureScore/10 * settings.weighCompetition.Features | 0;
+            //featureScore += feature.score*maxFeatureScore;
+            featureScoreNormalized = (sumFeatureScore * settings.weighCompetition.Features)/12 | 0;
         })
         
         /** Get the Business Acumen Average  */
         let summBA=0;
         this.Companies[companyID].getPresalesTeam().forEach( personID => summBA += this.People[personID].getSkillBA())
         let avgBA=summBA/this.Companies[companyID].getPresalesTeam().length;
-        avgBANormalized = avgBA * settings.weighCompetition.BA | 0;
+        avgBANormalized = (avgBA * settings.weighCompetition.BA)/100 | 0;
 
         /** Get the Brend Recognition */
         let brandRecognition = this.Companies[companyID].getBrendRecognition();
-        brandRecognitionNormalized = brandRecognition * settings.weighCompetition.BR | 0;
+        brandRecognitionNormalized = (brandRecognition * settings.weighCompetition.BR)/100 | 0;
 
         return ({companyID: companyID, TrendScore: trendScoreNormalized, FeatureScore: featureScoreNormalized, BA: avgBANormalized, BR: brandRecognitionNormalized})
 
@@ -260,10 +277,16 @@ class Market {
 
         /** Saving Opportunities statistics */
         this.saveQuarterResultToFile(this.quarter,this.getOpportunities())
+
+        /** Saving Employed people statistics */
+        let employedPeople = this.getPeople(true);
+        Object.keys(employedPeople).forEach( personId => employedPeople[personId].saveQuarterResultToFile(this.quarter))
         
 
         /** Move forward to the next Quarter */
         Object.keys(this.Companies).forEach(function(companyID) {
+            /** Save company statistics */
+            _this.Companies[companyID].saveTeamToFile(_this.quarter);
             /** Save Company statistics */
             _this.Companies[companyID].saveQuarterResultToFile(_this.quarter);
             /** Save the amount of hours left */
@@ -279,6 +302,7 @@ class Market {
             _this.Companies[companyID].getPresalesTeam().forEach( personID =>  _this.People[personID].changeSatisfactionalLevel(decrease*(-1)))
             /** Lower the Company brad */
             _this.Companies[companyID].decreaseBrendRecognition();
+            
         });
 
         _this.QIncomeCompanyRanking.sort(function(a,b){
@@ -295,6 +319,14 @@ class Market {
         this.slightlyChangeMarketTrends();
         msg={type:'end',msg:'Calulation completed '};
         this.wsM.sendTextMessage(JSON.stringify(msg));
+
+        /** Delete old opportunitis */
+        this.deleteOpportunities();
+        /** Create new fresh opportunities */
+        for(var i=0; i<this.oppyNum; i++)
+            this.addOpportunity(new Oppy(this.oppyMinValue, this.oppyMaxValue, this.oppyTTCmin, this.oppyTTCmin));
+        this.deserializeOppy();
+
     }
 
     getQCompanyRank() {
@@ -319,13 +351,11 @@ class Market {
         else{
             var results={};
             var _this = this;
-            var isEmp=false;
-            if(employedStatus === "true")
-                isEmp=true;
             Object.keys(this.People).forEach(function(PresalesID) {
-                var Person = _this.People[PresalesID];
-                if( Person.getEmployedStatus() === isEmp )
-                    results[PresalesID]=Person;
+                if( _this.People[PresalesID].getEmployedStatus() === employedStatus ){
+                    results[PresalesID]=_this.People[PresalesID];
+                }
+                    
             });
             return results;
         }
@@ -342,7 +372,7 @@ class Market {
 
     addOpportunity(oppy) { this.Opportunities.push(oppy)}
     getOpportunities() { return(this.Opportunities)}
-    deleteOpportunities() { this.Opportunities={}}
+    deleteOpportunities() { this.Opportunities=[]}
 
     setMarketTrends(){
         trends.forEach( trend =>{
@@ -459,7 +489,7 @@ class Market {
                         console.log("Error while writing the file ",generalFileName, " : ", err);
                         return (false);
                     }
-                    console.log("File ",generalFileName," succesfully saved");
+                    //console.log("File ",generalFileName," succesfully saved");
                     return (true);
                 })
             }
@@ -482,7 +512,7 @@ class Market {
                         console.log("Error while writing the file ",featureFileName, " : ", err);
                         return (false);
                     }
-                    console.log("File ",featureFileName," succesfully saved");
+                    //console.log("File ",featureFileName," succesfully saved");
                     return (true);
                 })
             }
@@ -503,7 +533,7 @@ class Market {
                         console.log("Error while writing the file ",pretendersFileName, " : ", err);
                         return (false);
                     }
-                    console.log("File ",pretendersFileName," succesfully saved");
+                    //console.log("File ",pretendersFileName," succesfully saved");
                     return (true);
                 })
             }
@@ -523,11 +553,53 @@ class Market {
                         console.log("Error while writing the file ",trendsFileName, " : ", err);
                         return (false);
                     }
-                    console.log("File ",trendsFileName," succesfully saved");
+                    //console.log("File ",trendsFileName," succesfully saved");
                     return (true);
                 })
             }
         })
+    }
+
+    getAvgTeamTrends(companyId){
+        let avgTrends={};
+        trends.forEach( t=> {
+            avgTrends[t]=[0,0];       
+        })
+        console.log(avgTrends);
+        if(this.Companies[companyId].presalesTeam){
+            this.Companies[companyId].presalesTeam.forEach( (p,idx) =>{
+                this.People[p].person.PersonTrends.forEach( trend =>{
+                    console.log("This person ",p," has a trend ",trend.name," having score ",trend.score);
+                    console.log(avgTrends[trend.name]);
+                    avgTrends[trend.name] = [avgTrends[trend.name][0]+trend.score, avgTrends[trend.name][1]+1 ];
+                    console.log(avgTrends[trend.name]);
+                })
+    
+                if(idx === this.Companies[companyId].presalesTeam.length -1){
+                    console.log("********************************");
+                    console.log(avgTrends);
+                    console.log("********************************");
+                    console.log("Let's calculate the AVG");
+                    Object.keys(avgTrends).forEach(t =>{
+                        console.log("-------------------");
+                        console.log("Trend ",avgTrends[t]);
+                        console.log(avgTrends)
+                        if(avgTrends[t][1] !== 0){
+                            avgTrends[t][0]=avgTrends[t][0]/avgTrends[t][1];
+                            avgTrends[t][2]=avgTrends[t][1];
+                            avgTrends[t][1]=avgTrends[t][0]/this.Companies[companyId].presalesTeam.length;
+                        }
+                        else
+                        avgTrends[t]=[0,0,0];
+
+                        console.log(avgTrends)
+                        console.log("-------------------");
+                    })
+                }
+            })
+        }
+
+        return (avgTrends);
     }
 }
 

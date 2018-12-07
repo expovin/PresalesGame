@@ -2,13 +2,11 @@
     <notifier-container></notifier-container>
     <div [ngClass]="{'wrapper': true}"> 
 
-                <app-sidebar></app-sidebar>
-                    
-                
+                    <app-sidebar></app-sidebar>                                
                     <app-navbar></app-navbar>
             
                     <div [ngClass]="{'wrapperDisabled': isElaborating}">
-                        <router-outlet></router-outlet> <!--<app-dashboard></app-dashboard> --> 
+                        <router-outlet></router-outlet> 
                         <app-footer></app-footer>
                     </div>
                     

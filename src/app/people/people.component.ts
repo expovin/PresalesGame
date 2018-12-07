@@ -6,7 +6,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { Presale } from '../shared/presale';
 import { ChartsComponent } from '../charts/charts.component'
 import { NotifierService } from 'angular-notifier';
-
+import { MessageService } from '../services/message.service';
 
 @Component({
   selector: 'app-people',
@@ -24,8 +24,11 @@ export class PeopleComponent implements OnInit {
   private labels=[];
   private lablesChart=[];
   private personalScore=[];
-  private marketScore=[];
+  private avgTeamScore=[];
+  private avgTeamScoreMax=[];
+  private numPeople={};
   private notifier;
+  private avgTeamTrends={};
 
   private isPersonSelected:boolean=false;
   private isTrend:boolean=true;
@@ -41,12 +44,14 @@ export class PeopleComponent implements OnInit {
               private companyService: CompanyService,
               private marketService: MarketService,
               private notifierService: NotifierService,
+              private messageService: MessageService,
               private cookieService: CookieService) { 
     
               this.notifier = this.notifierService;
               }
 
   ngOnInit() {
+    this.messageService.setPageStatus("People");
     this.gameID = this.cookieService.get('gameID');
     this.companyID = this.cookieService.get('companyID');
 
@@ -56,7 +61,6 @@ export class PeopleComponent implements OnInit {
       Object.keys(Companies['data']).forEach(function(companyId) {
         _this.companyNameDict[companyId] = Companies['data'][companyId]['name'];
       })
-      console.log(this.companyNameDict)
     });
     
     
@@ -73,9 +77,13 @@ export class PeopleComponent implements OnInit {
 
     this.companyService.getDetails(this.companyID,this.gameID)
     .subscribe( CompanyDet =>{
-      console.log(CompanyDet['data']);
       this.companyFeatures=CompanyDet['data']['ProductBasicFeatures'];
     } );
+
+    this.marketService.getTeamAvgTrends(this.gameID,this.companyID)
+    .subscribe( res =>{
+        this.avgTeamTrends=res['data'];
+    } );    
 
   }
 
@@ -112,17 +120,20 @@ export class PeopleComponent implements OnInit {
     this.selectedPerson=person;
     this.labels=[];
     this.personalScore=[];
-    this.marketScore=[];
+    this.avgTeamScore=[];
+    this.avgTeamScoreMax=[];
     this.offer=this.selectedPerson['cost'];
     this.isPersonSelected=true;
 
 
     if(this.isTrend){
       this.selectedPerson['PersonTrends'].forEach( (t) =>{
-        this.lablesChart=['Personal Trends','Market Trends'];
+        this.lablesChart=['Personal Trends','Avg Team Trends', 'Avg Team Trends Max'];
         this.labels.push(t.name);
         this.personalScore.push(t.score);
-        this.marketScore.push(this.marketTrends[t.name])
+        this.avgTeamScore.push(this.avgTeamTrends[t.name][1]);
+        this.avgTeamScoreMax.push(this.avgTeamTrends[t.name][0]);
+        this.numPeople[t.name]=this.avgTeamTrends[t.name][2];
       })
     }
     else {
@@ -132,7 +143,7 @@ export class PeopleComponent implements OnInit {
         this.personalScore.push(f.score);
         this.companyFeatures.forEach( cf => {
           if(cf.name === f.name)
-          this.marketScore.push(cf.score)
+          this.avgTeamScore.push(cf.score)
         })
 
       })

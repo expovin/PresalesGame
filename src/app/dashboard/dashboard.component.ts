@@ -1,4 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
+import { MessageService } from '../services/message.service';
 import { CompanyService } from '../services/company.service';
 import { CookieService } from 'ngx-cookie-service';
 import { PresalesService } from '../services/presales.service';
@@ -60,13 +61,14 @@ export class DashboardComponent implements OnInit {
               private cookieService: CookieService,
               private notifierService: NotifierService,
               private presalesService: PresalesService,
+              private messageService: MessageService,
               private marketService: MarketService) { this.notifier = this.notifierService; }
 
   ngOnInit() {
     this.companyID = this.cookieService.get('companyID');
     this.gameID = this.cookieService.get('gameID');
     this.userDetails=0;
-
+    this.messageService.setPageStatus("Dashboard");
 
     this.marketService.getTeamAvgSatisfaction(this.gameID, this.companyID)
     .subscribe ( res =>{
@@ -77,6 +79,7 @@ export class DashboardComponent implements OnInit {
     this.companyService.getDetails(this.companyID,this.gameID)
     .subscribe( CompanyDet =>{
       this.company=CompanyDet['data'];
+      this.messageService.setCompany(this.company);
 
       this.team=[];
       
@@ -129,7 +132,7 @@ export class DashboardComponent implements OnInit {
       .subscribe( res =>{
         if(res['result'] === 'OK'){
           this.labelBAM="Disable BAM";
-          this.notifier.notify( 'success', 'BAM has been enabled');
+          this.notifier.notify( 'success', 'BAM has been enabled');          
         }         
         else
           this.notifier.notify( 'error', 'Error while enabling BAM');
@@ -147,7 +150,7 @@ export class DashboardComponent implements OnInit {
           this.notifier.notify( 'error', 'Error while disabling BAM');
       })
     }
-
+    this.messageService.setCompany(this.company);
     this.ngOnInit();
 
   }
@@ -178,6 +181,7 @@ export class DashboardComponent implements OnInit {
       })
     }
 
+    this.messageService.setCompany(this.company);
     this.ngOnInit();
 
   }

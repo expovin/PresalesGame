@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CompanyService } from '../services/company.service';
 import { NotifierService } from 'angular-notifier';
 import { CookieService } from 'ngx-cookie-service';
-
-
-
+import { MessageService } from '../services/message.service';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-navbar',
@@ -20,12 +19,20 @@ export class NavbarComponent implements OnInit {
   private stepNotify=null;
   private notificationLable=['Disable Notification', 'Enable Notification'];
   private notificationLableIdx=0;
+  private subscription: Subscription;
+  private pageStatus:string;
 
   constructor(private notifierService: NotifierService,
               private companyService: CompanyService,
-              
+              private messageService: MessageService,
               private cookieService: CookieService) { 
               this.notifier = this.notifierService;
+
+                this.subscription = this.messageService.getPageStatus()
+                .subscribe( selectedState => {
+                  this.pageStatus = selectedState;
+                  console.log(this.pageStatus);
+                })
 
               }
 

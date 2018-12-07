@@ -1,151 +1,301 @@
 OpportunityId;CompanyName;Quarter;TeoricalValue;VariationPerc;RealValue;QualificationLevel;TTC;Winner;Status
-dkKfhsTUf43vIb191SlWcUd9;Western Window Systems;2019 Q2;893;-38;554;2;103;e6c258674d561c2b6fdac38a79d57243;CLOSE
-dQ2HAhMQyFHItkmYHSfQv75G;Moxie Solar;2019 Q2;121;10;133;2;117;e6c258674d561c2b6fdac38a79d57243;CLOSE
-W4AilxjjHKbJ1Fv6LOplUDhN;Saitech;2019 Q2;846;15;973;4;87;737962add6b0f4823171184ee18ac3dd;CLOSE
-QFDn3E5XYe3cQC4nwBrur1ln;Savage Race;2019 Q2;269;10;296;2;102;null;OPEN
-ru4z7K2vWXNoAqIaGKfm1DGW;The Payroll Company (TPC);2019 Q2;234;13;264;3;21;null;OPEN
-LuRCn1iQlQ9duW0FSVUB2tG8;AAW Enterprises;2019 Q2;745;13;842;3;130;595c32c9d98776c9c7b553e2ffb7c2d6;CLOSE
-wELtlpInnuY902TzHoXmSiEG;Levitate Media;2019 Q2;960;9;1046;3;66;null;OPEN
-Nat1Xk9zVWydQ49GzCFjblbB;Cowan Group Engineering;2019 Q2;1211;4;1259;2;44;e6c258674d561c2b6fdac38a79d57243;CLOSE
-GiPqTs47DhiGBRg1LHjDP6Fw;Synergy Comp Insurance Company;2019 Q2;1162;14;1325;2;40;737962add6b0f4823171184ee18ac3dd;CLOSE
-K6yd1fg5hf7s6yQEsYM0j5JY;Hydra-Flex;2019 Q2;68;-49;35;1;47;737962add6b0f4823171184ee18ac3dd;CLOSE
-yhjBtrcwzQx6fEQLatxv6pSS;CardioSolution;2019 Q2;47;-50;24;1;114;null;OPEN
-2yFuNQZzxkmHggwqAEYLz7Ln;SANTE Realty Investments;2019 Q2;752;9;820;3;101;737962add6b0f4823171184ee18ac3dd;CLOSE
-GaFFnJnsRcy5CnkIsjhelxBd;P2Sample;2019 Q2;553;-10;498;2;52;437ba6fe24d7295ca42a59064db52b12;CLOSE
-f9tOCR9kV91w1AigE6nCxwXb;ROI Healthcare Solutions;2019 Q2;326;13;368;3;62;null;OPEN
-zkdrTMJZkdVpAPrSdxcIfL6q;ALKU;2019 Q2;642;15;738;4;74;737962add6b0f4823171184ee18ac3dd;CLOSE
-9vJpELnO1QYqr1IcaKwa1xw9;ERP GLOBAL;2019 Q2;803;-43;458;1;71;null;OPEN
-I3CZYQPnrloWpgKFWccnW06E;Cipher Tech Solutions;2019 Q2;52;15;60;4;54;null;OPEN
-ATercEIa2KA3rog70kS7mqyY;James Enterprise;2019 Q2;281;6;298;3;123;737962add6b0f4823171184ee18ac3dd;CLOSE
-lJQMZOhr9AC0qRwf1P8b3I0a;Opus Agency;2019 Q2;866;7;927;3;74;e6c258674d561c2b6fdac38a79d57243;CLOSE
-fT7n98qHwjQSnhE8tNNQoynm;Skull Shaver;2019 Q2;324;-12;285;2;35;null;OPEN
-VD5z2AzQnDjxrs9YgY9r7zcb;Computer Solutions Group;2019 Q2;233;15;268;4;54;null;OPEN
-59nkb9gNXu1Uk8ybsxWPyg4i;ADVANCED CARE PEDIATRICS;2019 Q2;891;-13;775;2;40;null;OPEN
-UJWsyt5jDrUgSj4HEx7yLjSM;SUNation Solar Systems;2019 Q2;566;-36;362;2;67;null;OPEN
-zWtARz2Ag08XaCPoasIh5sn0;New Penn Financial;2019 Q2;637;1;643;2;44;null;OPEN
-PxwicxgIa3fPkijofuI7a2pj;MASS Communications;2019 Q2;973;8;1051;3;80;null;OPEN
-xQ8mvc7sm1D9D9XTwE5gvs85;WebpageFX;2019 Q2;177;4;184;3;54;null;OPEN
-ZJDb8XZY86dIQMBIYGSUJlG4;RE/MAX TITANIUM;2019 Q2;76;1;77;2;13;null;OPEN
-ZH57Vp7IrsXTkmCFab81mroZ;Banyan Investment Group;2019 Q2;95;-47;50;2;134;null;OPEN
-xbTNG5AI9OeYFboawppIvbmP;MCCi;2019 Q2;859;5;902;3;51;null;OPEN
-mBZvSRUj93guRbq4ZgN7KIuu;Palmetto Technology Group;2019 Q2;1070;4;1113;2;77;null;OPEN
-VLSplK7N39taD9pPEKWW350t;Outer Banks Blue;2019 Q2;474;-49;242;1;96;null;OPEN
-I3CcMImkYoLtQ5ZWxK8x53qw;Evergreen Escapes / EG-X;2019 Q2;554;15;637;4;82;null;OPEN
-o4tGgcY6ofgQRaaD4uMFyMy6;FYZICAL Therapy & Balance Centers (Sarasota, FL);2019 Q2;237;14;270;4;121;null;OPEN
-qUarD1aNDQC1Nj1ha0XiLxRg;The Hilb Group;2019 Q2;574;-4;551;3;112;null;OPEN
-3CUln2UvUZN2fEg1wmWIfih5;IdeaScale;2019 Q2;532;14;606;4;56;null;OPEN
-kAKdpuFphrT7eEIkIh1rlyET;Disc Store;2019 Q2;64;15;74;4;29;null;OPEN
-LNGtw5YSb3tAkwP0fqLIujEy;Wallace Montgomery;2019 Q2;924;-48;480;2;25;null;OPEN
-fRVjuH4WInKhXa4Tsube2dOu;Purchasing Power;2019 Q2;533;14;608;3;45;null;OPEN
-u5Mjuf7Shh8tdYhd7oGcDBAd;Leadpages;2019 Q2;429;14;489;4;19;null;OPEN
-005pMpe4qlOtBDznLzMLimvF;Exact Solar;2019 Q2;606;13;685;4;113;null;OPEN
-PDv73EfUA9MlpQvUkgW1FgEC;OneSource Virtual;2019 Q2;89;-35;58;2;61;null;OPEN
-hcR0coN681B19i4BFkbpluhs;REVA CONSULTING;2019 Q2;571;10;628;3;5;null;OPEN
-LwSWB0hA22WcU8NGTnunC7u9;Weiss & Associates;2019 Q2;499;-17;414;2;35;null;OPEN
-9XF85cE7Au5U5OzVzxRf6321;Azulle;2019 Q2;274;15;315;4;87;null;OPEN
-pNNfHKRaz8zf5v0zqnHC79Sx;Tax Guard;2019 Q2;633;13;715;4;72;null;OPEN
-7KLEDX8zexLYfNxRCaDCJFdy;Raizlabs;2019 Q2;502;1;507;2;127;null;OPEN
-yfqgLskWE1XLXOkR97klO6iY;Clarity Partners;2019 Q2;754;6;799;2;92;null;OPEN
-0G2tg34zgH2AS0xcg8qoAmhY;Real Restoration Group;2019 Q2;606;-43;345;2;57;null;OPEN
-mGVdSMpEu74iAiiANQYPVWEn;Placers;2019 Q2;1046;-24;795;2;116;null;OPEN
-yLZZcBjMvdTe3xm5bBmy1g5E;Rabbit Air;2019 Q2;894;-17;742;3;82;null;OPEN
-h1sruxm01LGvoFaoMOAGAu16;Xyngular;2019 Q2;486;7;520;3;105;null;OPEN
-ycuwS9sR7Pj1yIwcfbyA2a3C;Full Circle Home;2019 Q2;187;-15;159;2;68;null;OPEN
-mrC35cpi2Kl3Nyar5wBQZsJo;Logistics Planning Services;2019 Q2;232;-50;116;2;107;null;OPEN
-zXuKfR2ZHjec24hpDoYpBGHx;Mindgrub Technologies;2019 Q2;1386;-50;693;1;21;null;OPEN
-k1Xj6mINRKDvCYmxSxlXqfDR;AustinCSI;2019 Q2;13;11;14;3;122;null;OPEN
-0It4qJ4RSQQniU8M3rK9EgLz;TaskUs;2019 Q2;974;-47;516;1;35;null;OPEN
-Tve4tscsZ7GEshafK0LYdDYW;eHealth Technologies;2019 Q2;1480;6;1569;3;94;null;OPEN
-BKmFwwID4yXxm5XL81Hm4mze;KeyMedia Solutions;2019 Q2;429;0;429;2;115;null;OPEN
-58v4G5BMd1701Xszi0RZFRNi;LG Fairmont;2019 Q2;223;-50;112;1;42;null;OPEN
-eckumGZ6dINJvJKwXcorfyoH;TDBBS;2019 Q2;142;5;149;2;129;null;OPEN
-cO2oswJoZ4tC2YtPr0OH2jEy;Captive Alternatives;2019 Q2;392;14;447;4;43;null;OPEN
-50WId0eYbmPm2d3wHDnEJSt7;SRS Distribution;2019 Q2;862;-7;802;2;66;null;OPEN
-wowGpVGT7C7vqGpJzDPl5k8x;Chesapeake Plumbing & Heating;2019 Q2;20;-46;11;1;92;null;OPEN
-1jK5kX5KnkLd6wffXA6OVlW6;Chameleon Integrated Services;2019 Q2;462;8;499;1;83;null;OPEN
-JdoSf2Rxi3BwWaRTmrNaXzwS;Stretch Internet;2019 Q2;1163;-16;977;2;70;null;OPEN
-EOlyEWCDqZhz3dWQoGfuPZud;Blue Corona;2019 Q2;1310;15;1506;4;54;null;OPEN
-AkVGld3cyQek7V5shgnUgeiu;ARCO Construction Company;2019 Q2;551;-19;446;2;116;null;OPEN
-Omfpx2Ees3Rb9YKCPTFVGQkF;OpenSymmetry;2019 Q2;412;-26;305;2;102;null;OPEN
-HXXaOWBNJc2M8GuVz576rz6x;ION Solar;2019 Q2;894;-23;688;2;8;null;OPEN
-Xm7Okg7pmg9LnXfcO3iLuCpJ;United Fray;2019 Q2;141;-36;90;2;70;null;OPEN
-EoBDnYwFaBGxEbdEbl0ZQZkv;Fusion PPT;2019 Q2;56;1;57;2;133;null;OPEN
-m6cP0mfpKeFRnpESKobDSRb9;Netsync Network Solutions;2019 Q2;267;3;275;2;102;null;OPEN
-eWzjtP8fTd7BcYoLUQmc4VWW;AustinCSI;2019 Q2;469;-50;235;1;111;null;OPEN
-Bsfn8S7dQTesAtBFtKCfcQlS;Dependable Global Solutions;2019 Q2;584;-49;298;1;88;null;OPEN
-F5W1HWr8m9niu6gpyKfYH7Ua;MedicOne Medical Response;2019 Q2;646;9;704;3;42;null;OPEN
-QGBPUz57ClICvmBA9cKajl1O;innoVia Events;2019 Q2;619;-49;316;1;7;null;OPEN
-n33660JSDnNz03HGtVSLbD1K;Magellan Jets;2019 Q2;525;13;593;4;68;null;OPEN
-y8bqd66WO41gRqajmfUFqvxj;Quikteks;2019 Q2;476;-38;295;2;84;null;OPEN
-687yzyG26UzaMRoKZyPkclv3;InkHouse;2019 Q2;483;14;551;4;40;null;OPEN
-Of3DTLzvY2EaOivfZTxIsvJc;Propeller;2019 Q2;1040;-17;863;2;121;null;OPEN
-FzPpT2Ako12jx5PYCVVDa6gj;PinPoint Collateral;2019 Q2;791;6;838;2;30;null;OPEN
-MgCztb3kUp4YPDcp61NBWwRV;E3 Federal Solutions;2019 Q2;729;-13;634;2;53;null;OPEN
-sHbzK9fVgVPVqCeHJwYS51qC;Hairroin Salon;2019 Q2;170;-45;94;2;77;null;OPEN
-edfxHc5nP5kf3vj9NDot9Cd1;OneTrust Home Loans;2019 Q2;715;-40;429;2;92;null;OPEN
-bY5SZvPovCYdXfu4DlXxeVK8;Intone Networks;2019 Q2;429;5;450;3;56;null;OPEN
-bSsbouaGUUVv7e9vqWwMWlmv;Property Debt Research;2019 Q2;186;-47;99;1;39;null;OPEN
-ww8fgiIUWdALqeIdJvuwhSZP;New York Global Consultants;2019 Q2;37;13;42;4;40;null;OPEN
-S2QPl6LeWvKKoJ8viROZPIti;Impiger Technologies;2019 Q2;598;7;640;2;29;null;OPEN
-WLpt9f1i899Pt0DYGP0t7Jtb;The ExecRanks;2019 Q2;911;12;1020;3;109;null;OPEN
-SoAzC0bD1ZgTQOhLLRtLUL6F;CloudSmartz;2019 Q2;76;-31;52;1;9;null;OPEN
-yKE1FZOQFp3gufPtTyNbBOkS;Amrita Aromatherapy;2019 Q2;1041;-50;521;1;10;null;OPEN
-ECFll0dngiw1i8KGEGoqp1A1;Automotive Development Group;2019 Q2;748;-26;554;2;112;null;OPEN
-YUqLmCZGHG0x8UyBkt3ZJtYp;Avenue Link;2019 Q2;341;-10;307;3;57;null;OPEN
-bUg0dl9hA1scKn5qZmTLdEYC;RightDirection Technology Solutions;2019 Q2;776;-47;411;1;115;null;OPEN
-NCPW9ueumrR0M4dVnVMina4X;Altair Sign & Light;2019 Q2;661;15;760;4;72;null;OPEN
-RgHe3LJ4q4Tw8IjO8KAz7eYn;Kovarus;2019 Q2;841;-37;530;1;115;null;OPEN
-uRK7SIXwjXh3Ii3oMF3TS3li;stable|kernel;2019 Q2;65;15;75;4;89;null;OPEN
-BmCfHUir0mo4KcqRSohcOU1S;Vee Technologies;2019 Q2;627;8;677;2;91;null;OPEN
-5mCS2igKphd2QpWYFNTQd66S;Smarsh;2019 Q2;288;15;331;4;108;null;OPEN
-p4hfH7fL7na1PIVhEjYqrYAL;All Things BBQ;2019 Q2;19;-49;10;2;114;null;OPEN
-HTSjfXnHO4a1WeRHMqtzDorH;DW Smith Associates;2019 Q2;644;-50;322;1;87;null;OPEN
-1c57ixmTMFATKJ7sCgLPcuA8;Technology Management Associates;2019 Q2;412;-30;288;2;52;null;OPEN
-4hqGH3BLHhcIZb89qnacfzt5;Laser Products Industries;2019 Q2;151;4;157;3;70;null;OPEN
-bb6kHPSjx3lNdDZP8zyQDsa5;American Painting & Renovations;2019 Q2;702;2;716;3;54;null;OPEN
-WKKoA74D567Nu4hpxfIJuKA9;Teeming Vacation Rentals;2019 Q2;406;-48;211;1;41;null;OPEN
-6W05e3pOqHud96NPtVWo77H8;BULL ENGINEERED PRODUCTS;2019 Q2;208;7;223;2;120;null;OPEN
-MliBAQjYQfZ3FnO65AVEWIPc;Vintech Solutions;2019 Q2;669;11;743;3;119;null;OPEN
-gXmhPbpVf6SwC3OSgWB9kPdz;Sales Partnerships;2019 Q2;124;-23;95;2;96;null;OPEN
-KPlh3YEYqV6xnCBmPUTzPuwm;Cape Medical Supply;2019 Q2;204;-1;202;2;85;null;OPEN
-siFXXLpZxtsaS9TXtUdWPd6j;TitleSmart;2019 Q2;561;15;645;4;131;null;OPEN
-3uv9rEnRlQ9cBDXrTzpSnYwi;Chandlee and Sons Construction;2019 Q2;822;-42;477;2;123;null;OPEN
-0xKLiBb5DQrv9wxAZWKzof9D;The CERES Group;2019 Q2;37;-50;19;1;126;null;OPEN
-DYD68HG0HguFGO3zsuZPHCP7;Aldridge;2019 Q2;272;-22;212;2;45;null;OPEN
-OrlVYfJ3h4naMYyKJJBbMj60;DataServ;2019 Q2;785;11;871;3;22;null;OPEN
-wO4I0s2l588EiFvORVZYv0CO;DigitalGreenMedia;2019 Q2;648;-50;324;1;84;null;OPEN
-oyBBruJXahg4pWdLg1BKRC0o;GreyCastle Security;2019 Q2;1131;10;1244;3;90;null;OPEN
-Valx8ZODl7BSCHvJ2xmhbtKt;New Vision Properties;2019 Q2;245;-21;194;2;47;null;OPEN
-E4J1SuzXbSLNKIclBHt3eUlo;Ammex;2019 Q2;209;15;240;4;78;null;OPEN
-bZPxkdZ4kdBuzD5dw9hPDJl6;Big Barker;2019 Q2;145;12;162;4;10;null;OPEN
-xyG1HMYQ1YlEij4IKmvFFyH3;Environmentallights.com;2019 Q2;1176;-10;1058;3;53;null;OPEN
-fKTIvxd8NkhUhBcQFenKoxkv;Tane Digital Video;2019 Q2;314;-50;157;1;117;null;OPEN
-F67am5ijB1zkN5Bdk2xZqFCt;Environmental Protection Industries;2019 Q2;1277;-9;1162;3;20;null;OPEN
-CnFhe8evJZ2zR4M6T864jIpj;Bionic Solution;2019 Q2;205;-26;152;2;69;null;OPEN
-AoGgVIKAtWlZ6mnUjkHmsDwI;Praxent;2019 Q2;585;-35;380;2;120;null;OPEN
-7vcGrX1AlUhDYpDI6E3gld60;Accountable Healthcare Staffing;2019 Q2;210;-2;206;3;60;null;OPEN
-dd5Bnb5TmzjLvg1Y1ql96Oce;Inspire Medical Systems;2019 Q2;899;12;1007;3;19;null;OPEN
-hIQD2EyqE9kXGGLsBOUbFzwz;NuAxis Innovations;2019 Q2;1003;-49;512;1;115;null;OPEN
-QXmSl2bkY5n1bN31SbGt4nk1;Shore Solutions;2019 Q2;547;-7;509;3;8;null;OPEN
-PntvpR2gEHZrqIvouZ2AgB7d;MixRank;2019 Q2;1012;15;1164;4;114;null;OPEN
-OMxLI5TVY62YT8ZYSBgbXHsx;TravelPass Group;2019 Q2;160;15;184;4;78;null;OPEN
-4VwipYvgBc9WLEbtaqB9ex56;Comprehensive Logistics;2019 Q2;752;-50;376;1;75;null;OPEN
-8t30jDygPfeVVyUYZJfGLEM1;Business IT Source;2019 Q2;220;11;244;3;54;null;OPEN
-U7El5dJuctusWyFAfqBvN3Ff;Freight Right Global Logistics;2019 Q2;192;-45;106;1;111;null;OPEN
-v0V7pzp4d0Ci1JNpgoz9ONYr;Home Care Assistance;2019 Q2;361;15;415;4;10;null;OPEN
-nLEwnZCbLLqOIV8TdquJYtjL;PeriShip;2019 Q2;881;-12;775;3;16;null;OPEN
-yZFPjjFEEEE8eKZbZ3FpiOoy;Western Peaks Logistics;2019 Q2;55;-36;35;1;13;null;OPEN
-d9JWqkm1ng9dzG2DVt2r37uk;iPROMOTEu;2019 Q2;693;14;790;4;69;null;OPEN
-58osh2saU6nQ7ZjH6NNaVzt0;YourCause;2019 Q2;573;13;647;3;47;null;OPEN
-NR34YE2OL0LmAq6PFCqKKzWq;Praxent;2019 Q2;689;15;792;4;57;null;OPEN
-aXbbbWnNJHJlVoHWPceEQNhS;C-Vision;2019 Q2;855;-45;470;1;33;null;OPEN
-xUoDQvJadmKWzpK821R9AZeC;Creditsafe USA;2019 Q2;397;6;421;2;77;null;OPEN
-jZsC8Wh0TiwmNZYccSy4hvJa;Boomsourcing;2019 Q2;1193;9;1300;2;39;null;OPEN
-xgnj1CfVvCnN1KlZQRkJhQkK;Prop & Peller Pretzels;2019 Q2;879;-50;440;1;102;null;OPEN
-NheWiM2HMVJ75ffKP1lSgjLM;Factory Expo Home Centers;2019 Q2;8;-8;7;3;18;null;OPEN
-1lEsy4tOi2gMoOEPls6lnfG4;Clinical Resources;2019 Q2;510;13;576;2;93;null;OPEN
-6nJqFZz33Y3K4y9v33CZAlcQ;Jonathan's Grille;2019 Q2;1255;13;1418;4;62;null;OPEN
-RADL0BDNuhmeXaP1DuHcKe2A;TribalVision;2019 Q2;507;-6;477;2;15;null;OPEN
-QYUEfyOnE4lHQ2Mjm0bIVcAW;AmeriFirst Home Mortgage;2019 Q2;355;-28;256;2;67;null;OPEN
-MFE7WEhMZ1Ag6TdwdEOcUFqL;WorkWave;2019 Q2;1176;-46;635;2;132;null;OPEN
-KtAgkUOOwiuzuFxGyBDc4lpL;Restoration Media;2019 Q2;208;-23;160;3;134;null;OPEN
+COqJQd4ENAEw4302lMuuX2gi;SP Group P.C.;2019 Q2;560;-7;521;2;5;6bb2eea06979bd218b301630d467a5b4;CLOSE
+6saFAsgFcjiLqx3UzOyQVoGp;DevelopIntelligence;2019 Q2;486;-13;423;2;5;null;OPEN
+z62FRbmjNzvqgwQa81hYs5kD;A-LIGN;2019 Q2;172;11;191;2;5;null;OPEN
+iEMuaoH475Rz4aSX4tkxLLyh;SPEAR Physical Therapy;2019 Q2;1214;-32;826;2;5;null;OPEN
+rUFOP9lzoiSj5C2vkHzCbymX;Managed Solution;2019 Q2;691;7;739;3;5;null;OPEN
+sxfTlfRZgjX5uuX58xGqhRBi;Freddy's Frozen Custard & Steakburgers;2019 Q2;422;15;485;4;5;null;OPEN
+7IEFwJWPL1ebRV4h8PHK91W1;Surya;2019 Q2;909;4;945;3;5;d4672713f08ec4ced1d3c68f9f17e835;CLOSE
+n662ODMSE6a590mvA0LRuq2J;MyITpros;2019 Q2;1063;14;1212;4;5;null;OPEN
+EuqjOoikJmkA3V6UeOPukSlL;Simeio Solutions;2019 Q2;130;9;142;3;5;null;OPEN
+Cb66SSrSL7HOdNBoAOlz6wpZ;ISHIR;2019 Q2;127;-50;64;1;5;null;OPEN
+jMK8BB6DBPCQ7hOUTI9yYSFg;Fresno First Bank;2019 Q2;77;15;89;4;5;null;OPEN
+QUYHVSuUf0HWPOTkMEnKDtLo;Chesapeake Plumbing & Heating;2019 Q2;400;0;NaN;5;5;null;OPEN
+rRcMG4wXYuotFH4zBdT8wxbM;FEDSYNC;2019 Q2;74;8;80;2;5;null;OPEN
+2N3qqHJEm4krGitqqpGpQtbG;VYRIAN;2019 Q2;853;-1;844;3;5;null;OPEN
+NIvtNf42PX0ZeI8P5cVrJWHG;NAI Benchmark;2019 Q2;347;-50;174;1;5;null;OPEN
+NKVoANuxamjXgWeeaO417514;Unitas Global;2019 Q2;332;-1;329;1;5;null;OPEN
+sOFUSnvg702B20U38RuFbqpd;TEEMA;2019 Q2;19;-29;13;2;5;null;OPEN
+AfWyzkKTEutkPPS754gJkHdQ;540.co;2019 Q2;115;14;131;4;5;null;OPEN
+8zpKaNpiSs6eJc5JUk4luQCY;Konnect Agency;2019 Q2;252;-26;186;2;5;null;OPEN
+bT1X1k63fYgNKp9MHh1CtKMd;Core and More Technologies;2019 Q2;645;-21;510;2;5;null;OPEN
+YYnLijfLFm3DsJOfFwf3QRrc;Sunkiko;2019 Q2;507;0;507;3;5;null;OPEN
+XCN4ZXfN2HL1N2KBQUK8DOCq;Chartis Federal;2019 Q2;438;9;477;3;5;null;OPEN
+3hbNHLx9qadpohvUnZluw3tf;MM.LaFleur;2019 Q2;1212;-14;1042;2;5;null;OPEN
+cTGTCYl9MAS9k5EXgCbfQHcs;PC Pitstop;2019 Q2;380;-48;198;1;5;null;OPEN
+y6x7THTaWWI3o1uqmc5wtJXZ;Evergreen Escapes / EG-X;2019 Q2;235;-50;118;1;5;null;OPEN
+uNXyK5MFxfRbUnYxFeabq7C9;Digital Marketing Services;2019 Q2;1376;-46;743;1;5;null;OPEN
+2GsOYjXEg1zdV9zpnMsk6tNL;Aegis Strategies;2019 Q2;317;-31;219;2;5;null;OPEN
+Z3IbNO2x2LlpfmLbid1X0SA9;Kupanda Capital;2019 Q2;1056;-1;1045;3;5;d4672713f08ec4ced1d3c68f9f17e835;CLOSE
+bUJqOHcwNtrMA8lTRSugLnMJ;Prosource Fitness Equipment;2019 Q2;294;-23;226;2;5;null;OPEN
+qBVzcwQ1obf3BCyQFQN4Ag8Q;Austin & Williams;2019 Q2;375;-14;323;2;5;null;OPEN
+2mwxmqqZdELjlRhO3eot0IJ4;Softvision;2019 Q2;1142;-11;1016;2;5;null;OPEN
+46P10ez7ddNCzpks4YH1FvRH;PeopleG2;2019 Q2;1006;-47;533;2;5;null;OPEN
+vGxK7lxuzprYV4g49e3p1BNu;CatPrint.com;2019 Q2;309;-46;167;1;5;null;OPEN
+fJU7f5KCRCiPo7OgS7YCHeWg;ARServices;2019 Q2;579;-18;475;2;5;null;OPEN
+hPLHtHyoRFOEcX3QdiENp5r9;Horsetail Technologies;2019 Q2;256;-8;236;3;5;null;OPEN
+1eYjDsgR01AA7Pr6ZUcQ2fQO;Knight Point Systems;2019 Q2;228;-9;207;3;5;null;OPEN
+rhqRUFonvgtpq3upE5FPacnA;Advanced Discovery;2019 Q2;337;-45;185;2;5;null;OPEN
+3TnWwh8ZgqJCZbdRqEogSM9d;Taoti Creative;2019 Q2;325;11;361;3;5;null;OPEN
+1nJ6S0gW574o46DRMCc35FnC;Southern RV;2019 Q2;852;15;980;4;5;null;OPEN
+GRLs73Seb1gyTh3S4YsXw2MD;Quality Engineering & Surveying;2019 Q2;1006;14;1147;4;5;null;OPEN
+FmvGnB0TI8qyVYv7WsVssLF3;Transfinder;2019 Q2;391;-29;278;2;5;null;OPEN
+9sksvZYxoeDyJKZrctgBXhDA;M. A. Silva USA;2019 Q2;89;-33;60;2;5;null;OPEN
+nkcwh1KzI09Xn5cnp8tzRNG7;Foundant Technologies;2019 Q2;93;-36;60;2;5;null;OPEN
+uZS6TycoZYyx940LfmZto7lW;Viva Railings;2019 Q2;235;-17;195;1;5;null;OPEN
+HIHieN2skpUo2zN6UMsP6zaY;EverQuote;2019 Q2;279;4;290;2;5;null;OPEN
+txVMmb1J655r1z3BDSwFTF9a;Core Nutritionals;2019 Q2;503;-47;267;1;5;null;OPEN
+pe96ViyHEiSlrJJabUPizMVi;Complete Recovery;2019 Q2;1152;15;1325;4;5;null;OPEN
+3xnoKeX403H5NuD93ncIqPgq;Cullum Homes;2019 Q2;204;-50;102;1;5;null;OPEN
+kbFBPMPUsyTENcz0tFb5E5qA;CalCom Solar;2019 Q2;631;-45;347;2;5;null;OPEN
+XDakOzPiAlM0nNQa1ekz4UIL;Chicken and Rice Guys;2019 Q2;10;13;11;2;5;null;OPEN
+BS7cZpKrb5Efw0MJwskHDldE;Chef's Cut Real Jerky;2019 Q2;507;-49;259;1;5;null;OPEN
+wG64CMy6YrHTPQOOTeCbc6ry;Delta Defense;2019 Q2;110;14;125;4;5;null;OPEN
+6OQHaMBrqLi3Mv1bruEZ3fAC;JeffreyM Consulting;2019 Q2;142;14;162;4;5;null;OPEN
+3E3FwIAzM3zudfHFFDblssXs;CFO Alliance;2019 Q2;59;14;67;4;5;null;OPEN
+clQNZtVrTaYEiZCKbtJwpOms;Emergenetics International;2019 Q2;346;-49;176;1;5;null;OPEN
+8Iul5JO2im1RymnEpBAhqbUE;LEEP Forward;2019 Q2;537;-20;430;2;5;null;OPEN
+dsNmNIOh4QaJUf3CNKVJAI7k;capSpire;2019 Q2;506;3;521;3;5;null;OPEN
+chXwcz98yKIoLYo6CrLqpEO5;Knowledge Hub Media;2019 Q2;692;8;747;2;5;null;OPEN
+UJTLPthTdZK8fnr9C8bxbL0V;Burwood Group;2019 Q2;387;14;441;4;5;null;OPEN
+vtB4Htf88DJJRZcPRVG7c5dm;Point Recognition;2019 Q2;226;-8;208;2;5;null;OPEN
+skOKQzM8anOkobhozd9NKKM2;Very;2019 Q2;69;5;72;2;5;null;OPEN
+br8UeQwGj1BxK7jf1poVI7eY;Design To Delivery;2019 Q2;1434;-11;1276;1;5;null;OPEN
+KAgrHMdmvuqWZIPW5FKd8K08;RevolutionParts;2019 Q2;153;8;165;3;5;null;OPEN
+CQRQuxb5mqRJSA7gUnwLsdsX;Mabbly;2019 Q2;8;-30;6;1;5;null;OPEN
+pivfb7OJc04wt27YFsCPX6ga;RE/MAX TITANIUM;2019 Q2;365;-47;193;1;5;null;OPEN
+0He4PgYuYBj2IdZBcxzfR9sw;Surefire Local;2019 Q2;209;-7;194;2;5;null;OPEN
+iN0wIJoIwLvjZzM4HqR9sYsr;Gearhart Law;2019 Q2;788;-35;512;1;5;null;OPEN
+poH2td52uNQORrQKHe2kCobR;Southwest Foodservice Excellence;2019 Q2;946;14;1078;4;5;null;OPEN
+NyH3PrUJOcOgWmfyXe4Qvr6F;Choice Home Warranty;2019 Q2;501;15;576;4;5;null;OPEN
+NEGxk7ZI4NtAz2mQrQtoAHX9;Illuminati Studios;2019 Q2;879;14;1002;4;5;null;OPEN
+Xtinx63kgRJcb9TfKWWNSLSb;Fresno First Bank;2019 Q2;328;-48;171;1;5;null;OPEN
+GwHCfBsuIhsjKHqYEy1Wq0NP;Kupanda Capital;2019 Q2;273;-5;259;2;5;null;OPEN
+tojtKA2VZSwrneEE3ZL11OlK;ArrowCore Group;2019 Q2;5;14;6;4;5;null;OPEN
+pvEd3TQymmdU9nrJ1rLFoNCm;Payscout;2019 Q2;894;6;948;3;5;null;OPEN
+X0goHbHjEhzdAQlYxCETrxkf;Medix;2019 Q2;386;10;425;3;5;null;OPEN
+n3jKpcsHo2jKuRc0kdyBBl3j;MediCopy Services;2019 Q2;409;6;434;3;5;null;OPEN
+5g2xB0RQC4FPkZz787fm4x17;Diversified;2019 Q2;261;-49;133;1;5;null;OPEN
+qcECi2THXQvIgebq0IGPYkM7;DiscoverIT Solutions;2019 Q2;1044;0;1044;2;5;null;OPEN
+47hylzfNASVUPwR0FsRjcAFH;Relief-Mart;2019 Q2;1205;9;1313;3;5;null;OPEN
+woYi7zfp15Ju69sa8HijaFMf;SunCommon NY;2019 Q2;103;14;117;4;5;null;OPEN
+rdQl5ZX3ZRV6du3nQCmPdSO1;CONNECT Computer;2019 Q2;321;-50;161;1;5;null;OPEN
+xuM3yBGrizDIsqW7ZsnOFWM9;Filterworks USA;2019 Q2;138;-24;105;3;5;null;OPEN
+tqxp5qqhaLAx9xMp5QfRih9B;Delta Defense;2019 Q2;131;-27;96;2;5;null;OPEN
+9rlS2uEIuGUXdX53KV6HZsdn;The Gober Group;2019 Q2;427;15;491;4;5;null;OPEN
+nDunMuNltVLiSaHHE2ujbeiU;Metal Building Industries;2019 Q2;768;-26;568;2;5;null;OPEN
+YpoBArWH871LAWeHuBLR3dYx;JeffreyM Consulting;2019 Q2;1074;13;1214;3;5;null;OPEN
+RPpgjgY4IPYFcx3parhWUuQx;KRG TECHNOLOGIES;2019 Q2;398;-4;382;3;5;null;OPEN
+yfe7yZwPELF0sTTAeTPEehMz;Rain City Capital;2019 Q2;344;1;347;3;5;null;OPEN
+Q1gvBQXr2SfYIjUKYbsLuIze;West Hills Capital;2019 Q2;56;-47;30;2;5;null;OPEN
+xf78FrA7Z9A31DJ99HNLK2F2;Scanco Software;2019 Q2;959;7;1026;3;5;null;OPEN
+zhEIkcacVnX7XMdJnT5elNDL;OpenWater Software;2019 Q2;379;-41;224;2;5;null;OPEN
+rOjaQ3rBlUjktTKTdxi0L59Q;Universal Separators;2019 Q2;499;2;509;3;5;null;OPEN
+n2QNGgX5bmgATULd13NMFHNl;Whois API;2019 Q2;884;-29;628;2;5;null;OPEN
+CoeLgWQIOP94bfJelxpWbTUW;AArete;2019 Q2;128;-41;76;1;5;null;OPEN
+1cPzoOgjqPZRK0mFgwmXijh6;Meathead Movers;2019 Q2;291;-4;279;2;5;null;OPEN
+2460nMFdaK6o2B3OPHsZSj1o;First Cornerstone Group;2019 Q2;69;11;77;4;5;null;OPEN
+jesbEOmjIaLAKJmVEpdQw9YP;Findsome & Winmore;2019 Q2;519;-46;280;1;5;null;OPEN
+mvdbVFf7EA4KUCEGYlIy4uVb;Excelleum Coaching and Consulting;2019 Q2;795;6;843;3;5;null;OPEN
+BMcDeTUeczTK6w5Unto6x4P0;Inflow;2019 Q2;971;14;1107;4;5;null;OPEN
+Ugpefb4y3JAjwQkeg5USy4RO;Purchasing Power;2019 Q2;105;14;120;2;5;null;OPEN
+comugB3rcoi62pmYZbVHEgRu;Before The Movie;2019 Q2;61;-16;51;2;5;null;OPEN
+jPQNFhtvANIKJwhYpUwyMTtI;Mark Spain Real Estate;2019 Q2;75;-31;52;1;5;null;OPEN
+DfeTF9bUrDjSMWgSzLXvcxVH;Interwest Communications;2019 Q2;412;-50;206;2;5;null;OPEN
+D5PLvbtZ3hz75Ult7CHJnSoU;ZippyPaws;2019 Q2;738;14;841;4;5;null;OPEN
+gQkPHLLAjn9sKQy5MohxHUe7;Advocate;2019 Q2;89;-3;86;3;5;null;OPEN
+ZTKdDLxkWnRGGMOeMsERmhHj;Black Clover Enterprises;2019 Q2;4;-50;2;1;5;null;OPEN
+FS3QNC4hGztogmL0Ha6OfdQZ;ImageSoft;2019 Q2;22;-10;20;2;5;null;OPEN
+rdL5oG45mXHqk9pXeHlJTBLT;Woodruff;2019 Q2;794;15;913;4;5;null;OPEN
+K6Rn13MygNKZaj6QA4pARbSj;Summus Group;2019 Q2;1097;12;1229;3;5;null;OPEN
+dZHGEH1jlcSNCT4RH3NyEIL9;Stony Point;2019 Q2;239;8;258;3;5;null;OPEN
+UUEjco7WSTZG7h26HWSLPglU;MZ Capital Partners;2019 Q2;1276;-28;919;2;5;null;OPEN
+yBYPfcZCpGQDNwzmcCnVwQ2K;VS carriers;2019 Q2;681;8;735;3;5;null;OPEN
+e0zwZTvFoFhiP6vlKTGwu8r3;Accumatch Property Tax Intelligence;2019 Q2;496;4;516;3;5;null;OPEN
+4Hi3pRIWkwJ8uRtWN0dPnMB2;Juvo Plus;2019 Q2;156;14;178;4;5;null;OPEN
+YAF4JEkfsk9CSZN2GsyHepOX;Sky Zone Trampoline Park;2019 Q2;1375;-14;1183;2;5;null;OPEN
+PaHgSmvfaaj55MfM8VP4foy8;MediCopy Services;2019 Q2;15;8;16;2;5;null;OPEN
+qc6j1XWQcLBXSbTosRCTOoMd;Sound Rink;2019 Q2;924;14;1053;3;5;null;OPEN
+TqSMtVDO2roohgNRFh262eQ3;Kobeyaki Holdings;2019 Q2;312;-22;243;2;5;null;OPEN
+mVB9yErO3l8qPgUOc5nh16si;Blount Fine Foods;2019 Q2;405;-40;243;1;5;null;OPEN
+tf9QsmJKwlEhAq2Z0670Tvco;Transformyx;2019 Q2;1053;14;1200;4;5;null;OPEN
+2kLb2mbOygW37r8B4gLuT5X8;AdTheorent;2019 Q2;83;-30;58;2;5;null;OPEN
+G90ASXtd4ZA5l3vISVpIEPbF;HealthCare Scouts;2019 Q2;370;-43;211;2;5;null;OPEN
+24ZKrMMtgZb7cyk9J2cxfg42;SGW Designworks;2019 Q2;451;-31;311;2;5;null;OPEN
+kxX7g6hkZYh6bMMOpELJbSc7;SmartBox Web Marketing;2019 Q2;340;10;374;3;5;null;OPEN
+vwtvajqN9PD87HB7wvPxwgle;Spear;2019 Q2;256;3;264;1;5;null;OPEN
+UFa7z3pu6nPry6ZlfKTiromQ;The Hired Guns;2019 Q2;132;-45;73;1;5;null;OPEN
+d28kVMUktpay6JtSOMzsOxvp;Nussbaum Group;2019 Q2;440;-42;255;2;5;null;OPEN
+nH11UZq03haK5YBLLEesyzn3;American Eagle Protective Services;2019 Q2;409;1;413;3;5;null;OPEN
+XIMicZJNQBjrWAafmTJDDLVW;One Federal Solution;2019 Q2;360;-2;353;2;5;null;OPEN
+84GbqrXn24lAE1Kk7F4CeA5y;Syndeo Outsourcing;2019 Q2;603;-21;476;2;5;null;OPEN
+pjeyXGAEkMp0JuKTcQB12MEy;Navigate Power;2019 Q2;243;14;277;4;5;null;OPEN
+6TxYZ2T4FQxM2Qlktwn7HxGP;Be Found Online;2019 Q2;340;-3;330;3;5;null;OPEN
+LLsDGLKPpedWtSibDw8xr80t;Trinity Solar;2019 Q2;802;11;890;3;5;null;OPEN
+BKSCNDCpGNXA73voQIemnFKI;GSG Computers;2019 Q2;392;-50;196;1;5;null;OPEN
+QEIxODQshRFjPZGmDnQdIYFP;SeKON Enterprise;2019 Q2;562;5;590;3;5;null;OPEN
+u67HRDdIHjpacNVAezKyuqBo;MicroSystems Automation Group;2019 Q2;777;-5;738;2;5;null;OPEN
+sVsJg0L62YCfZoC04ODw0M1r;AcctTwo;2019 Q2;186;-1;184;3;5;null;OPEN
+6oVbc3OCEBoty2PIvWkfnyG5;Audience Partners;2019 Q2;753;-36;482;2;5;null;OPEN
+qfJGXFWly3EWDHMT5Gsr87g4;Taphandles;2019 Q2;777;4;808;2;5;null;OPEN
+C23Wu3MIi5uLGZeBpbva4OiY;Coast Medical Service;2019 Q2;409;-13;356;3;5;null;OPEN
+HlZMMNTkfLxreNNmQxvDGEet;Prestige Employee Administrators;2019 Q2;523;14;596;4;5;null;OPEN
+l6blLWQtJMKZlDZT5kZSsRJr;Level Office;2019 Q2;418;-24;318;1;5;null;OPEN
+G1aASzlnLkYoZp7ekPRV5a1c;Premier Staffing;2019 Q2;504;-14;433;2;5;null;OPEN
+P9L2ZParqPa6AXOGUpBYStBw;OneTrust Home Loans;2019 Q2;320;1;323;2;5;null;OPEN
+z6io6JgQeykdRyT1YSkS7acT;Entech Computer Services;2019 Q2;641;-36;410;1;5;null;OPEN
+yEJsfFr5dW8kGvAJsz0uvaXy;Entech Computer Services;2019 Q2;466;-25;350;1;5;null;OPEN
+MK39VpqspdMVWPb4138IVFlB;Dynamics Resources;2019 Q2;984;11;1092;2;5;null;OPEN
+Tcn3BPcJyqhAXnzYyCuStJcE;Truelogic Software;2019 Q2;1407;-40;844;2;5;null;OPEN
+YIDt2hi9LnwPqoDbo5L1SNxq;TXS Industrial Design;2019 Q2;172;14;196;3;5;null;OPEN
+Pg0LpfZoYEfEGp33nl3QH0Dp;Tag Aero;2019 Q2;96;-50;48;1;5;null;OPEN
+8K2GjCGdQAYM3PnYDar8tBWd;Prop & Peller Pretzels;2019 Q2;109;-49;56;1;67;null;OPEN
+kMxS4XL2K1dEC3YJwFYpkhVj;Astir IT Solutions;2019 Q2;800;15;920;4;18;null;OPEN
+T5fewU1R2q57NdJMBO7eEaA6;DistributorCentral;2019 Q2;242;11;269;3;92;null;OPEN
+ViJgo0Dx9uwRtOr0up7n15N8;Favor TechConsulting;2019 Q2;47;-35;31;2;106;null;OPEN
+kyuLDWJ77vYA7OuOd2wRsGZz;TeamLogic IT;2019 Q2;243;5;255;3;126;null;OPEN
+2g8Te0uIwGnfz5RO2p5VWcli;centralcloseout.com;2019 Q2;259;13;293;3;57;null;OPEN
+EAGR8XbzwNIKTBSAiR2Q6UkM;Build Group;2019 Q2;161;-50;81;1;86;null;OPEN
+e0FLa2n9WGa8NOckOc9UszQS;Shoemagoo;2019 Q2;128;-50;64;1;7;null;OPEN
+6LEYqIq3Lqg7Sa7QtUxA8qtM;Renaissance Electronic Services;2019 Q2;347;14;396;2;12;null;OPEN
+lGqTn1fDMkiazyC8CXcYVgW3;Baker Electric Solar;2019 Q2;630;-9;573;2;41;null;OPEN
+gfmZo9tly6OMGc4SwOmiJNkn;DA Defense Logistics HQ;2019 Q2;69;15;79;4;47;null;OPEN
+HkB6LrCnp8BJeJWvW4gTbTaD;Heavy Hammer New Media Solutions;2019 Q2;26;15;30;4;95;null;OPEN
+4XcwWetqkICU6BhfnFTZdlJn;Freedom Boat Club;2019 Q2;80;3;82;2;75;null;OPEN
+tRYWyFTcoMB0OHVuUpTtXLoV;Exact Data;2019 Q2;370;0;370;2;7;null;OPEN
+3Nd9WKsFh6Bx1zgwb2Cj22jQ;CDYNE;2019 Q2;218;-50;109;1;130;null;OPEN
+5TdbckeW830sndxGMC0gkxWZ;National Brokers of America;2019 Q2;385;-8;354;3;25;null;OPEN
+UAlXdsM430T9DnyL1Mw9zTJb;Denken Solutions;2019 Q2;527;15;606;3;51;null;OPEN
+R7Fj9FJOF9ApUBDE2YVh4w6R;DataLab USA;2019 Q2;225;14;257;4;68;null;OPEN
+VoWwS7guTxr7cBGM8QE524qZ;Greystone Technology;2019 Q2;41;-47;22;2;20;null;OPEN
+yOYXFZPCFilDni11gbBEbovj;Masergy Communications;2019 Q2;1128;-50;564;1;7;null;OPEN
+bXcpXfavrqns3YrML2eaIrZZ;QA Cafe;2019 Q2;1165;0;NaN;5;55;null;OPEN
+Ss52FLhbF0RAuzxRtMhnTCSc;Edgewater Automation;2019 Q2;632;5;664;3;109;null;OPEN
+qBUfNW2bsV092QbMA1McCW5u;The Kenjya-Trusant Group;2019 Q2;158;-48;82;1;67;null;OPEN
+asrHnNuMSxKnEVkjsxVDzAzM;Onset Financial;2019 Q2;184;-50;92;1;115;null;OPEN
+xiYvpLHx4yvXP7OPLPWHsU00;Rescue | The Behavior Change Agency;2019 Q2;303;11;336;3;75;null;OPEN
+NH1MSg7MDG7Tz12u2zsPENyz;Go Local Interactive;2019 Q2;906;-6;852;3;95;null;OPEN
+hn0pug2IHV5Km1qkLVB8EWCe;Strong Smiles Dental Care;2019 Q2;603;4;627;2;117;null;OPEN
+3ILRTRhzREHMjisZIK31RRs7;Clearas Water Recovery;2019 Q2;141;2;144;2;97;null;OPEN
+No726hDs8bpyxa7plVYcMprn;Bennett Aerospace;2019 Q2;26;-50;13;1;28;null;OPEN
+YRNmVazS4QIOlOolu1OdvSDr;Atlas Executive Consulting;2019 Q2;83;-46;45;1;107;null;OPEN
+nSyJtzMQ9FAItIGVxNXgqaNk;Startech.Com;2019 Q2;945;4;983;2;132;null;OPEN
+xbFPjZn79oTiU0ZfZy875stE;Bear Down Consulting;2019 Q2;163;15;187;4;21;null;OPEN
+E8K1YhfJGHxIEIcCivnRtmNz;Proforma Nitro;2019 Q2;162;-43;92;2;62;null;OPEN
+0eeZTytIZWbmKguwJ44jq5Mg;Continuity;2019 Q2;102;-39;62;2;115;null;OPEN
+qMuL1LqFLqTztaT0LSx4nQpS;Integrity Services;2019 Q2;77;-31;53;2;79;null;OPEN
+4WBQq3y3nwug867bDU05lb9b;NEOSTEK;2019 Q2;1076;-45;592;1;89;null;OPEN
+Nixx0IjbiW6lRh0aXmPtMSzE;TSI Healthcare;2019 Q2;80;-26;59;2;112;null;OPEN
+98IGg1wU2izYyaQDhaKVwdjd;Community Impact Newspaper;2019 Q2;87;14;99;3;42;null;OPEN
+U6VoLsilLogLPP3Q7S3N0bPL;Zoom Technical Services;2019 Q2;1322;11;1467;3;79;null;OPEN
+w8FnLTcBdOEfJvKv1YlyBD9P;The Loken Group;2019 Q2;607;-46;328;1;53;null;OPEN
+goRFUH6NLU64cPFB0LMBorXY;ICONSOFT;2019 Q2;525;6;557;3;130;null;OPEN
+KiNoqMgUwW3douTjqHR405z1;Worksighted;2019 Q2;624;-45;343;1;46;null;OPEN
+cwekLeptrehcab4Z1NUBUUpE;Seer Interactive;2019 Q2;402;9;438;3;106;null;OPEN
+wcQKz7OMpeVQUe6yG25NxHd6;Influenster;2019 Q2;1133;-10;1020;2;131;null;OPEN
+wiW4Sit8qRA0v6cXL3qHnIQQ;Picore International;2019 Q2;380;14;433;4;115;null;OPEN
+u9UEFVlH1op3sJExt2NUozgH;TradeMark Media;2019 Q2;780;-47;413;1;117;null;OPEN
+kDFyf5jr2FegpZjic7jIgaor;280 Group;2019 Q2;195;-2;191;2;5;null;OPEN
+jPkcwrej3rjnszHtsN06FcDJ;Mac Warehouse;2019 Q2;918;8;991;3;64;null;OPEN
+gdwb4JTrIGX6BWbTtjVwFQcB;Tal Search Group;2019 Q2;1138;12;1275;2;100;null;OPEN
+eEpNCF5mPBuN19C10c7hidGF;AmeriChem Systems;2019 Q2;397;15;457;3;113;null;OPEN
+KtYa2oVM9VJ5QfBo62yrvYb0;ej4;2019 Q2;79;15;91;4;18;null;OPEN
+QhbKV04tEgJm0yNBwmv2VlrD;Clarity Insights;2019 Q2;784;-42;455;1;59;null;OPEN
+yY1lYlLprMiIkKLxHP50w0gB;Stream Companies;2019 Q2;90;13;102;1;101;null;OPEN
+SBPKudl8rDDZyD5vNdsjzrm0;LingPerfect Translations;2019 Q2;1202;-32;817;2;90;null;OPEN
+zyxetIII3nwdx9JgoC3icW15;Circlepix;2019 Q2;56;-44;31;1;23;null;OPEN
+YfSn1slKuPYT3KElwz8EotDQ;Bowstern;2019 Q2;45;14;51;4;42;null;OPEN
+rcRP6Q5U2qcA2crIPOKnYscT;KFW Engineers & Surveying;2019 Q2;432;-50;216;1;48;null;OPEN
+sDw0ShC1JXGpxv9XUu4iAEHr;Escalon Services;2019 Q2;151;1;153;2;120;null;OPEN
+A9qpAEbICLmVhQMCUINnAbWk;LVC Companies;2019 Q2;479;9;522;3;69;null;OPEN
+aoYEf0jl5sSAix2s5URhTDv8;Eligo Energy;2019 Q2;639;-18;524;2;78;null;OPEN
+yAfRxLKM4xaVgs7NXB30lv6V;Street Smart Transmission;2019 Q2;298;-28;215;2;95;null;OPEN
+7xPMDHrW1jm6Ci8BODoN0CfN;Full Visibility;2019 Q2;113;13;128;3;40;null;OPEN
+HY4mVMyagtX5docLAFmmWTYp;FireFly Computers;2019 Q2;529;15;608;4;83;null;OPEN
+GbC1DppdK2RDnlBkLrRWfsvq;Union Home Mortgage;2019 Q2;679;-50;340;1;98;null;OPEN
+eyfsFHb5FvHcefjtCv5BTsmm;Email Aptitude;2019 Q2;1229;-36;787;2;124;null;OPEN
+rZYs1KjjFwqwhSzfG3oJK7Hu;White Bottle;2019 Q2;449;-46;242;2;6;null;OPEN
+6MEMI6nZUQJNHaQnz0ItWTDW;Adore Me;2019 Q2;542;-48;282;2;72;null;OPEN
+VaFAVdGsZTM72MAnRShMv7Th;Industrial Lighting Products;2019 Q2;357;-11;318;2;61;null;OPEN
+wkwP6J27clGI5e9qLXplZQd2;Kucumber Skin Lounge;2019 Q2;835;15;960;4;75;null;OPEN
+Qy1rIvSxK1lcjjgyESzJIWMu;S'well;2019 Q2;702;11;779;2;91;null;OPEN
+4NoFCZba94a3ZBjPaA1m9J0v;Hi-Tech Builders;2019 Q2;379;-49;193;1;126;null;OPEN
+ZiINL4m1yqGEM3WPcZxUqTDZ;Accellis Technology Group;2019 Q2;289;-38;179;1;98;null;OPEN
+SIpLA55lciORGCOGRYyVbHlW;Sizemore & Company;2019 Q2;1163;-15;989;2;119;null;OPEN
+ZM9XvrpkXvGHr1d79hRYrQkN;Lazy Palms Productions;2019 Q2;132;4;137;3;25;null;OPEN
+XcFufSLstR5wPLGvqxrr6dg9;Delta Exteriors;2019 Q2;48;-46;26;1;113;null;OPEN
+uMZNmmPSQZ8aQXwLobvDT59k;Staffpay;2019 Q2;545;-1;540;2;11;null;OPEN
+w4iL2TEr6mHZLDdPwCnSjeBH;Green Key Resources;2019 Q2;718;-19;582;2;112;null;OPEN
+mz2pZUfKqm5gWqRhoYVyCvOz;Remote Medical International;2019 Q2;437;1;441;2;96;null;OPEN
+j4CEVhvDDWzJzcBnUx69DuQO;MODA LIGHT;2019 Q2;163;13;184;3;55;null;OPEN
+uCetkc6G1MKr54epnOc2VJeX;STS International;2019 Q2;511;-50;256;1;41;null;OPEN
+uxFu1KWn38AsCzwivENH2XDd;Global Facility Management & Construction;2019 Q2;285;-18;234;1;90;null;OPEN
+kOveKWsjmHhsBgUq3Sff3AOi;John Pomp Studios;2019 Q2;23;12;26;4;63;null;OPEN
+Ne2WEFcgNVj0LspNFfnwNgyC;Velocity Advisory Group;2019 Q2;582;-13;506;3;25;null;OPEN
+5dPHAXaBwy89SPceYcVMgSko;Choozle;2019 Q2;1306;-5;1241;3;78;null;OPEN
+x6M5Y8yqnxp2jl2eYxLPxCDi;CONSTRUCTION PROS OF NJ;2019 Q2;346;9;377;3;124;null;OPEN
+Z4yO1u1O1u0pB621t48Rx9Lo;The Ticket Group;2019 Q2;429;5;450;2;53;null;OPEN
+JDN4swK9APNANAm8FaIIWXTI;Lehigh Mining & Navigation;2019 Q2;223;-50;112;1;123;null;OPEN
+S9UKs4zPhACoMVrTIBT4JXRz;Engage3;2019 Q2;988;-39;603;2;116;null;OPEN
+AR3cLMfKc0ifhWQSe5qoo4C0;EXB Solutions;2019 Q2;325;2;332;3;91;null;OPEN
+qDKHeDZsQDHkCPUkMeDQojAj;National Electronic Attachment;2019 Q2;153;2;156;3;61;null;OPEN
+CKNMCtAMCUXoAEpFVkJXEUfq;Mars Services;2019 Q2;516;-41;304;2;79;null;OPEN
+VhV5VHVrYkoxyjDSJPQEWl6l;Tri-County Mechanical;2019 Q2;674;8;728;2;53;null;OPEN
+WoqxJ0LLSu4jZdsefWTqNoOF;Southend Exteriors;2019 Q2;511;-10;460;3;72;null;OPEN
+Hw83ZeuBmu7hWMIJD7UCWg2F;Cashbloom;2019 Q2;63;-49;32;1;23;null;OPEN
+379Un11rfcTVDQD8R2mg52F8;Innovest Systems;2019 Q2;15;-50;8;1;82;null;OPEN
+8671LjbHiJA9DMdtr6Slaq3L;Career Step;2019 Q2;195;-26;144;2;130;null;OPEN
+m41dbODATs64pgsHC2eTtyQl;Global Conductor;2019 Q2;263;6;279;3;77;null;OPEN
+F3vGIHnFo6PwjAdLKSx0HduV;TEVET;2019 Q2;598;12;670;3;101;null;OPEN
+2pM4J1Du5mDzeT4FvdAfBwb8;NuevaCare;2019 Q2;570;13;644;4;123;null;OPEN
+KMeuoWzwTergOtZz6wytw7kH;Executech;2019 Q2;198;-48;103;2;134;null;OPEN
+ChfKlHmV7vJrI2Vwe9hCiceP;Strongbridge;2019 Q2;532;-50;266;1;84;null;OPEN
+IIhGrPCOhPiyH2kFnzcIW1hw;Matt Curtis Real Estate;2019 Q2;711;-20;569;2;42;null;OPEN
+Op8Fk3HcESml9XJE8X3teQcO;Sparkle In Pink;2019 Q2;696;14;793;4;127;null;OPEN
+RZymI5nDOOtQ4ia0HQYkYe0u;Performance Plus Carts;2019 Q2;630;-39;384;2;117;null;OPEN
+a6wtZjn6vg39B18Q3X8Fh5AV;Emerald Isle Landscaping;2019 Q2;120;14;137;4;77;null;OPEN
+cIhji6tQmZPJIn3U5Bo7MlbV;Biomedical Research Laboratories;2019 Q2;30;10;33;3;8;null;OPEN
+JetsFZMSlrCtaLnqBgbDpVKn;1798 Consultants;2019 Q2;351;-11;312;2;66;null;OPEN
+Q5KMQJ8ICfRCdHC69GRIuzOA;Evidon;2019 Q2;1070;14;1220;4;102;null;OPEN
+xRUIXg7AXK0NrLr49urR1Vob;RAR Hospitality;2019 Q2;1202;8;1298;3;35;null;OPEN
+gyrJH2oeeW2yAHJ8c44JBqeK;Lighter Capital;2019 Q2;963;4;1002;2;132;null;OPEN
+9GD3UKFTdjZ3PiceHDQPWXhG;Sweet Peach Wax & Sugaring Studio;2019 Q2;142;9;155;3;32;null;OPEN
+7DwojNed1QpQcG9YduEeP4zx;PeriShip;2019 Q2;173;-48;90;1;60;null;OPEN
+whNB3uwGtki1Rwc9ZoE8NJ9R;InfoReady;2019 Q2;209;-22;163;1;24;null;OPEN
+fDaZS461mOz9L64acZ3cC4iR;Uproar PR;2019 Q2;329;14;375;3;80;null;OPEN
+YEsyx5VSIwlgZPMah0IyTOxO;Clarion Security;2019 Q2;1139;-14;980;3;24;null;OPEN
+HcP8zhnYuG22MS21g6S8SFxW;LIBERTY Dental Plan;2019 Q2;178;-5;169;3;52;null;OPEN
+j7BNcQ5ATtEDs3D5KwEbN4qh;Mammoth Networks;2019 Q2;736;8;795;2;75;null;OPEN
+BpbpWfWWVfb3ekSiw7azgy4G;IST Research;2019 Q2;121;-40;73;2;120;null;OPEN
+4mAOrvSs317xNknL2OVrW6Fi;Verys;2019 Q2;799;-49;407;1;117;null;OPEN
+dNOrxUk8w8VZDpCB88bAOKQF;9Gauge Partners;2019 Q2;1026;-42;595;2;90;null;OPEN
+35k0mN6cieCkqjcZMDINAcba;V Digital Services;2019 Q2;142;15;163;4;133;null;OPEN
+9dKDYnbTQMPmrcHvfm39zbxq;CTE Logistics;2019 Q2;947;-18;777;1;71;null;OPEN
+gLgCY4ueQBfcEucKXueilfCS;INNOVATIVE REASONING;2019 Q2;84;-50;42;1;123;null;OPEN
+IDVAlQgZoMV1QLPLZQr3eVBv;Laudan Properties;2019 Q2;627;11;696;3;76;null;OPEN
+ZMNODvTrtTcYrvxVmdpCZMb3;Prolific Interactive;2019 Q2;318;15;366;4;102;null;OPEN
+h9LSDpq73HwiO4SozaWUlpEn;H&F Bread Cpmpany;2019 Q2;311;-27;227;1;89;null;OPEN
+E0c0LrGAhbJ2L4w5AgsPGBY1;Side By Side Stuff;2019 Q2;23;-15;20;2;62;null;OPEN
+PFETjDtu3Ngz1LLcsx7az5WO;Spindrift;2019 Q2;1093;2;1115;3;90;null;OPEN
+shtrnZXrXCTxYth9LpYM3exw;Katom Restaurant Supply;2019 Q2;7;14;8;3;88;null;OPEN
+GZOXOVxgZqeSjKVQEfxrnW9e;RE 360;2019 Q2;217;15;250;4;131;null;OPEN
+1kMGdDPGH8dd0LhVbxUOAxlf;Valiant Solutions;2019 Q2;253;0;NaN;5;77;null;OPEN
+HfySSVeTsExb7xj2Z8n0EN6a;ORS Partners;2019 Q2;383;-1;379;3;114;null;OPEN
+E2FB6XiiOrLvZRacBhB9Rn2N;HomeVestors of America;2019 Q2;540;-50;270;1;40;null;OPEN
+VHJALnogQquV9NbraH2vmZsU;Global Sourcing Connection;2019 Q2;774;11;859;3;59;null;OPEN
+KLst4G31kC8D0fvM8ppeVHmF;SnapCap;2019 Q2;319;1;322;2;79;null;OPEN
+6P0dIrCyhHKB0GMcVZeyVxyf;ICONSOFT;2019 Q2;368;13;416;3;76;null;OPEN
+pMdOWFen6qlhSkwKtjtGD3FL;AWD Management Services;2019 Q2;708;-24;538;3;21;null;OPEN
+XivBzzasBmpxAbeCivJCXeZa;Apex Home Loans;2019 Q2;800;-39;488;2;55;null;OPEN
+4h4mehf3NqlADqHTrq37tnct;Philosophie Group;2019 Q2;500;14;570;4;58;null;OPEN
+5pQMOPb1DAwzlUNE5yF2PaO3;247Headhunting;2019 Q2;13;2;13;3;104;null;OPEN
+sr5LkpFjn07l01QQ9NEfX9eI;Accelerated Claims;2019 Q2;675;-42;392;1;68;null;OPEN
+fr3JLQrNh0OZLeq2kc7GuJG7;ScribeAmerica;2019 Q2;808;-41;477;1;110;null;OPEN
+DO5N4RvAYKfOOLHKfzHlmhmy;United Mailing Service dba UMS;2019 Q2;339;-16;285;3;129;null;OPEN
+y8nwgBzJWvpNAmv0NBpntIkf;CTE Logistics;2019 Q2;67;-32;46;2;27;null;OPEN
+ShdPzDsPkl94dz7e1eC3grpR;4SIGHT Supply Chain Group;2019 Q2;81;-13;70;3;29;null;OPEN
+NXJov1MdYXTtBp6a1iyT6Jms;Pacific Gold Marketing;2019 Q2;617;0;NaN;5;15;null;OPEN
+ocMNn19fL8LTLrlmKwmcMmkZ;Gamma Labs;2019 Q2;347;-50;174;1;122;null;OPEN
+A0zDzevcccwKInuqLbQ4kUW4;Skin By Lovely;2019 Q2;348;-8;320;1;101;null;OPEN
+QCglFKLLMGAjyyU9f1I3vKH5;Access Networks;2019 Q2;400;6;424;3;7;null;OPEN
+pZB56J664qsS9ho5yQ6Qoe7w;Advantage Media Group;2019 Q2;178;-13;155;3;61;null;OPEN

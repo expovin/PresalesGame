@@ -1,7 +1,7 @@
 <div class="main-panel">
     <div class="content">
         <div class="container-fluid">
-            <div class="row">
+            <div class="row" *ngIf="company !== undefined">
                 <div class="col-lg-3 col-sm-6">
                     <div class="card">
                         <div class="content">
@@ -137,9 +137,9 @@
                         </div>
                         <div class="content">
 
-                            <div class="row" >
+                            <div class="row" *ngIf="company !== undefined">
                                 <div class="BAM_TOP">
-                                    <div class="col-md-4">
+                                    <div class="col-md-5">
                                         <div class="row">
                                                 <h3 class="sistemLable sistemLableActive" [hidden]="!company.isBAMEnabled">BAM Enabled</h3>
                                                 <h3 class="sistemLable sistemLableDeactive" [hidden]="company.isBAMEnabled">BAM Disabled</h3>
@@ -149,6 +149,18 @@
                                             <button type="button" class="btn btn-outline-primary" (click)="toggleBAM()">{{labelBAM}}</button>
                                         </div>
                                     </div>
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-5">
+                                        <div class="row">
+                                                <h3 class="sistemLable sistemLableActive" [hidden]="!company.isTOPEnabled">TOP Enabled</h3>
+                                                <h3 class="sistemLable sistemLableDeactive" [hidden]="company.isTOPEnabled">TOP Disabled</h3>
+                                        </div>
+
+                                        <div class="row">
+                                            <button type="button" class="btn btn-outline-primary" (click)="toggleTOP()">{{labelTOP}}</button>
+                                        </div>
+                                    </div>                                    
+                                    <!--
                                     <div class="col-md-8">
                                             <p class="text-warning">
                                                 BAM cna give you more insights on the opportunities you face in the previous quarter.
@@ -159,34 +171,10 @@
                                                 the recoursive cost.
                                             </p>
                                     </div>
+                                    -->
                                 </div>
                             </div>
 
-                            <hr>
-
-                            <div class="row" >
-                                <div class="BAM_TOP">
-                                    <div class="col-md-4">
-                                        <div class="row">
-                                                <h3 class="sistemLable sistemLableActive" [hidden]="!company.isTOPEnabled">TOP Enabled</h3>
-                                                <h3 class="sistemLable sistemLableDeactive" [hidden]="company.isTOPEnabled">TOP Disabled</h3>
-                                        </div>
-
-                                        <div class="row">
-                                            <button type="button" class="btn btn-outline-primary" (click)="toggleTOP()">{{labelTOP}}</button>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-8">
-                                            <p class="text-warning">
-                                                TOP is a system to allow your cmpany in a better planning the big opportunities and find out
-                                                the product's strength and weakness. This may help to better address the product improvements.<br>
-                                                TOP require an initial cost in terms of effort to implement (hours) and in terms of money
-                                                and a recoursive cost each quarter (hours + money). You can disable this feature any time avoiding
-                                                the recoursive cost.
-                                            </p>
-                                    </div>
-                                </div>
-                            </div>
 
                             <hr>
 
@@ -220,7 +208,7 @@
                                                     </form>
                                             </div>
                                             <div class="row">
-                                                    <table class="table">
+                                                    <table class="table" *ngIf="company !== undefined">
                                                             <thead>
                                                               <tr>
                                                                 <th scope="col">Money</th>
@@ -365,7 +353,7 @@
                     
                     </div>
 
-                    <div class="card" [hidden]="selectedPerson === null">
+                    <div class="card" *ngIf="selectedPerson !== null">
                             <div class="header">
                                 <h4 class="title" [hidden]="userDetails != 1">Merit increase</h4>
                                 <h4 class="title" [hidden]="userDetails != 2">Retention Bonus</h4>
@@ -422,7 +410,9 @@
                                                 <div class="row">
                                                         <app-charts [labels]="labels" 
                                                         [personalScore]="personalScore" 
-                                                        [marketScore]="marketScore"
+                                                        [avgTeamScore]="avgTeamScore"
+                                                        [avgTeamScoreMax]="avgTeamScoreMax"
+                                                        [numPeople]="numPeople"
                                                         [lablesChart]="lablesChart"></app-charts>
                                                 </div>
 

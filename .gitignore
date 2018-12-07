@@ -64,6 +64,9 @@ typings/
 /tmp
 /out-tsc
 
+# log directory
+/qLog
+
 # IDEs and editors
 /.idea
 .project

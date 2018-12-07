@@ -21,7 +21,7 @@ var post_data = {
 var options = {
     host: 'localhost',
     port: 3000,
-    path: '/api/market',
+    path: '/api/v1/market',
     method: 'GET',
     headers: {
         'Content-Type': 'application/json',
@@ -81,7 +81,7 @@ var options = {
 module.exports = {
 
     genMarket : function () {
-        options.path="/api/market";
+        options.path="/api/v1/market";
         options.method="POST";
         return new Promise ( (fulfill, reject) => {
             genericRequest()
@@ -93,7 +93,7 @@ module.exports = {
     },
 
     getMarket : function () {
-        options.path="/api/market";
+        options.path="/api/v1/market";
         options.method='GET';
         return new Promise ( (fulfill, reject) => {
             getRequest()
@@ -105,7 +105,7 @@ module.exports = {
     },
 
     genPresales : function() {
-        options.path="/api/presales";
+        options.path="/api/v1/presales";
         options.method="POST";
         return new Promise ( (fulfill, reject) => {
             genericRequest()
@@ -116,7 +116,7 @@ module.exports = {
     },
 
     getCompanies : function () {
-        options.path="/api/companies";
+        options.path="/api/v1/companies";
         options.method='GET';
         return new Promise ( (fulfill, reject) => {
             getRequest()
@@ -128,7 +128,7 @@ module.exports = {
     },    
 
     getPresales : function() {
-        options.path="/api/presales";
+        options.path="/api/v1/presales";
         options.method='GET';
         return new Promise ( (fulfill, reject) => {
             getRequest()
@@ -139,7 +139,7 @@ module.exports = {
     },
 
     makeProposal : function(companyID, presalesID) {
-        options.path="/api/market/proposal/"+companyID+"/"+presalesID;
+        options.path="/api/v1/market/proposal/"+companyID+"/"+presalesID;
         options.method="POST";
         return new Promise ( (fulfill, reject) => {
             genericRequest()
@@ -150,7 +150,7 @@ module.exports = {
     },
 
     evaluate : function(companyID, presalesID) {
-        options.path="/api/market/evaluate";
+        options.path="/api/v1/market/evaluate";
         options.method='GET';
         return new Promise ( (fulfill, reject) => {
             getRequest()
@@ -161,7 +161,7 @@ module.exports = {
     },    
 
     confirmPerson : function(companyID, PersonID) {
-        options.path="/api/market/evaluate";
+        options.path="/api/v1/market/evaluate";
         options.method="POST";
         post_data['companyID']=companyID;
         post_data['personID']=PersonID;
@@ -174,7 +174,7 @@ module.exports = {
     },
 
     discardPerson : function(companyID, PersonID) {
-        options.path="/api/market/evaluate";
+        options.path="/api/v1/market/evaluate";
         options.method="PUT";
         post_data['companyID']=companyID;
         post_data['personID']=PersonID;        
@@ -187,7 +187,7 @@ module.exports = {
     },    
 
     genOpportunities : function() {
-        options.path="/api/opportunities";
+        options.path="/api/v1/opportunities";
         options.method="POST";
         return new Promise ( (fulfill, reject) => {
             genericRequest()
@@ -198,7 +198,7 @@ module.exports = {
     },
 
     genCompany : function (name){
-        options.path="/api/companies";
+        options.path="/api/v1/companies";
         options.method="POST";
         post_data.name=name;
         return new Promise ( (fulfill, reject) => {
@@ -210,7 +210,7 @@ module.exports = {
     },
 
     marketCampain : function (companyID){
-        options.path="/api/companies/"+companyID+"/Campain";
+        options.path="/api/v1/companies/"+companyID+"/Campain";
         options.method="POST";
         return new Promise ( (fulfill, reject) => {
             genericRequest()
@@ -221,7 +221,7 @@ module.exports = {
     },
 
     toggleFilterValue : function (companyID){
-        options.path="/api/companies/"+companyID+"/filter/value";
+        options.path="/api/v1/companies/"+companyID+"/filter/value";
         options.method="PUT";
         return new Promise ( (fulfill, reject) => {
             genericRequest()
@@ -232,7 +232,7 @@ module.exports = {
     },    
 
     setFilterValue : function (companyID){
-        options.path="/api/companies/"+companyID+"/filter/value";
+        options.path="/api/v1/companies/"+companyID+"/filter/value";
         options.method="POST";
         return new Promise ( (fulfill, reject) => {
             genericRequest()
@@ -243,7 +243,7 @@ module.exports = {
     },
 
     makeProposal : function(companyID, PersonID){
-        options.path="/api/market/proposal/"+companyID+"/"+PersonID+"/";
+        options.path="/api/v1/market/proposal/"+companyID+"/"+PersonID+"/";
         options.method="POST";
         return new Promise ( (fulfill, reject) => {
             genericRequest()
@@ -254,7 +254,7 @@ module.exports = {
     },
 
     getCampain : function(companyID){
-        options.path="/api/companies/"+companyID+"/Campain";
+        options.path="/api/v1/companies/"+companyID+"/Campain";
         options.method="POST";
         return new Promise ( (fulfill, reject) => {
             genericRequest()
@@ -265,7 +265,7 @@ module.exports = {
     },
 
     BRShare : function(){
-        options.path="/api/market/BRShare";
+        options.path="/api/v1/market/BRShare";
         options.method="POST";
         return new Promise ( (fulfill, reject) => {
             genericRequest()
@@ -276,7 +276,7 @@ module.exports = {
     },
 
     nextPeriod : function(){
-        options.path="/api/market/nextPeriod";
+        options.path="/api/v1/market/nextPeriod";
         options.method="GET";
         return new Promise ( (fulfill, reject) => {
             getRequest()

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { CookieService } from 'ngx-cookie-service';
-
+import { CompanyService } from '../services/company.service';
+import { MessageService } from '../services/message.service';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-sidebar',
@@ -10,11 +11,22 @@ import { CookieService } from 'ngx-cookie-service';
 export class SidebarComponent implements OnInit {
 
   private companyName:string;
+  private companyID:string;
+  private gameID:string;
+  private companyDetails;
+  private subscription: Subscription;
   
-  constructor(private cookieService: CookieService) { }
+  constructor(private messageService: MessageService,
+              private companyService: CompanyService,) { 
+  
+    this.subscription = this.messageService.getCompany()
+    .subscribe( selectedState => {
+      this.companyDetails = selectedState;
+    })
+  }
 
   ngOnInit() {
-    this.companyName = this.cookieService.get('companyName');
+  
   }
 
 }

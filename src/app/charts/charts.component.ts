@@ -19,7 +19,9 @@ export class ChartsComponent implements OnInit {
   private chart;
   @Input('labels') labels:[string];
   @Input('personalScore') personalScore:[number];
-  @Input('marketScore') marketScore:[number];
+  @Input('avgTeamScore') avgTeamScore:[number];
+  @Input('avgTeamScoreMax') avgTeamScoreMax:[number];
+  @Input('numPeople') numPeople;
   @Input('lablesChart') lablesChart;
 
 
@@ -27,7 +29,6 @@ export class ChartsComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-
   }
 
   updateChart(){
@@ -42,6 +43,13 @@ export class ChartsComponent implements OnInit {
         text: title,
         x: -80
     },
+/*
+    tooltip: {
+        formatter: function() {
+            return 'The value for <b>' + this.x + '</b> is <b>' + this.y + '</b>, in series '+ this.series.name+' you already have '+this.title[this.x]+' people, in your tema';
+        }
+    },
+    */
 
     pane: {
         size: '80%'
@@ -71,7 +79,10 @@ export class ChartsComponent implements OnInit {
         data: this.personalScore
     }, {
         name: this.lablesChart[1],
-        data: this.marketScore
+        data: this.avgTeamScore
+    }, {
+        name: this.lablesChart[2],
+        data: this.avgTeamScoreMax
     }]
 });  
   }

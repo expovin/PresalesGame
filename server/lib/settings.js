@@ -79,10 +79,10 @@ module.exports = {
     marketTrendPercentageVariationMax: 8,
 
     weighCompetition : {
-        Trends : 35,
-        Features : 25,
-        BA : 20,
-        BR : 20
+        Trends : 37,
+        Features : 23,
+        BA : 24,
+        BR : 16
     },
 
     penaltyDeclineToHire : 10,

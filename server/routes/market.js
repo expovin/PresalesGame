@@ -74,7 +74,7 @@ router.route('/BRShare')
 router.route('/evaluate')
 .get( function(req, res, next) {
     var Deals=initDeals(m[req.headers.gameid].getCompanies());
-    var people = m[req.headers.gameid].getPeople("false");
+    var people = m[req.headers.gameid].getPeople(false);
 
 
     /** Loop over unemployed people*/
@@ -94,7 +94,7 @@ router.route('/evaluate')
       });
 
     /** Loop over employed people */
-    var people = m[req.headers.gameid].getPeople("true");
+    var people = m[req.headers.gameid].getPeople(true);
     var resignedPeople=[];
     Object.keys(people).forEach(function(personID) {
         const resigned=m[req.headers.gameid].getPerson(personID).resign();
@@ -151,13 +151,20 @@ router.route('/evaluate')
 
 router.route('/avgSatisfaction/:companyID/')
 .get( function(req, res, next) {
-    res.status(209).json({result:'OK', data:m[req.headers.gameid].getAvgSatisfactionalLevel(req.params.companyID)});
+    res.status(200).json({result:'OK', data:m[req.headers.gameid].getAvgSatisfactionalLevel(req.params.companyID)});
 });
 
 router.route('/avgTeamWork/:companyID/')
 .get( function(req, res, next) {
-    res.status(209).json({result:'OK', data:m[req.headers.gameid].getAvgTeamWorkLevel(req.params.companyID)});
+    res.status(200).json({result:'OK', data:m[req.headers.gameid].getAvgTeamWorkLevel(req.params.companyID)});
 });
+
+router.route('/avgTeamTrends/:companyID/')
+.get( function(req, res, next) {
+    res.status(200).json({result:'OK', data:m[req.headers.gameid].getAvgTeamTrends(req.params.companyID)});
+});
+
+
 
 router.route('/proposal/:companyID/:presalesID')
 .get( function(req, res, next) {

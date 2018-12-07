@@ -3,6 +3,7 @@ import { PresalesService } from '../services/presales.service'
 import { CookieService } from 'ngx-cookie-service';
 import picasso from 'picasso.js';
 import PicassoCharts from '../shared/PicassoCharts.js';
+import { MessageService } from '../services/message.service';
 
 @Component({
   selector: 'app-market',
@@ -16,10 +17,12 @@ export class MarketComponent implements OnInit {
   private marketTrends=[];
 
   constructor(private presalesService: PresalesService,
+              private messageService: MessageService,
               private cookieService: CookieService) { }
 
   ngOnInit() {
 
+    this.messageService.setPageStatus("Market");
     this.gameID = this.cookieService.get('gameID');
     this.companyID = this.cookieService.get('companyID');
 
@@ -31,7 +34,6 @@ export class MarketComponent implements OnInit {
         _this.marketTrends.push({name:trend, score:res['data'][Object.keys(res['data'])[0]]['marketTrends'][trend]})
       })    
 
-      console.log(this.marketTrends);
       picasso.chart({
         element: document.querySelector('#chartMarketTrends'), // This is the element to render the chart in
         data: [{

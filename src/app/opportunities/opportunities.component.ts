@@ -32,11 +32,12 @@ export class OpportunitiesComponent implements OnInit {
   constructor(private opportunitiesService: OpportunitiesService, 
               private companyService: CompanyService,
               private notifierService: NotifierService,
+              private messageService: MessageService,
               private cookieService: CookieService) { this.notifier = this.notifierService; }
 
   ngOnInit() {
 
-    console.log(this.config.showOpportunities);
+    this.messageService.setPageStatus("Opportunities");
     this.gameID = this.cookieService.get('gameID');
     this.companyID = this.cookieService.get('companyID');
 
@@ -158,7 +159,5 @@ export class OpportunitiesComponent implements OnInit {
       else
         this.btnClassArray[i+"B"]="btn btn-danger";
     }
-
-    console.log(this.company.oppyConstraint.Qualification);
   }
 }

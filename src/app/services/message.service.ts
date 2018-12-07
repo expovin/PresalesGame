@@ -1,22 +1,30 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MessageService {
 
-  private companyName: string;
+  private pageStatus =  new Subject<any>();
+  private companyDetails = new Subject<any>();
 
   constructor() { }
 
-  setCompanyName(companyName : string){
-    
-    this.companyName=companyName;
-    console.log("Setting company name to : ",this.companyName);
+  setCompany(state: any) {
+    this.companyDetails.next(state);
   }
 
-  getCompanyName(): string{
-    console.log("getting CompanyName: ",this.companyName);
-    return this.companyName;
+  getCompany(): Observable<any> {
+    return this.companyDetails.asObservable();
+  }  
+
+  setPageStatus(state: any) {
+    this.pageStatus.next(state);
   }
+
+  getPageStatus(): Observable<any> {
+    return this.pageStatus.asObservable();
+  }   
 }

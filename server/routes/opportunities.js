@@ -12,6 +12,8 @@ router.route('/')
     res.status(200).json({result:'OK', data: m[req.headers.gameid].getOpportunities()});
 })
 .post( function (req, res, next){
+    m[req.headers.gameid].setOppyParameters(req.body.num, req.body.minValue, req.body.maxValue, req.body.minTTC, req.body.maxTTC);
+
     for(var i=0; i<req.body.num; i++)
         m[req.headers.gameid].addOpportunity(new Oppy(req.body.minValue, req.body.maxValue, req.body.minTTC, req.body.maxTTC))
     m[req.headers.gameid].deserializeOppy();

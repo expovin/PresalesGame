@@ -42,7 +42,7 @@ app.use(function (req, res, next) {
 
    // Website you wish to allow to connect
   var allowedOrigins = ['http://127.0.0.1:3000', 'http://127.0.0.1:4200', 'http://localhost:3000', 'http://localhost:4200',
-                        'http://itmil-ves:3000', 'http://itmil-ves:4200'];
+                        'http://itmil-ves:3000', 'http://itmil-ves:4200', 'http://itmil-ves, http://localhost'];
 
   var origin = req.headers.origin;
   if(allowedOrigins.indexOf(origin) > -1){
@@ -64,14 +64,13 @@ app.use(function (req, res, next) {
 
 
 //app.use('/', indexRouter);
-app.use('/api/users', usersRouter);
-app.use('/api/users', usersRouter);
-app.use('/api/presales', presalesRoute);
-app.use('/api/opportunities', opportunitiesRoute);
-app.use('/api/companies', companiesRoute);
-app.use('/api/market', marketRoute);
-app.use('/api/game', gameRoute);
-app.use('/api/qix', qix);
+app.use('/api/v1/users', usersRouter);
+app.use('/api/v1/presales', presalesRoute);
+app.use('/api/v1/opportunities', opportunitiesRoute);
+app.use('/api/v1/companies', companiesRoute);
+app.use('/api/v1/market', marketRoute);
+app.use('/api/v1/game', gameRoute);
+app.use('/api/v1/qix', qix);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

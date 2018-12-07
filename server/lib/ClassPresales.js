@@ -5,7 +5,7 @@ var skills = require('./dictionary').skills;
 var features = require('./dictionary').features;
 var trends = require('./dictionary').trends;
 var icons = require('./dictionary').icons;
-//var random = require('random-name');
+const fs = require('fs');
 var random = require('node-random-name');
 const helper = require('./helper');
 
@@ -277,6 +277,60 @@ class Presales  {
     }
 
     getValues(){ return(this.person) }
+
+    saveQuarterResultToFile(quarter){
+        let fileName=this.person.ID+"_"+quarter+"_PersonDetails.csv";
+        let personData="PersonId;Name;Cost;satisfactionLevel;quarter\r\n";
+        personData += this.person.ID+";"+this.person.name+";"+this.person.cost+";"+this.person.satisfactionLevel+";"+quarter+"\r\n"
+        fs.writeFile(settings.quarterLogFilePath+fileName,personData, function(err){
+            if(err){
+                console.log("Error while writing the file ",fileName, " : ", err);
+                return (false);
+            }
+            //console.log("File ",fileName," succesfully saved");
+            return (true);
+        })           
+        this.savePersonTrends(quarter);
+        this.saveFeatures(quarter);
+    }
+
+    savePersonTrends(quarter){
+        let fileName=this.person.ID+"_"+quarter+"_PersonTrends.csv";
+        let personData="PersonId;quarter;TrendName;TrendScore\r\n";
+        this.person.PersonTrends.forEach( (t,idx) =>{
+            personData += this.person.ID+";"+quarter+";"+t.name+";"+t.score+"\r\n";
+
+            if(this.person.PersonTrends.length === idx+1){
+                fs.writeFile(settings.quarterLogFilePath+fileName,personData, function(err){
+                    if(err){
+                        console.log("Error while writing the file ",fileName, " : ", err);
+                        return (false);
+                    }
+                    //console.log("File ",fileName," succesfully saved");
+                    return (true);
+                })   
+            }
+        })
+    }
+
+    saveFeatures(quarter){
+        let fileName=this.person.ID+"_"+quarter+"_PersonFeatures.csv";
+        let personData="PersonId;quarter;FeatureName;FeatureScore\r\n";
+        this.person.features.forEach( (t,idx) =>{
+            personData += this.person.ID+";"+quarter+";"+t.name+";"+t.score+"\r\n";
+
+            if(this.person.features.length === idx+1){
+                fs.writeFile(settings.quarterLogFilePath+fileName,personData, function(err){
+                    if(err){
+                        console.log("Error while writing the file ",fileName, " : ", err);
+                        return (false);
+                    }
+                    //console.log("File ",fileName," succesfully saved");
+                    return (true);
+                })   
+            }
+        })
+    }
 }
 
 module.exports = Presales;

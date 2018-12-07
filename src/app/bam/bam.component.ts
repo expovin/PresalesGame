@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MessageService } from '../services/message.service';
 
 @Component({
   selector: 'app-bam',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BamComponent implements OnInit {
 
-  constructor() { }
+  constructor(private messageService: MessageService) { }
 
   ngOnInit() {
+    this.messageService.setPageStatus("BAM");
   }
 
 }

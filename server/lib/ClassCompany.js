@@ -28,7 +28,6 @@ class Company {
         this.oppyCompeted={};
         this.oppyNotCompeted=[];
         this.endQuarterRemainingHours=[];
-        
 
 
         this.oppyConstraint ={
@@ -357,12 +356,14 @@ class Company {
                         console.log("Error while writing the file ",fileName, " : ", err);
                         return (false);
                     }
-                    console.log("File ",fileName," succesfully saved");
+                    //console.log("File ",fileName," succesfully saved");
                     return (true);
                 })
             }
         })
 
+        this.saveTeamToFile(quarter);
+        
         let productFeatureFileName=this.id+"_"+quarter+"_ProductFeatures.csv";
         let prodFeaturesData="CompanyId;quarter;ProductFeatureName;ProductFeatureScore\r\n";
         Object.keys(this.productFeatures).forEach((feature, index) => {
@@ -373,10 +374,26 @@ class Company {
                         console.log("Error while writing the file ",productFeatureFileName, " : ", err);
                         return (false);
                     }
-                    console.log("File ",productFeatureFileName," succesfully saved");
+                    //console.log("File ",productFeatureFileName," succesfully saved");
                     return (true);
                 })
             }
+        })
+    }
+
+    saveTeamToFile(quarter){
+        let fileName=this.id+"_"+quarter+"_PresalesTeam.csv";
+        let peopleData="CompanyId;personId\r\n";
+        this.presalesTeam.forEach( person =>{
+            peopleData+=this.id+";"+person+"\r\n";
+            fs.writeFile(settings.quarterLogFilePath+fileName,peopleData, function(err){
+                if(err){
+                    console.log("Error while writing the file ",fileName, " : ", err);
+                    return (false);
+                }
+                //console.log("File ",fileName," succesfully saved");
+                return (true);
+            })            
         })
     }
 

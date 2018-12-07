@@ -43,9 +43,11 @@
                                             <div class="col-md-2">
                                                 <button type="button" class="btn btn-outline-success" (click)="placeOffer()" [attr.disabled]="selectedPerson.isEmployed ? '' : null">Place an offer</button>
                                             </div>
+                                            <!--
                                             <div class="col-md-4">
                                                 <button type="button" class="btn btn-outline-primary" (click)="toggleChart()">{{lableButton}}</button>
                                             </div>
+                                            -->
                                         </form>
 
 
@@ -70,7 +72,9 @@
                         <div class="card">
                             <app-charts [labels]="labels" 
                                 [personalScore]="personalScore" 
-                                [marketScore]="marketScore"
+                                [avgTeamScore]="avgTeamScore"
+                                [avgTeamScoreMax]="avgTeamScoreMax"
+                                [numPeople]="numPeople"
                                 [lablesChart]="lablesChart">
                             </app-charts>
                         </div>
@@ -124,7 +128,7 @@
                                         <div class="row">
                                             <form>
                                             <div class="checkbox">
-                                                <label><input type="checkbox" (ngModelChange)="onChangeShowEmpoyed()" [ngModel]="showEmployed">
+                                                <label><input type="checkbox" (ngModelChange)="onChangeShowEmpoyed()" [ngModel]="showEmployed" name="filterPeople">
                                                     Show Employed people</label>
                                                 <button type="button" class="btn btn-outline-primary" (click)="onChangeShowEmpoyed()">Show Employed</button>
                                             </div>

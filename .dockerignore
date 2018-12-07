@@ -1,0 +1,9 @@
+node_modules
+npm-debug.log
+qLog*
+.git
+.vscode
+.gitignore
+assets
+src
+

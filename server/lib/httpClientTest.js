@@ -89,7 +89,7 @@ var peopleToHire={};
                     Promises.push(httpClient.confirmPerson(company, personId))
                 }) 
             })
-            return (Promise.all(Promises) .then( (values) => {
+            return (Promise.all(Promises).then( (values) => {
                 values.forEach(val =>{
                     printMessage("["+val.code+"] " +val.body.message);
                 })

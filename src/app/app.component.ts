@@ -17,7 +17,7 @@ export class AppComponent {
   constructor(private chatService: ChatService){
 
     chatService.messages.subscribe(msg => {			
-      console.log("Response from websocket: " + msg['type']+" - "+msg['msg']);
+      //console.log("Response from websocket: " + msg['type']+" - "+msg['msg']);
       if(msg['type'] === 'start'){
         this.isElaborating=true;
       }
