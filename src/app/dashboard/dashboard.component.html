@@ -1,5 +1,7 @@
+<!-- Modal to improve product features-->
+
 <ngx-smart-modal #modalImproveFeature identifier="modalImproveFeature">
-    <h1>Improve feature</h1>
+    <h3>Improve feature</h3>
     <hr>
     <form>
         <div class="row" *ngIf="company !== undefined">
@@ -27,6 +29,46 @@
 </form>
   
     <button (click)="modalImproveFeature.close()">Close</button>
+</ngx-smart-modal>
+
+<!-- Modal to improve warn about the BAM activation-->
+<ngx-smart-modal #modalBAMActivation identifier="modalBAMActivation">
+    <h3>BAM Activation</h3>
+    <hr>
+    <p class="text-warning">
+        BAM cna give you more insights on the opportunities you face in the previous quarter.
+        Enabling BAM now you can find out several information which might help you to better
+        setting your company. <br>
+        BAM require an initial cost in terms of effort to implement (hours) and in terms of money
+        and a recoursive cost each quarter (hours + money). You can disable this feature any time avoiding
+        the recoursive cost.
+        Are you sure to enable BAM?
+    </p>
+  
+    <div class="btn-group" role="group" aria-label="...">
+        <button type="button" class="btn btn-outline-warning" (click)="toggleBAM(); modalBAMActivation.close()">{{labelBAM}}</button>
+        <button type="button" class="btn btn-outline-info" (click)="modalBAMActivation.close()">Cancel</button>
+    </div>
+</ngx-smart-modal>
+
+<!-- Modal to improve warn about the TOP activation-->
+<ngx-smart-modal #modalTOPActivation identifier="modalTOPActivation">
+    <h3>TOP Activation</h3>
+    <hr>
+    <p class="text-warning">
+        TOP cna give you more insights on the opportunities you face in the previous quarter.
+        Enabling TOP now you can find out several information which might help you to better
+        setting your company. <br>
+        TOP require an initial cost in terms of effort to implement (hours) and in terms of money
+        and a recoursive cost each quarter (hours + money). You can disable this feature any time avoiding
+        the recoursive cost.
+        Are you sure to enable TOP?
+    </p>
+  
+    <div class="btn-group" role="group" aria-label="...">
+        <button type="button" class="btn btn-outline-warning" (click)="toggleTOP(); modalTOPActivation.close()">{{labelTOP}}</button>
+        <button type="button" class="btn btn-outline-info" (click)="modalTOPActivation.close()">Cancel</button>
+    </div>
 </ngx-smart-modal>
 
 <div class="main-panel">
@@ -177,7 +219,7 @@
                                         </div>
 
                                         <div class="row">
-                                            <button type="button" class="btn btn-outline-primary" (click)="toggleBAM()">{{labelBAM}}</button>
+                                            <button type="button" class="btn btn-outline-primary" (click)="ngxSmartModalService.getModal('modalBAMActivation').open()">{{labelBAM}}</button>
                                         </div>
                                     </div>
                                     <div class="col-md-2"></div>
@@ -188,21 +230,9 @@
                                         </div>
 
                                         <div class="row">
-                                            <button type="button" class="btn btn-outline-primary" (click)="toggleTOP()">{{labelTOP}}</button>
+                                            <button type="button" class="btn btn-outline-primary" (click)="ngxSmartModalService.getModal('modalTOPActivation').open()">{{labelTOP}}</button>
                                         </div>
                                     </div>                                    
-                                    <!--
-                                    <div class="col-md-8">
-                                            <p class="text-warning">
-                                                BAM cna give you more insights on the opportunities you face in the previous quarter.
-                                                Enabling BAM now you can find out several information which might help you to better
-                                                setting your company. <br>
-                                                BAM require an initial cost in terms of effort to implement (hours) and in terms of money
-                                                and a recoursive cost each quarter (hours + money). You can disable this feature any time avoiding
-                                                the recoursive cost.
-                                            </p>
-                                    </div>
-                                    -->
                                 </div>
                             </div>
 
