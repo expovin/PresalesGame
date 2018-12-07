@@ -121,10 +121,10 @@ router.route('/:companyID/ProductFeature')
     res.status(209).json({result:'OK', data:m[req.headers.gameid].getCompany(req.params.companyID).getProductFeatures()});
 })
 .post( function (req, res, next){
-    if(m[req.headers.gameid].getCompany(req.params.companyID).improveFeature(req.body.feature, req.body.points))
+    if(m[req.headers.gameid].getCompany(req.params.companyID).improveFeature(req.body.feature, req.body.money))
         res.status(200).json({result:'OK', message:'Product features has been improved'});
     else
-        res.status(200).json({result:'WARNING', message:'Sorry, you have no enought points'});
+        res.status(200).json({result:'WARNING', message:'Sorry, you have no enought money'});
 })
 .put( function (req, res, next){
     res.status(209).json({result:'WARNING', message:'This function has not been implemented yet'});

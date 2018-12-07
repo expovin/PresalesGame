@@ -9,6 +9,7 @@ import picasso from 'picasso.js';
 import PicassoCharts from '../shared/PicassoCharts.js';
 import { NotifierService } from 'angular-notifier';
 import { ChartsComponent } from '../charts/charts.component'
+import { NgxSmartModalService } from 'ngx-smart-modal';
 
 @Component({
   selector: 'app-dashboard',
@@ -62,6 +63,7 @@ export class DashboardComponent implements OnInit {
               private notifierService: NotifierService,
               private presalesService: PresalesService,
               private messageService: MessageService,
+              public ngxSmartModalService: NgxSmartModalService,
               private marketService: MarketService) { this.notifier = this.notifierService; }
 
   ngOnInit() {
@@ -361,6 +363,19 @@ export class DashboardComponent implements OnInit {
       else
         this.notifier.notify( 'error', 'Error while removing campain');
     })    
+  }
+
+  improveFeature(){
+    console.log("Improve feature ",this.featureToImprove," investing ",this.moneyToInvest);
+    this.companyService.improveProductFeature(this.companyID, this.gameID, this.featureToImprove, this.moneyToInvest)
+    .subscribe ( res =>{
+      if(res['result'] === 'OK'){
+        this.notifier.notify( 'success', 'You have succesfully increased your ',this.featureToImprove,' feature by ',this.moneyToInvest / 10,"%");        
+        this.ngOnInit();
+      }
+      else
+        this.notifier.notify( 'error', 'Error while increasing product feature');
+    })
   }
 
 }

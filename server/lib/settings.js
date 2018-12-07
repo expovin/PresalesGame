@@ -71,6 +71,7 @@ module.exports = {
     featureMinChange : -7,
     featureMaxChange : 7,
     DMaxImprovableFeaturePerQuarter : 5,
+    improveFeatureMoneyRatio: 10,        /** K€ for each 1% score on a feature */
 
     meritIncreaseSatisfactionRatio:5,
     retentionBonusSatisfactionRatio:1,

@@ -66,6 +66,7 @@ typings/
 
 # log directory
 /qLog
+qLog.zip
 
 # IDEs and editors
 /.idea

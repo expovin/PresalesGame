@@ -222,4 +222,19 @@ export class CompanyService {
     return this.http.post(baseURL + 'companies/'+idCompany+'/filter/qualification',{oppyQualifications:values} ,requestOptions)
             .map(res => { return this.processHTTPMsgService.extractData(res); });
   }  
+
+  improveProductFeature(idCompany, gameId, feature, money){
+    const headerDict = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'gameID' : gameId
+    }
+    
+    const requestOptions = {                                                                                                                                                                                 
+      headers: new Headers(headerDict), 
+    };
+
+    return this.http.post(baseURL + 'companies/'+idCompany+'/ProductFeature',{feature:feature, money:money} ,requestOptions)
+            .map(res => { return this.processHTTPMsgService.extractData(res); });    
+  }
 }

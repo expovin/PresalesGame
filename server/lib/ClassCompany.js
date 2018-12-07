@@ -144,17 +144,28 @@ class Company {
         return(join);
     }
 
-    improveFeature(featureName, points){
-        if(this.improvablePointsFeatures - points < 0)
+    improveFeature(featureName, money){
+        if(this.budget - money < 0)
             return (false)
 
         this.productFeatures.forEach( f => {
-            if(f.name === featureName)
-              f.score +=points;
+            if(f.name === featureName){
+                f.score += money / settings.improveFeatureMoneyRatio;
+                this.budget -=money;
+            }
+              
         })
-        this.improvablePointsFeatures -=points;
+        this.productFeatures.sort(this.compare);
         return (true)
     }
+
+    compare(a,b) {
+        if (a.score > b.score)
+          return -1;
+        if (a.score < b.score)
+          return 1;
+        return 0;
+      }       
 
     enableBAM(){
         if(this.totalHours - settings.BAMinitialHourCost < 0){

@@ -46,6 +46,7 @@
     "morgan": "~1.9.0",
     "ngx-cookie-service": "^2.0.0",
     "ngx-restangular": "^3.0.0",
+    "ngx-smart-modal": "^7.1.0",
     "node-random-name": "^1.0.1",
     "picasso.js": "^0.15.0",
     "prettyjson": "^1.2.1",

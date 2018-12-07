@@ -1,3 +1,34 @@
+<ngx-smart-modal #modalImproveFeature identifier="modalImproveFeature">
+    <h1>Improve feature</h1>
+    <hr>
+    <form>
+        <div class="row" *ngIf="company !== undefined">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Feature</label>
+                    <input type="text" class="form-control border-input"  placeholder="Insert the feature to improve" 
+                            [(ngModel)]="featureToImprove" name="featureToImprove" (ngModelChange)="featureSuggestion($event)" required />
+                    <ul [hidden]="!isFeatureSuggestion">
+                        <li *ngFor="let feature of company.productFeatures | myfilter:featureToImprove" (click)="featureToImprove=feature.name;isFeatureSuggestion=false"> {{feature.name}}</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Money to invest</label>
+                    <input type="number" [(ngModel)]="moneyToInvest" class="form-control border-input" placeholder="Insert the amount to invest" name="moneyToInvest" required />
+                </div>
+            </div>
+            <div class="col-md-4">
+                <br>
+                <button type="button" class="btn btn-outline-primary" (click)="improveFeature();modalImproveFeature.close()">Invest</button>
+            </div>                                                     
+        </div>
+</form>
+  
+    <button (click)="modalImproveFeature.close()">Close</button>
+</ngx-smart-modal>
+
 <div class="main-panel">
     <div class="content">
         <div class="container-fluid">
@@ -13,7 +44,7 @@
                                 </div>
                                 <div class="col-xs-7">
                                     <div class="numbers">
-                                        <p>Brend Recognition</p>
+                                        <p>Brand Recognition</p>
                                        {{company.brendRecognition | number : '1.2-2'}} %
                                     </div>
                                 </div>
@@ -121,7 +152,7 @@
                                     <i class="fa fa-circle text-warning"></i> Click Second Time
                                 </div>
                                 <hr>
-                                <div class="stats">
+                                <div class="stats" (click)="ngxSmartModalService.getModal('modalImproveFeature').open()">
                                     <i class="ti-stats-up"></i> Improve
                                 </div>
                             </div>

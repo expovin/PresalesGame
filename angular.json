@@ -32,6 +32,7 @@
               "node_modules/angular-notifier/styles/types/type-info.css",
               "node_modules/angular-notifier/styles/types/type-success.css",
               "node_modules/angular-notifier/styles/types/type-warning.css",
+              "node_modules/ngx-smart-modal/ngx-smart-modal.css",
               "node_modules/angular-notifier/styles/core.css",
               "src/assets/css/animate.min.css",
               "src/assets/css/paper-dashboard.css",

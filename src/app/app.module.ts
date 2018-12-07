@@ -25,6 +25,7 @@ import { ChartModule } from 'angular-highcharts';
 import { ChartsComponent } from './charts/charts.component';
 import { MyFilterPipe } from './shared/filter.pipe';
 import { PeopleProposal } from './shared/filter.pipe.peopleproposal';
+import { NgxSmartModalModule } from 'ngx-smart-modal';
 
 import { ElaborationComponent } from './elaboration/elaboration.component';
 
@@ -89,7 +90,8 @@ import { ElaborationComponent } from './elaboration/elaboration.component';
         overlap: 150
       }
     }),
-    RestangularModule.forRoot(RestangularConfigFactory)
+    RestangularModule.forRoot(RestangularConfigFactory),
+    NgxSmartModalModule.forRoot()
   ],
   providers: [{provide: 'BaseURL', useValue: baseURL},
                 ProcessHTTPMsgService,
