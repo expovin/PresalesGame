@@ -32,7 +32,9 @@ export class MarketComponent implements OnInit {
       var _this=this;
       Object.keys(res['data'][Object.keys(res['data'])[0]]['marketTrends']).forEach(function(trend) {
         _this.marketTrends.push({name:trend, score:res['data'][Object.keys(res['data'])[0]]['marketTrends'][trend]})
-      })    
+      })  
+
+      this.marketTrends.sort((a,b) => {return(b.score - a.score)});  
 
       picasso.chart({
         element: document.querySelector('#chartMarketTrends'), // This is the element to render the chart in

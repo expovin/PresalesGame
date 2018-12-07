@@ -378,7 +378,9 @@ class Market {
         trends.forEach( trend =>{
             this.MarketTrends.push({trendName : trend, marketTrendScore : helper.generateRandomValue(settings.MinTrendScore, settings.MaxTrendScore)})
         })
-    }
+
+       // this.MarketTrends.sort(this.compareMarketTrends);
+    }  
 
     getAvgSatisfactionalLevel(companyId){
         let satisfaction=0;

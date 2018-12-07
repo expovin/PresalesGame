@@ -1,6 +1,6 @@
 <!-- Modal to improve product features-->
 
-<ngx-smart-modal #modalImproveFeature identifier="modalImproveFeature">
+<ngx-smart-modal #modalImproveFeature identifier="modalImproveFeature" id="modalImproveFeature">
     <h3>Improve feature</h3>
     <hr>
     <form>
@@ -44,7 +44,7 @@
         the recoursive cost.
         Are you sure to enable BAM?
     </p>
-  
+    <hr>
     <div class="btn-group" role="group" aria-label="...">
         <button type="button" class="btn btn-outline-warning" (click)="toggleBAM(); modalBAMActivation.close()">{{labelBAM}}</button>
         <button type="button" class="btn btn-outline-info" (click)="modalBAMActivation.close()">Cancel</button>
@@ -64,7 +64,7 @@
         the recoursive cost.
         Are you sure to enable TOP?
     </p>
-  
+    <hr>
     <div class="btn-group" role="group" aria-label="...">
         <button type="button" class="btn btn-outline-warning" (click)="toggleTOP(); modalTOPActivation.close()">{{labelTOP}}</button>
         <button type="button" class="btn btn-outline-info" (click)="modalTOPActivation.close()">Cancel</button>
