@@ -57,7 +57,10 @@ class QIX {
         this.sessionAppName=null;
         
         this.halyard = new Halyard();
-        this.openQixEngine();
+        this.openQixEngine()
+        .catch( error =>{
+            console.log("General error connecting to QIX engine ",error)
+        })
        
     }
     
@@ -70,8 +73,7 @@ class QIX {
             .then((qix) => {
                 this.qix=qix;
                 fulfill(qix);
-            }, error => reject("Error connecting QIX engine ",error) )
-            .catch(error => reject("Error connecting QIX engine ",error));
+            }, error => reject(error) );
         })
     }
 

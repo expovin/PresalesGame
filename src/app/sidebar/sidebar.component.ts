@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { CompanyService } from '../services/company.service';
 import { MessageService } from '../services/message.service';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -16,8 +15,7 @@ export class SidebarComponent implements OnInit {
   private companyDetails;
   private subscription: Subscription;
   
-  constructor(private messageService: MessageService,
-              private companyService: CompanyService,) { 
+  constructor(private messageService: MessageService) { 
   
     this.subscription = this.messageService.getCompany()
     .subscribe( selectedState => {

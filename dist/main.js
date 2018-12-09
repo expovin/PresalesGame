@@ -1186,7 +1186,7 @@ module.exports = "\n.wrapperDisabled {\n    display: none;\n    position: absolu
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--The content below is only a placeholder and can be replaced.-->\n    <notifier-container></notifier-container>\n    <div [ngClass]=\"{'wrapper': true}\"> \n\n                    <app-sidebar></app-sidebar>                                \n                    <app-navbar></app-navbar>\n            \n                    <div [ngClass]=\"{'wrapperDisabled': isElaborating}\">\n                        <router-outlet></router-outlet> \n                        <app-footer></app-footer>\n                    </div>\n                    \n                    <app-elaboration [hidden]=\"!isElaborating\"></app-elaboration>\n                    \n                    \n\n            \n    </div>        \n\n\n\n\n"
+module.exports = "<!--The content below is only a placeholder and can be replaced.\n    <notifier-container></notifier-container>\n-->    \n    <div [ngClass]=\"{'wrapper': true}\"> \n\n        <ngx-smart-modal #modalMsgFromServer identifier=\"modalMsgFromServer\" id=\"modalMsgFromServer\">\n            <h3>Message From Server</h3>\n            <hr>\n            <p> This is a Message from server !!!</p>          \n            <button (click)=\"modalMsgFromServer.close()\">Close</button>\n        </ngx-smart-modal>\n\n\n                    <app-sidebar></app-sidebar>                                \n                    <app-navbar></app-navbar>\n            \n                    <div [ngClass]=\"{'wrapperDisabled': isElaborating}\">\n                        <router-outlet></router-outlet> \n                        <app-footer></app-footer>\n                    </div>\n                    \n                    <app-elaboration [hidden]=\"!isElaborating\"></app-elaboration>\n                    \n                    \n\n            \n    </div>        \n\n\n\n\n"
 
 /***/ }),
 
@@ -1203,6 +1203,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _services_websocket_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./services/websocket.service */ "./src/app/services/websocket.service.ts");
 /* harmony import */ var _services_chat_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./services/chat.service */ "./src/app/services/chat.service.ts");
+/* harmony import */ var ngx_smart_modal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ngx-smart-modal */ "./node_modules/ngx-smart-modal/esm5/ngx-smart-modal.js");
+/* harmony import */ var ngx_cookie_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ngx-cookie-service */ "./node_modules/ngx-cookie-service/index.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1215,22 +1217,33 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
+
 var AppComponent = /** @class */ (function () {
-    function AppComponent(chatService) {
-        var _this = this;
+    function AppComponent(chatService, cookieService, ngxSmartModalService) {
+        var _this_1 = this;
         this.chatService = chatService;
+        this.cookieService = cookieService;
+        this.ngxSmartModalService = ngxSmartModalService;
         this.title = 'The Presales Game';
-        this.isElaborating = false;
-        chatService.messages.subscribe(function (msg) {
-            //console.log("Response from websocket: " + msg['type']+" - "+msg['msg']);
+        this.chatService.messages.subscribe(function (msg) {
+            console.log(msg);
             if (msg['type'] === 'start') {
-                _this.isElaborating = true;
+                console.log("Get a message from server");
+                _this_1.ngxSmartModalService.getModal("modalMsgFromServer").open();
             }
-            if (msg['type'] === 'end') {
-                setTimeout(function () { this.isElaborating = false; window.location.reload(); }, 5000);
-            }
+        }, function (error) {
+            console.log("Error receiving webSocket message : ", error);
+        }, function () {
+            console.log("webSocket connection closed by Server side");
         });
     }
+    AppComponent.prototype.ngOnInit = function () {
+        this.companyID = this.cookieService.get('companyID');
+        console.log('new message from client to websocket: ', this.companyID);
+        var _this = this;
+        setTimeout(function () { _this.chatService.messages.next({ type: 'control', message: _this.companyID }); }, 500);
+    };
     AppComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-root',
@@ -1238,7 +1251,9 @@ var AppComponent = /** @class */ (function () {
             styles: [__webpack_require__(/*! ./app.component.css */ "./src/app/app.component.css")],
             providers: [_services_websocket_service__WEBPACK_IMPORTED_MODULE_1__["WebsocketService"], _services_chat_service__WEBPACK_IMPORTED_MODULE_2__["ChatService"]]
         }),
-        __metadata("design:paramtypes", [_services_chat_service__WEBPACK_IMPORTED_MODULE_2__["ChatService"]])
+        __metadata("design:paramtypes", [_services_chat_service__WEBPACK_IMPORTED_MODULE_2__["ChatService"],
+            ngx_cookie_service__WEBPACK_IMPORTED_MODULE_4__["CookieService"],
+            ngx_smart_modal__WEBPACK_IMPORTED_MODULE_3__["NgxSmartModalService"]])
     ], AppComponent);
     return AppComponent;
 }());
@@ -1710,12 +1725,23 @@ var DashboardComponent = /** @class */ (function () {
         this.lablesChart = [];
         this.isTrends = true;
         this.isFeatureSuggestion = false;
+        this.isTracked = false;
         this.isTrendSuggestion = false;
         this.courseHoursCost = [10, 20, 40];
         this.courseMoneyCost = [2, 4, 8];
         this.courseIncreaseUpTo = [10, 20, 40];
         this.courseIndexCost = -1;
         this.notifier = this.notifierService;
+        /*
+          var _this=this;
+          if(!this.isTracked){
+            var client2 = new WebSocket('ws://echo.websocket.org');
+            client2.onopen = function (event) {
+              client2.send(_this.companyID);
+            };
+            this.isTracked=true;
+          }
+          */
     }
     DashboardComponent.prototype.ngOnInit = function () {
         var _this_1 = this;
@@ -2783,7 +2809,7 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 };
 
 
-var CHAT_URL = 'ws://localhost:1337/';
+var CHAT_URL = 'ws://itmil-ves:1337/';
 var ChatService = /** @class */ (function () {
     function ChatService(wsService) {
         this.messages = wsService
@@ -3500,7 +3526,12 @@ var WebsocketService = /** @class */ (function () {
         });
         var observer = {
             next: function (data) {
+                console.log(ws);
+                Object.keys(ws).forEach(function (key) {
+                    console.log(key + " : " + ws[key]);
+                });
                 if (ws.readyState === WebSocket.OPEN) {
+                    console.log("Sending message " + JSON.stringify(data));
                     ws.send(JSON.stringify(data));
                 }
             }
@@ -3830,8 +3861,7 @@ module.exports = "<div class=\"sidebar\" data-background-color=\"white\" data-ac
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SidebarComponent", function() { return SidebarComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _services_company_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/company.service */ "./src/app/services/company.service.ts");
-/* harmony import */ var _services_message_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/message.service */ "./src/app/services/message.service.ts");
+/* harmony import */ var _services_message_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/message.service */ "./src/app/services/message.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3843,12 +3873,10 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 };
 
 
-
 var SidebarComponent = /** @class */ (function () {
-    function SidebarComponent(messageService, companyService) {
+    function SidebarComponent(messageService) {
         var _this = this;
         this.messageService = messageService;
-        this.companyService = companyService;
         this.subscription = this.messageService.getCompany()
             .subscribe(function (selectedState) {
             _this.companyDetails = selectedState;
@@ -3862,8 +3890,7 @@ var SidebarComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./sidebar.component.html */ "./src/app/sidebar/sidebar.component.html"),
             styles: [__webpack_require__(/*! ./sidebar.component.css */ "./src/app/sidebar/sidebar.component.css")]
         }),
-        __metadata("design:paramtypes", [_services_message_service__WEBPACK_IMPORTED_MODULE_2__["MessageService"],
-            _services_company_service__WEBPACK_IMPORTED_MODULE_1__["CompanyService"]])
+        __metadata("design:paramtypes", [_services_message_service__WEBPACK_IMPORTED_MODULE_1__["MessageService"]])
     ], SidebarComponent);
     return SidebarComponent;
 }());

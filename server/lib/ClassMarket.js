@@ -43,7 +43,7 @@ class Market {
 
         this.quarter=periods[this.periodIndex];
         this.QIncomeCompanyRanking=[];
-        this.wsM = new wsClass();
+        //this.wsM = new wsClass();
 
         this.oppyMinValue;
         this.oppyMaxValue;
@@ -221,7 +221,7 @@ class Market {
         var msg="";
 
         msg={type:'start',msg:'Starting opportunities calculation from '+periods[this.periodIndex]+" to "+periods[this.periodIndex+1]};
-        this.wsM.sendTextMessage(JSON.stringify(msg));
+        //this.wsM.sendBroadcastMessage(JSON.stringify(msg));
 
         Object.keys(this.Companies).forEach(function(companyID) {
             let totalPeopleCosts = 0;
@@ -238,7 +238,7 @@ class Market {
             if( oppy.isOpen()){
                 winner=null;
                 msg={type:'ongoing',msg:'Elaborating Opportunity '+oppy.getID()};
-                this.wsM.sendTextMessage(JSON.stringify(msg));
+                //this.wsM.sendBroadcastMessage(JSON.stringify(msg));
                 Object.keys(this.Companies).forEach(companyID => {
                     
                     /** If the company want to compete */
@@ -318,7 +318,7 @@ class Market {
         /** Slightly change market trends */
         this.slightlyChangeMarketTrends();
         msg={type:'end',msg:'Calulation completed '};
-        this.wsM.sendTextMessage(JSON.stringify(msg));
+        //this.wsM.sendBroadcastMessage(JSON.stringify(msg));
 
         /** Delete old opportunitis */
         this.deleteOpportunities();

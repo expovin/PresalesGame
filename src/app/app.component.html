@@ -1,6 +1,15 @@
-<!--The content below is only a placeholder and can be replaced.-->
+<!--The content below is only a placeholder and can be replaced.
     <notifier-container></notifier-container>
+-->    
     <div [ngClass]="{'wrapper': true}"> 
+
+        <ngx-smart-modal #modalMsgFromServer identifier="modalMsgFromServer" id="modalMsgFromServer">
+            <h3>Message From Server</h3>
+            <hr>
+            <p> This is a Message from server !!!</p>          
+            <button (click)="modalMsgFromServer.close()">Close</button>
+        </ngx-smart-modal>
+
 
                     <app-sidebar></app-sidebar>                                
                     <app-navbar></app-navbar>

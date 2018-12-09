@@ -10,8 +10,9 @@ var presalesRoute = require('./routes/presales');
 var opportunitiesRoute = require('./routes/opportunities');
 var companiesRoute = require('./routes/company');
 var marketRoute = require('./routes/market');
+var adminRoute = require('./routes/admin');
 var gameRoute = require('./routes/game');
-var qix = require('./routes/QIX');
+var qixRoute = require('./routes/QIX');
 
 var app = express();
 
@@ -70,7 +71,8 @@ app.use('/api/v1/opportunities', opportunitiesRoute);
 app.use('/api/v1/companies', companiesRoute);
 app.use('/api/v1/market', marketRoute);
 app.use('/api/v1/game', gameRoute);
-app.use('/api/v1/qix', qix);
+app.use('/api/v1/admin', adminRoute);
+app.use('/api/v1/qix', qixRoute);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

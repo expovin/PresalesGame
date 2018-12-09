@@ -136,16 +136,18 @@
     "maskOutgoingPackets":false,
     "maskBytes":{
         "type":"Buffer",
-        "data":[0,0,0,0]},
-        "frameHeader":{
+        "data":[0,0,0,0]
+    },    
+    "frameHeader":{
             "type":"Buffer",
-            "data":[0,0,0,0,0,0,0,0,101,120]},
-            "bufferList":{
+            "data":[0,0,0,0,0,0,0,0,101,120]
+    },        
+    "bufferList":{
                 "_events":{},
                 "_eventsCount":0,
                 "length":0
-            },
-            "currentFrame":{
+    },
+    "currentFrame":{
                 "maskBytes":{
                     "type":"Buffer",
                     "data":[0,0,0,0]
@@ -160,19 +162,19 @@
             "frameTooLarge":false,
             "invalidCloseFrameLength":false,
             "parseState":1,"closeStatus":-1
-        },
-        "fragmentationSize":0,
-        "frameQueue":[],
-        "connected":true,
-        "state":"open",
-        "waitingForCloseResponse":false,
-        "receivedEnd":false,
-        "closeTimeout":5000,
-        "assembleFragments":true,
-        "maxReceivedMessageSize":1048576,
-        "outputBufferFull":false,
-        "inputPaused":false,
-        "_keepaliveTimeoutID":{
+    },
+    "fragmentationSize":0,
+    "frameQueue":[],
+    "connected":true,
+    "state":"open",
+    "waitingForCloseResponse":false,
+    "receivedEnd":false,
+    "closeTimeout":5000,
+    "assembleFragments":true,
+    "maxReceivedMessageSize":1048576,
+    "outputBufferFull":false,
+    "inputPaused":false,
+    "_keepaliveTimeoutID":{
             "_called":false,
             "_idleTimeout":20000,
             "_idlePrev":{
@@ -188,7 +190,7 @@
             "_idleStart":18037,
             "_repeat":null,
             "_destroyed":false
-        },
-        "webSocketVersion":13,
-        "remoteAddresses":["::1"]
+    },
+    "webSocketVersion":13,
+    "remoteAddresses":["::1"]
 }

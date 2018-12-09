@@ -10,6 +10,7 @@ import PicassoCharts from '../shared/PicassoCharts.js';
 import { NotifierService } from 'angular-notifier';
 import { ChartsComponent } from '../charts/charts.component'
 import { NgxSmartModalService } from 'ngx-smart-modal';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-dashboard',
@@ -47,6 +48,8 @@ export class DashboardComponent implements OnInit {
   private retentionBonus:number;
   private featureToImprove:string;
   private isFeatureSuggestion:boolean=false;
+  private subscription: Subscription;
+  private isTracked:boolean=false;
 
   private trendToImprove:string;
   private isTrendSuggestion:boolean=false;
@@ -64,9 +67,25 @@ export class DashboardComponent implements OnInit {
               private presalesService: PresalesService,
               private messageService: MessageService,
               public ngxSmartModalService: NgxSmartModalService,
-              private marketService: MarketService) { this.notifier = this.notifierService; }
+              private marketService: MarketService) 
+              { 
+                
+                this.notifier = this.notifierService; 
+              /*
+                var _this=this;
+                if(!this.isTracked){
+                  var client2 = new WebSocket('ws://echo.websocket.org');
+                  client2.onopen = function (event) {
+                    client2.send(_this.companyID);
+                  };
+                  this.isTracked=true;
+                }
+                */
+              }
 
   ngOnInit() {
+
+
     this.companyID = this.cookieService.get('companyID');
     this.gameID = this.cookieService.get('gameID');
     this.userDetails=0;

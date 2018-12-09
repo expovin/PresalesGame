@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { WebsocketService } from './services/websocket.service';
 import { ChatService } from './services/chat.service';
-import { NotifierService } from 'angular-notifier';
+import { NgxSmartModalService } from 'ngx-smart-modal';
+import { CookieService } from 'ngx-cookie-service';
+
 
 @Component({
   selector: 'app-root',
@@ -9,24 +11,35 @@ import { NotifierService } from 'angular-notifier';
   styleUrls: ['./app.component.css'],
   providers: [ WebsocketService, ChatService ]
 })
-export class AppComponent {
+export class AppComponent implements OnInit{ 
   title = 'The Presales Game';
+  private companyID:string;
 
-  private isElaborating:boolean=false;
+  constructor(private chatService: ChatService,
+              private cookieService: CookieService,
+              private ngxSmartModalService: NgxSmartModalService){
 
-  constructor(private chatService: ChatService){
-
-    chatService.messages.subscribe(msg => {			
-      //console.log("Response from websocket: " + msg['type']+" - "+msg['msg']);
-      if(msg['type'] === 'start'){
-        this.isElaborating=true;
+    this.chatService.messages.subscribe(
+      msg => {			
+        if(msg['type'] === 'start'){
+          console.log("Get a message from server");
+          this.ngxSmartModalService.getModal("modalMsgFromServer").open();
+        }         
+      },
+      error =>{
+        console.log("Error receiving webSocket message : ",error);
+      },
+      () =>{
+        console.log("webSocket connection closed by Server side");
       }
-        
+    );
+  }
 
-      if(msg['type'] === 'end'){
-        setTimeout(function(){this.isElaborating=false;window.location.reload();}, 5000);
-      }
-        
-    });
+  ngOnInit(){
+
+      this.companyID = this.cookieService.get('companyID');
+      var _this=this;
+      setTimeout(function(){_this.chatService.messages.next({type:'control', message:_this.companyID})}, 500)
+      
   }
 }
