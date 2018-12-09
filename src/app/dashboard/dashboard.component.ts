@@ -71,16 +71,6 @@ export class DashboardComponent implements OnInit {
               { 
                 
                 this.notifier = this.notifierService; 
-              /*
-                var _this=this;
-                if(!this.isTracked){
-                  var client2 = new WebSocket('ws://echo.websocket.org');
-                  client2.onopen = function (event) {
-                    client2.send(_this.companyID);
-                  };
-                  this.isTracked=true;
-                }
-                */
               }
 
   ngOnInit() {

@@ -14,6 +14,7 @@ import { CookieService } from 'ngx-cookie-service';
 export class AppComponent implements OnInit{ 
   title = 'The Presales Game';
   private companyID:string;
+  private isFinish:boolean=false;
 
   constructor(private chatService: ChatService,
               private cookieService: CookieService,
@@ -22,9 +23,12 @@ export class AppComponent implements OnInit{
     this.chatService.messages.subscribe(
       msg => {			
         if(msg['type'] === 'start'){
-          console.log("Get a message from server");
+          this.isFinish=false;
           this.ngxSmartModalService.getModal("modalMsgFromServer").open();
-        }         
+        }        
+        if(msg['type'] === 'end'){
+          this.isFinish=true;
+        }
       },
       error =>{
         console.log("Error receiving webSocket message : ",error);

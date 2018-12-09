@@ -1186,7 +1186,7 @@ module.exports = "\n.wrapperDisabled {\n    display: none;\n    position: absolu
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--The content below is only a placeholder and can be replaced.\n    <notifier-container></notifier-container>\n-->    \n    <div [ngClass]=\"{'wrapper': true}\"> \n\n        <ngx-smart-modal #modalMsgFromServer identifier=\"modalMsgFromServer\" id=\"modalMsgFromServer\">\n            <h3>Message From Server</h3>\n            <hr>\n            <p> This is a Message from server !!!</p>          \n            <button (click)=\"modalMsgFromServer.close()\">Close</button>\n        </ngx-smart-modal>\n\n\n                    <app-sidebar></app-sidebar>                                \n                    <app-navbar></app-navbar>\n            \n                    <div [ngClass]=\"{'wrapperDisabled': isElaborating}\">\n                        <router-outlet></router-outlet> \n                        <app-footer></app-footer>\n                    </div>\n                    \n                    <app-elaboration [hidden]=\"!isElaborating\"></app-elaboration>\n                    \n                    \n\n            \n    </div>        \n\n\n\n\n"
+module.exports = "<!--The content below is only a placeholder and can be replaced.\n    <notifier-container></notifier-container>\n-->    \n    <div [ngClass]=\"{'wrapper': true}\"> \n\n        <ngx-smart-modal [closable]=\"false\" [escapable]=\"false\" [dismissable]=\"false\" #modalMsgFromServer identifier=\"modalMsgFromServer\" id=\"modalMsgFromServer\">\n            <h3>Message From Server</h3>\n            <hr>\n            <p> This is a Message from server !!!</p>          \n            <button (click)=\"modalMsgFromServer.close()\" *ngIf=\"isFinish\">Close</button>\n        </ngx-smart-modal>\n\n\n                    <app-sidebar></app-sidebar>                                \n                    <app-navbar></app-navbar>\n            \n                    <div [ngClass]=\"{'wrapperDisabled': isElaborating}\">\n                        <router-outlet></router-outlet> \n                        <app-footer></app-footer>\n                    </div>\n                    \n                    <app-elaboration [hidden]=\"!isElaborating\"></app-elaboration>\n                    \n                    \n\n            \n    </div>        \n\n\n\n\n"
 
 /***/ }),
 
@@ -1226,11 +1226,14 @@ var AppComponent = /** @class */ (function () {
         this.cookieService = cookieService;
         this.ngxSmartModalService = ngxSmartModalService;
         this.title = 'The Presales Game';
+        this.isFinish = false;
         this.chatService.messages.subscribe(function (msg) {
-            console.log(msg);
             if (msg['type'] === 'start') {
-                console.log("Get a message from server");
+                _this_1.isFinish = false;
                 _this_1.ngxSmartModalService.getModal("modalMsgFromServer").open();
+            }
+            if (msg['type'] === 'end') {
+                _this_1.isFinish = true;
             }
         }, function (error) {
             console.log("Error receiving webSocket message : ", error);
@@ -1240,7 +1243,6 @@ var AppComponent = /** @class */ (function () {
     }
     AppComponent.prototype.ngOnInit = function () {
         this.companyID = this.cookieService.get('companyID');
-        console.log('new message from client to websocket: ', this.companyID);
         var _this = this;
         setTimeout(function () { _this.chatService.messages.next({ type: 'control', message: _this.companyID }); }, 500);
     };
@@ -1732,16 +1734,6 @@ var DashboardComponent = /** @class */ (function () {
         this.courseIncreaseUpTo = [10, 20, 40];
         this.courseIndexCost = -1;
         this.notifier = this.notifierService;
-        /*
-          var _this=this;
-          if(!this.isTracked){
-            var client2 = new WebSocket('ws://echo.websocket.org');
-            client2.onopen = function (event) {
-              client2.send(_this.companyID);
-            };
-            this.isTracked=true;
-          }
-          */
     }
     DashboardComponent.prototype.ngOnInit = function () {
         var _this_1 = this;
@@ -2815,7 +2807,6 @@ var ChatService = /** @class */ (function () {
         this.messages = wsService
             .connect(CHAT_URL)
             .map(function (response) {
-            console.log(response.data);
             var data = JSON.parse(response.data);
             return (data);
         });
@@ -3526,12 +3517,7 @@ var WebsocketService = /** @class */ (function () {
         });
         var observer = {
             next: function (data) {
-                console.log(ws);
-                Object.keys(ws).forEach(function (key) {
-                    console.log(key + " : " + ws[key]);
-                });
                 if (ws.readyState === WebSocket.OPEN) {
-                    console.log("Sending message " + JSON.stringify(data));
                     ws.send(JSON.stringify(data));
                 }
             }
