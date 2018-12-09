@@ -9,9 +9,9 @@ const trends = require('./dictionary').trends;
 const features = require('./dictionary').features;
 const periods = require('./dictionary').periods;
 const customers = require('./dictionary').companies;
-const wsClass = require('./wsMessages');
 const fs = require('fs');
 const Oppy = require('../lib/ClassOpportunities');
+const wsClass = require('./wsMessages');
 
 const QIX = require('../lib/ClassQIX');
 
@@ -50,6 +50,7 @@ class Market {
         this.oppyTTCmin;
         this.oppyTTCmax;
         this.oppyNum;
+        this.ws = new wsClass();
 
     }
 
@@ -108,6 +109,7 @@ class Market {
     }
 
     getBRShare(){ return (this.brendRecognitionShare)}
+    getQuarter(){ return this.quarter}
 
     deserializeOppy(){
         this.Opportunities.forEach (o =>{
@@ -220,25 +222,25 @@ class Market {
         var winnerScore=0;
         var msg="";
 
-        msg={type:'start',msg:'Starting opportunities calculation from '+periods[this.periodIndex]+" to "+periods[this.periodIndex+1]};
-        //this.wsM.sendBroadcastMessage(JSON.stringify(msg));
+        msg={type:'start',msg:'Opportunities calculation from '+periods[this.periodIndex]+" to "+periods[this.periodIndex+1]};
+        this.ws.sendBroadcastMessage(JSON.stringify(msg));
+
 
         Object.keys(this.Companies).forEach(function(companyID) {
             let totalPeopleCosts = 0;
             _this.Companies[companyID].getPresalesTeam().forEach( personID => totalPeopleCosts += _this.People[personID].getCost())
             _this.Companies[companyID].payQuarterCosts(totalPeopleCosts/4);
-            //_this.Companies[companyID].createOppyWonQuarter(_this.quarter);
 
             _this.Companies[companyID].saveBudgetInfo();
             _this.Companies[companyID].saveBrendRecognition();
           });
+          msg={type:'actions',msg:{type:"Making quarter payments and saving results",result:"done"}};
+          this.ws.sendBroadcastMessage(JSON.stringify(msg));
 
         // Loop for each opportunity and pass them to the companies.
         this.Opportunities.forEach( (oppy,oppyNum) => {
             if( oppy.isOpen()){
                 winner=null;
-                msg={type:'ongoing',msg:'Elaborating Opportunity '+oppy.getID()};
-                //this.wsM.sendBroadcastMessage(JSON.stringify(msg));
                 Object.keys(this.Companies).forEach(companyID => {
                     
                     /** If the company want to compete */
@@ -255,13 +257,15 @@ class Market {
                         }
                     }
                     else{
-                        this.Companies[companyID].sendMessage({type:'warning', msg:"Sorry, you can't compete on the oppy "+oppy.getID()+" because you run out of hours."});
+                        //this.Companies[companyID].sendMessage({type:'warning', msg:"Sorry, you can't compete on the oppy "+oppy.getID()+" because you run out of hours."});
                         this.Companies[companyID].addOppyNotCompeted(oppy.getID(), this.quarter);
                     }
                 })
                 if(winner !== null){
                     oppy.close();
                     oppy.setWinner(winner);         // Set the Winner on the Company record
+                    msg={type:'actions',msg:{type:"You won the opportunity "+oppy.getID()+" @"+oppy.getRealValue()+" K€",result:"WON"}};
+                    this.ws.sendTextMessage(winner,JSON.stringify(msg));                    
                     this.Companies[winner].addOppy(oppy.getID(), this.quarter, oppy.getValue(), oppy.getRealValue(), oppy.getTTC(), oppy.getAssociatedCost(),oppyNum,true)
                     this.Companies[winner].cashIn(oppy.getRealValue())
                     //this.Companies[winner].sendMessage("Congratulation, you won the oppy ID "+oppy.getID()+
@@ -272,16 +276,19 @@ class Market {
             }
 
         })
-
+        msg={type:'actions',msg:{type:"Opportunities fight is over",result:"done"}};
+        this.ws.sendBroadcastMessage(JSON.stringify(msg));
 
 
         /** Saving Opportunities statistics */
         this.saveQuarterResultToFile(this.quarter,this.getOpportunities())
 
+
         /** Saving Employed people statistics */
         let employedPeople = this.getPeople(true);
         Object.keys(employedPeople).forEach( personId => employedPeople[personId].saveQuarterResultToFile(this.quarter))
-        
+        msg={type:'actions',msg:{type:"Quarter results saved",result:"done"}};
+        this.ws.sendBroadcastMessage(JSON.stringify(msg));        
 
         /** Move forward to the next Quarter */
         Object.keys(this.Companies).forEach(function(companyID) {
@@ -302,8 +309,10 @@ class Market {
             _this.Companies[companyID].getPresalesTeam().forEach( personID =>  _this.People[personID].changeSatisfactionalLevel(decrease*(-1)))
             /** Lower the Company brad */
             _this.Companies[companyID].decreaseBrendRecognition();
-            
         });
+        msg={type:'actions',msg:{type:"Calulating new quarter company status",result:"done"}};
+        this.ws.sendBroadcastMessage(JSON.stringify(msg));          
+
 
         _this.QIncomeCompanyRanking.sort(function(a,b){
             return a.rank - b.rank
@@ -317,15 +326,27 @@ class Market {
 
         /** Slightly change market trends */
         this.slightlyChangeMarketTrends();
-        msg={type:'end',msg:'Calulation completed '};
-        //this.wsM.sendBroadcastMessage(JSON.stringify(msg));
+        msg={type:'actions',msg:{type:"Slightly changing market",result:"done"}};
+        this.ws.sendBroadcastMessage(JSON.stringify(msg));  
 
         /** Delete old opportunitis */
         this.deleteOpportunities();
+        msg={type:'actions',msg:{type:"Delete old opportunities",result:"done"}};
+        this.ws.sendBroadcastMessage(JSON.stringify(msg));  
+
         /** Create new fresh opportunities */
         for(var i=0; i<this.oppyNum; i++)
             this.addOpportunity(new Oppy(this.oppyMinValue, this.oppyMaxValue, this.oppyTTCmin, this.oppyTTCmin));
         this.deserializeOppy();
+        msg={type:'actions',msg:{type:"Generated new opportunities",result:"done"}};
+        this.ws.sendBroadcastMessage(JSON.stringify(msg));  
+
+        var _this=this;
+        setTimeout( function(){
+            msg={type:'end',msg:"Terminated"};
+            _this.ws.sendBroadcastMessage(JSON.stringify(msg)); 
+        }, 3000);
+
 
     }
 
@@ -504,7 +525,6 @@ class Market {
     saveFeatures(id,quarter,data){
         let featureFileName=id+"_"+quarter+"_Features.csv";
         let dataFeatures="OpportunityId;quarter;FeatureName;FeatureScore\r\n";
-        console.log(data);
         data.forEach((f,index) =>{
             dataFeatures += id+";"+quarter+";"+f.name+";"+f.score+"\r\n";
 
@@ -567,25 +587,15 @@ class Market {
         trends.forEach( t=> {
             avgTrends[t]=[0,0];       
         })
-        console.log(avgTrends);
         if(this.Companies[companyId].presalesTeam){
             this.Companies[companyId].presalesTeam.forEach( (p,idx) =>{
                 this.People[p].person.PersonTrends.forEach( trend =>{
-                    console.log("This person ",p," has a trend ",trend.name," having score ",trend.score);
-                    console.log(avgTrends[trend.name]);
                     avgTrends[trend.name] = [avgTrends[trend.name][0]+trend.score, avgTrends[trend.name][1]+1 ];
-                    console.log(avgTrends[trend.name]);
                 })
     
                 if(idx === this.Companies[companyId].presalesTeam.length -1){
-                    console.log("********************************");
-                    console.log(avgTrends);
-                    console.log("********************************");
-                    console.log("Let's calculate the AVG");
+
                     Object.keys(avgTrends).forEach(t =>{
-                        console.log("-------------------");
-                        console.log("Trend ",avgTrends[t]);
-                        console.log(avgTrends)
                         if(avgTrends[t][1] !== 0){
                             avgTrends[t][0]=avgTrends[t][0]/avgTrends[t][1];
                             avgTrends[t][2]=avgTrends[t][1];
@@ -593,9 +603,6 @@ class Market {
                         }
                         else
                         avgTrends[t]=[0,0,0];
-
-                        console.log(avgTrends)
-                        console.log("-------------------");
                     })
                 }
             })

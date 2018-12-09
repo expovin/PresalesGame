@@ -4,10 +4,16 @@
     <div [ngClass]="{'wrapper': true}"> 
 
         <ngx-smart-modal [closable]="false" [escapable]="false" [dismissable]="false" #modalMsgFromServer identifier="modalMsgFromServer" id="modalMsgFromServer">
-            <h3>Message From Server</h3>
-            <hr>
-            <p> This is a Message from server !!!</p>          
-            <button (click)="modalMsgFromServer.close()" *ngIf="isFinish">Close</button>
+            <h3>{{modalTitle}}</h3>
+            <hr>     
+            <ul *ngIf="actions.length > 0">                
+                <li *ngFor="let action of actions">
+                    <div class="col-md-5">{{action.type}}</div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-1">[{{action.result}}]</div>
+                </li>
+            </ul>   
+            <button (click)="cleanStatus()" *ngIf="isFinish">Close</button>
         </ngx-smart-modal>
 
 

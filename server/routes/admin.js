@@ -12,13 +12,13 @@ router.route('/')
 
 router.route('/wsMessage')
 .put( function (req, res, next){
-    m.ws.sendBroadcastMessage(JSON.stringify(req.body.wsMessage))
+    m[req.headers.gameid].ws.sendBroadcastMessage(JSON.stringify(req.body.wsMessage))
     res.status(209).json({result:'OK', message:'Broadcast message sent via webSocket'});
 })
 
 router.route('/wsMessage/:companyId')
 .put( function (req, res, next){
-    m.ws.sendTextMessage(req.params.companyId, JSON.stringify(req.body.wsMessage))
+    m[req.headers.gameid].ws.sendTextMessage(req.params.companyId, JSON.stringify(req.body.wsMessage))
     res.status(209).json({result:'OK', message:'Message sent via webSocket sent to '+req.params.companyId});
 })
 

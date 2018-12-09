@@ -4,6 +4,7 @@ import { NotifierService } from 'angular-notifier';
 import { CookieService } from 'ngx-cookie-service';
 import { MessageService } from '../services/message.service';
 import { Subscription } from 'rxjs/Subscription';
+import { MarketService } from '../services/market.service';
 
 @Component({
   selector: 'app-navbar',
@@ -21,10 +22,12 @@ export class NavbarComponent implements OnInit {
   private notificationLableIdx=0;
   private subscription: Subscription;
   private pageStatus:string;
+  private quarter:string;
 
   constructor(private notifierService: NotifierService,
               private companyService: CompanyService,
               private messageService: MessageService,
+              private marketService: MarketService,
               private cookieService: CookieService) { 
               this.notifier = this.notifierService;
 
@@ -40,6 +43,12 @@ export class NavbarComponent implements OnInit {
     this.gameID = this.cookieService.get('gameID');
     this.companyID = this.cookieService.get('companyID');
     console.log("companyID from cookie : "+this.companyID);
+
+    this.marketService.getQuarter(this.gameID)
+    .subscribe ( res =>{
+      this.quarter=res['data'];
+    })
+
   }
 
   toggleNotification(){

@@ -1175,7 +1175,7 @@ var routes = [
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n.wrapperDisabled {\n    display: none;\n    position: absolute;\n    width: 100px;\n    height: 100px;\n    background-color: gray;\n    top: 50px;\n    left: 50px;\n    padding: 10px;\n    opacity: .8;\n  }"
+module.exports = "\n.wrapperDisabled {\n    display: none;\n    position: absolute;\n    width: 100px;\n    height: 100px;\n    background-color: gray;\n    top: 50px;\n    left: 50px;\n    padding: 10px;\n    opacity: .8;\n  }\n\n  .nsm-dialog {\n    max-width:950px;\n  }"
 
 /***/ }),
 
@@ -1186,7 +1186,7 @@ module.exports = "\n.wrapperDisabled {\n    display: none;\n    position: absolu
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--The content below is only a placeholder and can be replaced.\n    <notifier-container></notifier-container>\n-->    \n    <div [ngClass]=\"{'wrapper': true}\"> \n\n        <ngx-smart-modal [closable]=\"false\" [escapable]=\"false\" [dismissable]=\"false\" #modalMsgFromServer identifier=\"modalMsgFromServer\" id=\"modalMsgFromServer\">\n            <h3>Message From Server</h3>\n            <hr>\n            <p> This is a Message from server !!!</p>          \n            <button (click)=\"modalMsgFromServer.close()\" *ngIf=\"isFinish\">Close</button>\n        </ngx-smart-modal>\n\n\n                    <app-sidebar></app-sidebar>                                \n                    <app-navbar></app-navbar>\n            \n                    <div [ngClass]=\"{'wrapperDisabled': isElaborating}\">\n                        <router-outlet></router-outlet> \n                        <app-footer></app-footer>\n                    </div>\n                    \n                    <app-elaboration [hidden]=\"!isElaborating\"></app-elaboration>\n                    \n                    \n\n            \n    </div>        \n\n\n\n\n"
+module.exports = "<!--The content below is only a placeholder and can be replaced.\n    <notifier-container></notifier-container>\n-->    \n    <div [ngClass]=\"{'wrapper': true}\"> \n\n        <ngx-smart-modal [closable]=\"false\" [escapable]=\"false\" [dismissable]=\"false\" #modalMsgFromServer identifier=\"modalMsgFromServer\" id=\"modalMsgFromServer\">\n            <h3>{{modalTitle}}</h3>\n            <hr>     \n            <ul *ngIf=\"actions.length > 0\">                \n                <li *ngFor=\"let action of actions\">\n                    <div class=\"col-md-5\">{{action.type}}</div>\n                    <div class=\"col-md-1\"></div>\n                    <div class=\"col-md-1\">[{{action.result}}]</div>\n                </li>\n            </ul>   \n            <button (click)=\"cleanStatus()\" *ngIf=\"isFinish\">Close</button>\n        </ngx-smart-modal>\n\n\n                    <app-sidebar></app-sidebar>                                \n                    <app-navbar></app-navbar>\n            \n                    <div [ngClass]=\"{'wrapperDisabled': isElaborating}\">\n                        <router-outlet></router-outlet> \n                        <app-footer></app-footer>\n                    </div>\n                    \n                    <app-elaboration [hidden]=\"!isElaborating\"></app-elaboration>\n                    \n                    \n\n            \n    </div>        \n\n\n\n\n"
 
 /***/ }),
 
@@ -1227,13 +1227,19 @@ var AppComponent = /** @class */ (function () {
         this.ngxSmartModalService = ngxSmartModalService;
         this.title = 'The Presales Game';
         this.isFinish = false;
+        this.actions = [];
         this.chatService.messages.subscribe(function (msg) {
             if (msg['type'] === 'start') {
                 _this_1.isFinish = false;
+                _this_1.modalTitle = msg['msg'];
                 _this_1.ngxSmartModalService.getModal("modalMsgFromServer").open();
             }
             if (msg['type'] === 'end') {
                 _this_1.isFinish = true;
+            }
+            if (msg['type'] === 'actions') {
+                _this_1.actions.push(msg['msg']);
+                console.log(_this_1.actions);
             }
         }, function (error) {
             console.log("Error receiving webSocket message : ", error);
@@ -1245,6 +1251,11 @@ var AppComponent = /** @class */ (function () {
         this.companyID = this.cookieService.get('companyID');
         var _this = this;
         setTimeout(function () { _this.chatService.messages.next({ type: 'control', message: _this.companyID }); }, 500);
+    };
+    AppComponent.prototype.cleanStatus = function () {
+        this.ngxSmartModalService.getModal('modalMsgFromServer').close();
+        this.actions = [];
+        window.location.reload();
     };
     AppComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -2285,7 +2296,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"main-panel\">\n<nav class=\"navbar navbar-default\">\n    <div class=\"container-fluid\">\n        <div class=\"navbar-header\">\n            <button type=\"button\" class=\"navbar-toggle\">\n                <span class=\"sr-only\">Toggle navigation</span>\n                <span class=\"icon-bar bar1\"></span>\n                <span class=\"icon-bar bar2\"></span>\n                <span class=\"icon-bar bar3\"></span>\n            </button>\n            <a class=\"navbar-brand\">{{pageStatus}}</a>\n        </div>\n        <div class=\"collapse navbar-collapse\">\n            <ul class=\"nav navbar-nav navbar-right\">\n                <li>\n                    <a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">\n                        <i class=\"ti-panel\"></i>\n                        <p>Stats</p>\n                    </a>\n                </li>\n                <li>\n                    <a (click)=\"toggleNotification()\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">\n                            <i class=\"ti-bell\"></i>\n                            <p>{{notificationLable[notificationLableIdx]}}</p>\n                      </a>\n                </li>\n    <li>\n                    <a href=\"#\">\n        <i class=\"ti-settings\"></i>\n        <p>Settings</p>\n                    </a>\n                </li>\n            </ul>\n\n        </div>\n    </div>\n</nav>\n</div>"
+module.exports = "<div class=\"main-panel\">\n<nav class=\"navbar navbar-default\">\n    <div class=\"container-fluid\">\n        <div class=\"navbar-header\">\n            <button type=\"button\" class=\"navbar-toggle\">\n                <span class=\"sr-only\">Toggle navigation</span>\n                <span class=\"icon-bar bar1\"></span>\n                <span class=\"icon-bar bar2\"></span>\n                <span class=\"icon-bar bar3\"></span>\n            </button>\n            <a class=\"navbar-brand\">{{pageStatus}} <small>({{quarter}})</small></a>\n        </div>\n        <div class=\"collapse navbar-collapse\">\n            <ul class=\"nav navbar-nav navbar-right\">\n                <li>\n                    <a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">\n                        <i class=\"ti-panel\"></i>\n                        <p>Stats</p>\n                    </a>\n                </li>\n                <li>\n                    <a (click)=\"toggleNotification()\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">\n                            <i class=\"ti-bell\"></i>\n                            <p>{{notificationLable[notificationLableIdx]}}</p>\n                      </a>\n                </li>\n    <li>\n                    <a href=\"#\">\n        <i class=\"ti-settings\"></i>\n        <p>Settings</p>\n                    </a>\n                </li>\n            </ul>\n\n        </div>\n    </div>\n</nav>\n</div>"
 
 /***/ }),
 
@@ -2304,6 +2315,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var angular_notifier__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! angular-notifier */ "./node_modules/angular-notifier/esm5/angular-notifier.js");
 /* harmony import */ var ngx_cookie_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ngx-cookie-service */ "./node_modules/ngx-cookie-service/index.js");
 /* harmony import */ var _services_message_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../services/message.service */ "./src/app/services/message.service.ts");
+/* harmony import */ var _services_market_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../services/market.service */ "./src/app/services/market.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2318,12 +2330,14 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var NavbarComponent = /** @class */ (function () {
-    function NavbarComponent(notifierService, companyService, messageService, cookieService) {
+    function NavbarComponent(notifierService, companyService, messageService, marketService, cookieService) {
         var _this_1 = this;
         this.notifierService = notifierService;
         this.companyService = companyService;
         this.messageService = messageService;
+        this.marketService = marketService;
         this.cookieService = cookieService;
         this.isEnabledNotification = false;
         this.stepNotify = null;
@@ -2337,9 +2351,14 @@ var NavbarComponent = /** @class */ (function () {
         });
     }
     NavbarComponent.prototype.ngOnInit = function () {
+        var _this_1 = this;
         this.gameID = this.cookieService.get('gameID');
         this.companyID = this.cookieService.get('companyID');
         console.log("companyID from cookie : " + this.companyID);
+        this.marketService.getQuarter(this.gameID)
+            .subscribe(function (res) {
+            _this_1.quarter = res['data'];
+        });
     };
     NavbarComponent.prototype.toggleNotification = function () {
         this.isEnabledNotification = !this.isEnabledNotification;
@@ -2372,6 +2391,7 @@ var NavbarComponent = /** @class */ (function () {
         __metadata("design:paramtypes", [angular_notifier__WEBPACK_IMPORTED_MODULE_2__["NotifierService"],
             _services_company_service__WEBPACK_IMPORTED_MODULE_1__["CompanyService"],
             _services_message_service__WEBPACK_IMPORTED_MODULE_4__["MessageService"],
+            _services_market_service__WEBPACK_IMPORTED_MODULE_5__["MarketService"],
             ngx_cookie_service__WEBPACK_IMPORTED_MODULE_3__["CookieService"]])
     ], NavbarComponent);
     return NavbarComponent;
@@ -3110,6 +3130,19 @@ var MarketService = /** @class */ (function () {
             headers: new _angular_http__WEBPACK_IMPORTED_MODULE_2__["Headers"](headerDict),
         };
         return this.http.get(_shared_baseurl__WEBPACK_IMPORTED_MODULE_3__["baseURL"] + 'market', requestOptions)
+            .map(function (res) { return _this.processHTTPMsgService.extractData(res); });
+    };
+    MarketService.prototype.getQuarter = function (gameId) {
+        var _this = this;
+        var headerDict = {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'gameID': gameId
+        };
+        var requestOptions = {
+            headers: new _angular_http__WEBPACK_IMPORTED_MODULE_2__["Headers"](headerDict),
+        };
+        return this.http.get(_shared_baseurl__WEBPACK_IMPORTED_MODULE_3__["baseURL"] + 'market/quarter', requestOptions)
             .map(function (res) { return _this.processHTTPMsgService.extractData(res); });
     };
     MarketService.prototype.getTeamAvgSatisfaction = function (gameId, CompanyId) {

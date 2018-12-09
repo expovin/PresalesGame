@@ -34,6 +34,21 @@ export class MarketService {
               .map(res => { return this.processHTTPMsgService.extractData(res); });
     } 
 
+    getQuarter(gameId): Observable <Object[]> {
+      const headerDict = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'gameID' : gameId
+      }
+      
+      const requestOptions = {                                                                                                                                                                                 
+        headers: new Headers(headerDict), 
+      };
+
+      return this.http.get(baseURL + 'market/quarter', requestOptions)
+              .map(res => { return this.processHTTPMsgService.extractData(res); });
+    }
+
     getTeamAvgSatisfaction(gameId, CompanyId): Observable <Object[]> {
       const headerDict = {
         'Content-Type': 'application/json',

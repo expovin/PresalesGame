@@ -3,6 +3,5 @@ const wsClass = require('./wsMessages');
 
 
 module.exports = {
-    m:new Market('m'),
-    ws : new wsClass()
+    m:   new Market('m')
 }

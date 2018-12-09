@@ -15,6 +15,8 @@ export class AppComponent implements OnInit{
   title = 'The Presales Game';
   private companyID:string;
   private isFinish:boolean=false;
+  private actions=[];
+  private modalTitle:string;
 
   constructor(private chatService: ChatService,
               private cookieService: CookieService,
@@ -24,11 +26,18 @@ export class AppComponent implements OnInit{
       msg => {			
         if(msg['type'] === 'start'){
           this.isFinish=false;
+          this.modalTitle=msg['msg'];
           this.ngxSmartModalService.getModal("modalMsgFromServer").open();
         }        
         if(msg['type'] === 'end'){
           this.isFinish=true;
+
         }
+        if(msg['type'] === 'actions'){
+          this.actions.push(msg['msg']);
+          console.log(this.actions);
+        }
+          
       },
       error =>{
         console.log("Error receiving webSocket message : ",error);
@@ -43,7 +52,13 @@ export class AppComponent implements OnInit{
 
       this.companyID = this.cookieService.get('companyID');
       var _this=this;
-      setTimeout(function(){_this.chatService.messages.next({type:'control', message:_this.companyID})}, 500)
+      setTimeout(function(){ _this.chatService.messages.next({type:'control', message:_this.companyID})}, 500)
       
+  }
+
+  cleanStatus(){
+    this.ngxSmartModalService.getModal('modalMsgFromServer').close();
+    this.actions=[];
+    window.location.reload()
   }
 }

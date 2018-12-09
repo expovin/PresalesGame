@@ -10,3 +10,7 @@
     padding: 10px;
     opacity: .8;
   }
+
+  .nsm-dialog {
+    max-width:950px;
+  }

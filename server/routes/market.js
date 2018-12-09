@@ -41,6 +41,11 @@ router.route('/')
     res.status(200).json({result:'OK', message:'Market trends have been deleted'});
 })
 
+router.route('/quarter')
+.get( function(req, res, next) {
+    res.status(200).json({result:'OK', data:m[req.headers.gameid].getQuarter()});
+})
+
 
 /* get all presales */
 router.route('/nextPeriod')
