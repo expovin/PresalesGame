@@ -2,10 +2,12 @@
 
 const enigmaConfig = require('./enigma-config.js');
 const enigma = require('enigma.js');
-const Halyard = require('halyard.js');
-const enigmaMixin = require('halyard.js/dist/halyard-enigma-mixin.js');
+const settings = require('./settings');
+//const Halyard = require('halyard.js');
+//const enigmaMixin = require('halyard.js/dist/halyard-enigma-mixin.js');
 
-enigmaConfig.mixins = enigmaMixin;
+
+//enigmaConfig.mixins = enigmaMixin;
 
 let scatterplotObject = null;
 const scatterplotProperties = {
@@ -52,11 +54,11 @@ class QIX {
 
     constructor(appName) {
         this.appObj=null;
-        this.appName=appName;
+        this.appName=null;
         this.qix=null;
         this.sessionAppName=null;
         
-        this.halyard = new Halyard();
+        //this.halyard = new Halyard();
         this.openQixEngine()
         .catch( error =>{
             console.log("General error connecting to QIX engine ",error)
@@ -72,6 +74,7 @@ class QIX {
             .open()
             .then((qix) => {
                 this.qix=qix;
+                console.log("QIX Engine correctly opened");
                 fulfill(qix);
             }, error => reject(error) );
         })
@@ -93,6 +96,7 @@ class QIX {
         return new Promise( (fulfill, reject) =>{
             this.qix.engineVersion()
             .then( ver => fulfill(ver))
+            .catch( error => {reject(error)})
         })
 
     }
@@ -103,6 +107,7 @@ class QIX {
             .then(apps => {
                 fulfill(apps);
             })
+            .catch( error => {reject(error)})
         })
     }
 
@@ -111,7 +116,7 @@ class QIX {
             this.qix.openDoc({qDocName:appID})
             .then(qdoc => {
                 this.appObj=qdoc;
-                fulfill({data:"Doc Opened"});
+                fulfill({data:"Doc Opened",appObj:this.appObj});
             }, err => {
                 reject(err);
             })
@@ -121,13 +126,78 @@ class QIX {
         })
     }
 
+    closeDoc(){
+        return new Promise ( (fulfill, reject) => {
+            this.appObj.close()
+            .then( (res) =>{
+                fulfill({result:"OK", message:"Document succesfully closed"});
+            }, err =>{
+                reject(err);
+            })
+        })
+    }
+
     getScript(){
         return new Promise ( (fulfill, reject) =>{
             this.appName.getScript()
             .then( script => { fulfill (script)})
+            .catch( error => {reject(error)})
         })
     }
 
+    doReloadEx(){
+        return new Promise ( (fulfill, reject) =>{
+            this.appObj.doReloadEx({
+                "qMode": 0,
+                "qPartial": false,
+                "qDebug": false
+            })
+            .then( script => { 
+                console.log(script);
+                fulfill (script)
+            })
+            .catch( error => {
+                console.log(error);
+                reject(error)
+            })
+        })
+    }    
+
+    MABReload(){
+        return new Promise( (fulfill, reject ) =>{
+            this.qix.openDoc(settings.QIX.MABAppId)
+            .then( appObj =>{
+                console.log("MAP App with Id "+settings.QIX.MABAppId+" is open");
+                return (appObj.appObj.getAppLayout());
+            }, error => {
+                console.log("Error opening the app --> "+error);
+                reject({result:'ERROR', error:error});
+            })
+            .then( ressult =>{
+                fulfill({result:'OK', data:ressult});
+            }, err => { 
+                console.log("Error whie loading MAB "+err);
+                reject({result:'ERROR', error:err});
+            })
+            .catch(error =>{
+                reject({result:'ERROR', error:error});
+            })    
+        })
+    }
+
+    getAppLayout(){
+        return new Promise ( (fulfill, reject) =>{
+            this.appObj.getAppLayout({})
+            .then( script => { 
+                fulfill (script)
+            })
+            .catch( error => {
+                reject(error)
+            })
+        })
+    }  
+    
+    
     createApp() {
         return new Promise ( (fulfill, reject) =>{
             this.qix.createApp({qAppName:this.appName})
@@ -234,6 +304,7 @@ class QIX {
         .catch(error => console.log("Error creating App ",error));
     }
 
+    /*
     createSessionApp(){
         this.qix.createSessionAppUsingHalyard(this.halyard)
         .then((app) => {
@@ -247,6 +318,7 @@ class QIX {
             console.log(error);
           }); 
     }
+    */
 
     reloadApp(){
         return new Promise( ( fulfill, reject) =>{

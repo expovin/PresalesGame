@@ -1440,7 +1440,7 @@ var AppModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ""
+module.exports = ".BAMBOX {\n    min-height:1000px;\n    margin-top: 35px;\n    margin-left: 5px;\n    margin-right: 5px;\n    margin-bottom: 5px;\n    \n}\n\niframe {\n    border:2px;\n    width:100%;\n    height:1000px;\n}"
 
 /***/ }),
 
@@ -1451,7 +1451,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<h1>BAM</h1>"
+module.exports = "<div class=\" row\">\n    <div class=\"col-lg-12 BAMBOX\">\n            <iframe src='https://pbgqix.expovin.it/single/?appid=4efbe950-8e2d-4793-8a51-6f8ba3f95f1f&sheet=7f4b7dbd-837e-4515-a0c2-1a7f58201cd0&opt=ctxmenu&select=clearall'></iframe>\n    </div>\n</div>\n"
 
 /***/ }),
 
@@ -1690,6 +1690,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var angular_notifier__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! angular-notifier */ "./node_modules/angular-notifier/esm5/angular-notifier.js");
 /* harmony import */ var _charts_charts_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../charts/charts.component */ "./src/app/charts/charts.component.ts");
 /* harmony import */ var ngx_smart_modal__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ngx-smart-modal */ "./node_modules/ngx-smart-modal/esm5/ngx-smart-modal.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1699,6 +1700,10 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param = (undefined && undefined.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
+
 
 
 
@@ -1711,7 +1716,7 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 var DashboardComponent = /** @class */ (function () {
-    function DashboardComponent(companyService, cookieService, notifierService, presalesService, messageService, ngxSmartModalService, marketService) {
+    function DashboardComponent(companyService, cookieService, notifierService, presalesService, messageService, ngxSmartModalService, marketService, document) {
         this.companyService = companyService;
         this.cookieService = cookieService;
         this.notifierService = notifierService;
@@ -1719,6 +1724,7 @@ var DashboardComponent = /** @class */ (function () {
         this.messageService = messageService;
         this.ngxSmartModalService = ngxSmartModalService;
         this.marketService = marketService;
+        this.document = document;
         this.companyID = null;
         this.gameID = null;
         this.team = [];
@@ -1750,6 +1756,11 @@ var DashboardComponent = /** @class */ (function () {
         var _this_1 = this;
         this.companyID = this.cookieService.get('companyID');
         this.gameID = this.cookieService.get('gameID');
+        if (this.companyID === undefined || this.gameID === undefined || this.companyID === "" || this.gameID === "") {
+            console.log("Company not created yet. Redirect to landing!");
+            var hostname = this.document.location.protocol + "//" + this.document.location.hostname + ":" + this.document.location.port + "/landing";
+            window.location.href = hostname;
+        }
         this.userDetails = 0;
         this.messageService.setPageStatus("Dashboard");
         this.marketService.getTeamAvgSatisfaction(this.gameID, this.companyID)
@@ -2024,13 +2035,15 @@ var DashboardComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./dashboard.component.html */ "./src/app/dashboard/dashboard.component.html"),
             styles: [__webpack_require__(/*! ./dashboard.component.css */ "./src/app/dashboard/dashboard.component.css")]
         }),
+        __param(7, Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"])(_angular_common__WEBPACK_IMPORTED_MODULE_11__["DOCUMENT"])),
         __metadata("design:paramtypes", [_services_company_service__WEBPACK_IMPORTED_MODULE_2__["CompanyService"],
             ngx_cookie_service__WEBPACK_IMPORTED_MODULE_3__["CookieService"],
             angular_notifier__WEBPACK_IMPORTED_MODULE_8__["NotifierService"],
             _services_presales_service__WEBPACK_IMPORTED_MODULE_4__["PresalesService"],
             _services_message_service__WEBPACK_IMPORTED_MODULE_1__["MessageService"],
             ngx_smart_modal__WEBPACK_IMPORTED_MODULE_10__["NgxSmartModalService"],
-            _services_market_service__WEBPACK_IMPORTED_MODULE_5__["MarketService"]])
+            _services_market_service__WEBPACK_IMPORTED_MODULE_5__["MarketService"],
+            Document])
     ], DashboardComponent);
     return DashboardComponent;
 }());
@@ -2133,7 +2146,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"main-panel\">\n<footer class=\"footer\">\n    <div class=\"container-fluid\">\n        <nav class=\"pull-left\">\n            <ul>\n\n                <li>\n                    <a href=\"http://www.creative-tim.com\">\n                        Creative Tim\n                    </a>\n                </li>\n                <li>\n                    <a href=\"http://blog.creative-tim.com\">\n                       Blog\n                    </a>\n                </li>\n                <li>\n                    <a href=\"http://www.creative-tim.com/license\">\n                        Licenses\n                    </a>\n                </li>\n            </ul>\n        </nav>\n        <div class=\"copyright pull-right\">\n            &copy; <script>document.write(new Date().getFullYear())</script>, made with <i class=\"fa fa-heart heart\"></i> by <a href=\"http://www.creative-tim.com\">Creative Tim</a>\n        </div>\n    </div>\n</footer>\n</div>"
+module.exports = "<div class=\"main-panel\">\n<footer class=\"footer\">\n    <div class=\"container-fluid\">\n        <nav class=\"pull-left\">\n            <ul>\n\n                <li>\n                    <a href=\"http://www.creative-tim.com\">\n                        Creative Tim\n                    </a>\n                </li>\n                <li>\n                    \n                </li>\n                <li>\n                    <a href=\"http://www.creative-tim.com/license\">\n                        Licenses\n                    </a>\n                </li>\n            </ul>\n        </nav>\n        <div class=\"copyright pull-right\">\n            <a href=\"https://seal.beyondsecurity.com/vulnerability-scanner-verification/pbgame.expovin.it\"><img src=\"https://seal.beyondsecurity.com/verification-images/pbgame.expovin.it/vulnerability-scanner-2.gif\" alt=\"Website Security Test\" border=\"0\"></a>\n        </div>\n    </div>\n</footer>\n</div>"
 
 /***/ }),
 
@@ -2196,7 +2209,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"main-panel\">\n        <div class=\"content\">\n            <div class=\"container-fluid\">\n                <div class=\"row\">\n                    <div class=\"col-md-8\">\n\t\t\t\t\t\t\t<div class=\"card\">\n\t\t\t\t\t\t\t\t\t<div class=\"header\">\n\t\t\t\t\t\t\t\t\t\t<h4 class=\"title\">Market Trends</h4>\n\t\t\t\t\t\t\t\t\t\t<p class=\"category\">Sorted by Relevance</p>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"content\">\n\t\t\t\t\t\t\t\t\t\t<div id=\"chartMarketTrends\" class=\"ct-chart\"></div>\n\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n                    </div>\n                </div>\n            </div>\n        </div>"
+module.exports = ""
 
 /***/ }),
 
@@ -2211,12 +2224,7 @@ module.exports = "<div class=\"main-panel\">\n        <div class=\"content\">\n 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MarketComponent", function() { return MarketComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _services_presales_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/presales.service */ "./src/app/services/presales.service.ts");
-/* harmony import */ var ngx_cookie_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ngx-cookie-service */ "./node_modules/ngx-cookie-service/index.js");
-/* harmony import */ var picasso_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! picasso.js */ "./node_modules/picasso.js/dist/picasso.esm.js");
-/* harmony import */ var _shared_PicassoCharts_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../shared/PicassoCharts.js */ "./src/app/shared/PicassoCharts.js");
-/* harmony import */ var _shared_PicassoCharts_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_shared_PicassoCharts_js__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _services_message_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../services/message.service */ "./src/app/services/message.service.ts");
+/* harmony import */ var _services_message_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/message.service */ "./src/app/services/message.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2228,38 +2236,13 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 };
 
 
-
-
-
-
 var MarketComponent = /** @class */ (function () {
-    function MarketComponent(presalesService, messageService, cookieService) {
-        this.presalesService = presalesService;
+    function MarketComponent(messageService) {
         this.messageService = messageService;
-        this.cookieService = cookieService;
         this.marketTrends = [];
     }
     MarketComponent.prototype.ngOnInit = function () {
-        var _this_1 = this;
         this.messageService.setPageStatus("Market");
-        this.gameID = this.cookieService.get('gameID');
-        this.companyID = this.cookieService.get('companyID');
-        this.presalesService.getPresales(this.gameID)
-            .subscribe(function (res) {
-            var _this = _this_1;
-            Object.keys(res['data'][Object.keys(res['data'])[0]]['marketTrends']).forEach(function (trend) {
-                _this.marketTrends.push({ name: trend, score: res['data'][Object.keys(res['data'])[0]]['marketTrends'][trend] });
-            });
-            _this_1.marketTrends.sort(function (a, b) { return (b.score - a.score); });
-            picasso_js__WEBPACK_IMPORTED_MODULE_3__["default"].chart({
-                element: document.querySelector('#chartMarketTrends'),
-                data: [{
-                        type: 'matrix',
-                        data: _this_1.marketTrends
-                    }],
-                settings: _shared_PicassoCharts_js__WEBPACK_IMPORTED_MODULE_4___default.a.barchart
-            });
-        });
     };
     MarketComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -2267,9 +2250,7 @@ var MarketComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./market.component.html */ "./src/app/market/market.component.html"),
             styles: [__webpack_require__(/*! ./market.component.css */ "./src/app/market/market.component.css")]
         }),
-        __metadata("design:paramtypes", [_services_presales_service__WEBPACK_IMPORTED_MODULE_1__["PresalesService"],
-            _services_message_service__WEBPACK_IMPORTED_MODULE_5__["MessageService"],
-            ngx_cookie_service__WEBPACK_IMPORTED_MODULE_2__["CookieService"]])
+        __metadata("design:paramtypes", [_services_message_service__WEBPACK_IMPORTED_MODULE_1__["MessageService"]])
     ], MarketComponent);
     return MarketComponent;
 }());
@@ -2354,7 +2335,7 @@ var NavbarComponent = /** @class */ (function () {
         var _this_1 = this;
         this.gameID = this.cookieService.get('gameID');
         this.companyID = this.cookieService.get('companyID');
-        console.log("companyID from cookie : " + this.companyID);
+        console.log(this.companyID);
         this.marketService.getQuarter(this.gameID)
             .subscribe(function (res) {
             _this_1.quarter = res['data'];
@@ -2419,7 +2400,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"main-panel\">\n    <div class=\"content\">\n        <div class=\"container-fluid\">\n        <div class=\"row\">\n            <div class=\"col-md-8\">\n                        <div class=\"card\">\n                            <div class=\"header\">\n                                <h4 class=\"title\">Opportunities</h4>\n                                <p class=\"category\">by Values</p>\n                            </div>\n                            <div class=\"content\">\n                                <div id=\"chartOpportunities\" class=\"ct-chart\"></div>\n                            </div>\n                        </div>\n            </div>\n            <div class=\"col-md-4\" [hidden]=\"!isOppySelected\">\n                    <div class=\"card card-plain\">\n                        <div class=\"header\">\n                            <h4 class=\"title\">Opportunities details</h4>\n                            <p class=\"category\">Included companies</p>\n                        </div>\n                        <div class=\"content\">\n                                <dl class=\"dl-horizontal\">\n                                        <dt>ID</dt>\n                                        <dd>{{selectedOppy.ID}}</dd>\n\n                                        <dt>Company Name</dt>\n                                        <dd>{{selectedOppy.CompanyName}}</dd>\n                                        \n                                        <dt>Value</dt>\n                                        <dd>{{selectedOppy.teoricalValue}} K€</dd>\n                                        <hr>\n                                        <dt>Trend required</dt>\n                                        <dd *ngFor=\"let trend of selectedOppy.TrendsRequired\" >{{trend}}</dd>   \n                                        <hr>\n                                        <dt>Feature required</dt>\n                                        <dd *ngFor=\"let feat of selectedOppy.features\">{{feat.name}} @{{feat.score}}%</dd>                                          \n                                </dl>\n                        </div>\n                    </div>\n            </div>\n        </div>\n        <div class=\"row\">\n                <div class=\"col-md-7 table-Fix\" [hidden]=\"!config.showOpportunities\">\n                        <div class=\"card card-plain\">\n                            <div class=\"header\">\n                                <h4 class=\"title\">Market Opportunities</h4>\n                                <p class=\"category\">Click on the id for more details</p>\n                            </div>\n                            <div class=\"content table-responsive table-full-width\">\n                                <table class=\"table table-hover\">\n                                    <thead>\n                                      <th>ID</th>\n                                      <th>Company Name</th>\n                                      <th>Estimated Value</th>\n                                      <th>Qualification level</th>\n                                      <th>status</th>\n                                    </thead>\n                                    <tbody>\n                                        <tr *ngFor=\"let oppy of opportunities\">\n                                          <td (click)=\"SelectOppy(oppy)\">{{oppy.ID}}</td>\n                                          <td>{{oppy.CompanyName}}</td>\n                                          <td>{{oppy.teoricalValue}}</td>\n                                          <td>{{oppy.qualificationLevel}}</td>  \n                                          <td>{{oppy.status}}</td>\n                                        </tr>\n                                    </tbody>\n                                </table>\n    \n                            </div>\n                        </div>\n                    </div>\n                    <div class=\"col-md-1\"></div>\n                    <div class=\"col-md-4\">\n                        <div class=\"row\">\n                            <div class=\"row\">\n                                    <h4>Filters Pane  </h4>\n                                    <hr>\n\n                                    <div class=\"panel panel-default\" *ngIf=\"company !== undefined\">\n                                            <div class=\"panel-heading\"><h5>Opportunity Value</h5></div>\n                                            <div class=\"panel-body\">\n                                                <div class=\"row\">\n                                                        <form>\n                                                                <div class=\"col-md-4\">\n                                                                        <div class=\"btn-group-vertical\" role=\"group\" aria-label=\"...\">\n                                                                                <button type=\"button\" class=\"btn btn-outline-primary\" (click)=\"toggleConstraint(0)\">{{lblValue}}</button>\n                                                                                <button type=\"button\" class=\"btn btn-outline-primary\" (click)=\"changeConstraint(0)\" [disabled]=\"!company.oppyConstraint.flgValue\">Submit</button>\n                                                                        </div>\n\n                                                                </div>\n                                                                        <div class=\"col-md-4\">\n                                                                                <div class=\"form-group\">\n                                                                                        <label>From</label>\n                                                                                        <input type=\"number\" class=\"form-control border-input\"  \n                                                                                                placeholder=\"Insert the Merit Increase in %\" \n                                                                                                [(ngModel)]=\"company.oppyConstraint.Value[0]\" \n                                                                                                name=\"valueMin\" \n                                                                                                [disabled]=\"!company.oppyConstraint.flgValue\"\n                                                                                                required />\n                                                                                </div>\n                                                                        </div>\n                                                                        <div class=\"col-md-4\">\n                                                                                <div class=\"form-group\">\n                                                                                        <label>To</label>\n                                                                                        <input type=\"number\" class=\"form-control border-input\"  \n                                                                                            placeholder=\"Insert the Merit Increase in %\" \n                                                                                            [(ngModel)]=\"company.oppyConstraint.Value[1]\" \n                                                                                            name=\"valueMax\" \n                                                                                            [disabled]=\"!company.oppyConstraint.flgValue\"\n                                                                                            required />\n                                                                                </div>\n                                                                        </div>\n                                                            </form>\n                                                </div>\n                                            </div>\n                                    </div>\n\n                                    <div class=\"panel panel-default\">\n                                            <div class=\"panel-heading\"><h5>Qualification Level</h5></div>\n                                            <div class=\"panel-body\">\n                                                <div class=\"row\" *ngIf=\"company !== undefined\">\n                                                        <form>\n                                                                <div class=\"col-md-4\">\n                                                                        <div class=\"btn-group-vertical\" role=\"group\" aria-label=\"...\">\n                                                                                <button type=\"button\" class=\"btn btn-outline-primary\" (click)=\"toggleConstraint(1)\">{{lblQualification}}</button>\n                                                                                <button type=\"button\" class=\"btn btn-outline-primary\" (click)=\"changeConstraint(1)\" [disabled]=\"!company.oppyConstraint.flgQualification\">Submit</button>\n                                                                        </div>\n\n                                                                </div>\n                                                                        <div class=\"col-md-8\">\n                                                                                <div class=\"row\">\n                                                                                    <label>Qualification Level</label>\n                                                                                </div>\n                                                                                <div class=\"row\">\n                                                                                        <div class=\"btn-group\" role=\"group\" aria-label=\"...\" >\n                                                                                                <button type=\"button\" [ngClass]=\"btnClassArray['1B']\" (click)=\"modifyQualificationArray(1)\" [disabled]=\"!company.oppyConstraint.flgQualification\">1</button>\n                                                                                                <button type=\"button\" [ngClass]=\"btnClassArray['2B']\" (click)=\"modifyQualificationArray(2)\" [disabled]=\"!company.oppyConstraint.flgQualification\">2</button>\n                                                                                                <button type=\"button\" [ngClass]=\"btnClassArray['3B']\" (click)=\"modifyQualificationArray(3)\" [disabled]=\"!company.oppyConstraint.flgQualification\">3</button>\n                                                                                                <button type=\"button\" [ngClass]=\"btnClassArray['4B']\" (click)=\"modifyQualificationArray(4)\" [disabled]=\"!company.oppyConstraint.flgQualification\">4</button>\n                                                                                                <button type=\"button\" [ngClass]=\"btnClassArray['5B']\" (click)=\"modifyQualificationArray(5)\" [disabled]=\"!company.oppyConstraint.flgQualification\">5</button>\n                                                                                        </div>\n                                                                                </div>\n                                                                        </div>\n                                                            </form>\n                                                </div>\n                                            </div>\n                                    </div>\n                                </div>\n\n\n                        </div>\n                    </div>\n        </div>\n\n\n\n            </div>\n        </div>\n    </div>"
+module.exports = "<div class=\"main-panel\">\n    <div class=\"content\">\n        <div class=\"container-fluid\">\n        <div class=\"row\">\n            <div class=\"col-md-8\">\n                        <div class=\"card\">\n                            <div class=\"header\">\n                                <h4 class=\"title\">Opportunities</h4>\n                                <p class=\"category\">by Values</p>\n                            </div>\n                            <div class=\"content\">\n                                <div id=\"chartOpportunities\" class=\"ct-chart\"></div>\n                            </div>\n                        </div>\n            </div>\n            <div class=\"col-md-4\" [hidden]=\"!isOppySelected\">\n                    <div class=\"card card-plain\">\n                        <div class=\"header\">\n                            <h4 class=\"title\">Opportunities details</h4>\n                            <p class=\"category\">Included companies</p>\n                        </div>\n                        <div class=\"content\">\n                                <dl class=\"dl-horizontal\">\n                                        <dt>ID</dt>\n                                        <dd>{{selectedOppy.ID}}</dd>\n\n                                        <dt>Company Name</dt>\n                                        <dd>{{selectedOppy.CompanyName}}</dd>\n                                        \n                                        <dt>Value</dt>\n                                        <dd>{{selectedOppy.teoricalValue}} K€</dd>\n                                        <hr>\n                                        <dt>Trend required</dt>\n                                        <dd *ngFor=\"let trend of selectedOppy.TrendsRequired\" >{{trend}}</dd>   \n                                        <hr>\n                                        <dt>Feature required</dt>\n                                        <dd *ngFor=\"let feat of selectedOppy.features\">{{feat.name}} @{{feat.score}}%</dd>                                          \n                                </dl>\n                        </div>\n                    </div>\n            </div>\n        </div>\n        <div class=\"row\">\n                <div class=\"col-md-7 table-Fix\" [hidden]=\"!config.showOpportunities\">\n                        <div class=\"card card-plain\">\n                            <div class=\"header\">\n                                <h4 class=\"title\">Market Opportunities</h4>\n                                <p class=\"category\">Click on the id for more details</p>\n                            </div>\n                            <div class=\"content table-responsive table-full-width\">\n                                <table class=\"table table-hover\">\n                                    <thead>\n                                      <th>ID</th>\n                                      <th>Company Name</th>\n                                      <th>Estimated Value</th>\n                                      <th>Qualification level</th>\n                                      <th>status</th>\n                                    </thead>\n                                    <tbody>\n                                        <tr *ngFor=\"let oppy of opportunities\">\n                                          <td (click)=\"SelectOppy(oppy)\">{{oppy.ID}}</td>\n                                          <td>{{oppy.CompanyName}}</td>\n                                          <td>{{oppy.teoricalValue}}</td>\n                                          <td>{{oppy.qualificationLevel}}</td>  \n                                          <td>{{oppy.status}}</td>\n                                        </tr>\n                                    </tbody>\n                                </table>\n    \n                            </div>\n                        </div>\n                    </div>\n                    <div class=\"col-md-1\"></div>\n                    <div class=\"col-md-4\">\n                        <div class=\"row\">\n                            <div class=\"row\">\n                                    <h4>Filters Pane  </h4>\n                                    <hr>\n\n                                    <div class=\"panel panel-default\" *ngIf=\"company !== undefined\">\n                                            <div class=\"panel-heading\"><h5>Opportunity Value</h5></div>\n                                            <div class=\"panel-body\">\n                                                <div class=\"row\">\n                                                        <form>\n                                                        <div class=\"row\">\n                                                                <div class=\"col-md-4\">\n                                                                        <div class=\"btn-group-vertical\" role=\"group\" aria-label=\"...\">\n                                                                                <button type=\"button\" class=\"btn btn-outline-primary\" (click)=\"toggleConstraint(0)\">{{lblValue}}</button>\n                                                                                <button type=\"button\" class=\"btn btn-outline-primary\" (click)=\"changeConstraint(0)\" [disabled]=\"!company.oppyConstraint.flgValue\">Submit</button>\n                                                                        </div>\n\n                                                                </div>\n                                                                <div class=\"col-md-4\">\n                                                                        <div class=\"form-group\">\n                                                                                <label>From</label>\n                                                                                <input type=\"number\" class=\"form-control border-input\"  \n                                                                                                placeholder=\"Insert the Merit Increase in %\" \n                                                                                                [(ngModel)]=\"company.oppyConstraint.Value[0]\" \n                                                                                                name=\"valueMin\" \n                                                                                                [disabled]=\"!company.oppyConstraint.flgValue\"\n                                                                                                required />\n                                                                        </div>\n                                                                </div>\n                                                                <div class=\"col-md-4\">\n                                                                        <div class=\"form-group\">\n                                                                                        <label>To</label>\n                                                                                        <input type=\"number\" class=\"form-control border-input\"  \n                                                                                            placeholder=\"Insert the Merit Increase in %\" \n                                                                                            [(ngModel)]=\"company.oppyConstraint.Value[1]\" \n                                                                                            name=\"valueMax\" \n                                                                                            [disabled]=\"!company.oppyConstraint.flgValue\"\n                                                                                            required />\n                                                                        </div>\n                                                                </div>\n                                                        </div>\n                                                        <div class=\"row\">\n                                                                <div class=\"col-md-4\"></div>\n                                                                        <div class=\"col-md-8\">\n                                                                                <div class=\"form-group\">\n                                                                                                <div class=\"row\"><label>Qualification Level</label></div>\n                                                                                                <div class=\"row\">\n                                                                                                        <div class=\"btn-group\" role=\"group\" aria-label=\"...\" >\n                                                                                                                <button type=\"button\" [ngClass]=\"btnClassArray['1B']\" (click)=\"modifyQualificationArray(1)\" [disabled]=\"!company.oppyConstraint.flgQualification\">1</button>\n                                                                                                                <button type=\"button\" [ngClass]=\"btnClassArray['2B']\" (click)=\"modifyQualificationArray(2)\" [disabled]=\"!company.oppyConstraint.flgQualification\">2</button>\n                                                                                                                <button type=\"button\" [ngClass]=\"btnClassArray['3B']\" (click)=\"modifyQualificationArray(3)\" [disabled]=\"!company.oppyConstraint.flgQualification\">3</button>\n                                                                                                                <button type=\"button\" [ngClass]=\"btnClassArray['4B']\" (click)=\"modifyQualificationArray(4)\" [disabled]=\"!company.oppyConstraint.flgQualification\">4</button>\n                                                                                                                <button type=\"button\" [ngClass]=\"btnClassArray['5B']\" (click)=\"modifyQualificationArray(5)\" [disabled]=\"!company.oppyConstraint.flgQualification\">5</button>\n                                                                                                        </div>    \n                                                                                                </div>                                                                            \n                                                                                        </div>\n                                                                         </div>\n                                                                </div>\n                                                        </form>\n                                                </div>\n                                            </div>\n                                    </div>\n\n                                    <!--\n                                    <div class=\"panel panel-default\">\n                                            <div class=\"panel-heading\"><h5>Qualification Level</h5></div>\n                                            <div class=\"panel-body\">\n                                                <div class=\"row\" *ngIf=\"company !== undefined\">\n                                                        <form>\n                                                                <div class=\"col-md-4\">\n                                                                        <div class=\"btn-group-vertical\" role=\"group\" aria-label=\"...\">\n                                                                                <button type=\"button\" class=\"btn btn-outline-primary\" (click)=\"toggleConstraint(1)\">{{lblQualification}}</button>\n                                                                                <button type=\"button\" class=\"btn btn-outline-primary\" (click)=\"changeConstraint(1)\" [disabled]=\"!company.oppyConstraint.flgQualification\">Submit</button>\n                                                                        </div>\n\n                                                                </div>\n                                                                        <div class=\"col-md-8\">\n                                                                                <div class=\"row\">\n                                                                                    <label>Qualification Level</label>\n                                                                                </div>\n                                                                                <div class=\"row\">\n                                                                                        <div class=\"btn-group\" role=\"group\" aria-label=\"...\" >\n                                                                                                <button type=\"button\" [ngClass]=\"btnClassArray['1B']\" (click)=\"modifyQualificationArray(1)\" [disabled]=\"!company.oppyConstraint.flgQualification\">1</button>\n                                                                                                <button type=\"button\" [ngClass]=\"btnClassArray['2B']\" (click)=\"modifyQualificationArray(2)\" [disabled]=\"!company.oppyConstraint.flgQualification\">2</button>\n                                                                                                <button type=\"button\" [ngClass]=\"btnClassArray['3B']\" (click)=\"modifyQualificationArray(3)\" [disabled]=\"!company.oppyConstraint.flgQualification\">3</button>\n                                                                                                <button type=\"button\" [ngClass]=\"btnClassArray['4B']\" (click)=\"modifyQualificationArray(4)\" [disabled]=\"!company.oppyConstraint.flgQualification\">4</button>\n                                                                                                <button type=\"button\" [ngClass]=\"btnClassArray['5B']\" (click)=\"modifyQualificationArray(5)\" [disabled]=\"!company.oppyConstraint.flgQualification\">5</button>\n                                                                                        </div>\n                                                                                </div>\n                                                                        </div>\n                                                            </form>\n                                                </div>\n                                            </div>\n                                    </div>\n                                -->\n\n                                </div>\n\n\n                        </div>\n                    </div>\n        </div>\n\n\n\n            </div>\n        </div>\n    </div>"
 
 /***/ }),
 
@@ -2512,62 +2493,54 @@ var OpportunitiesComponent = /** @class */ (function () {
     };
     OpportunitiesComponent.prototype.toggleConstraint = function (type) {
         var _this = this;
-        if (type === 0) {
-            if (!this.company.oppyConstraint.flgValue)
-                this.lblValue = "Disable";
+        if (!this.company.oppyConstraint.flgValue)
+            this.lblValue = "Disable";
+        else
+            this.lblValue = "Enable";
+        this.companyService.toggleValueConstraint(this.companyID, this.gameID)
+            .subscribe(function (res) {
+            if (res['result'] === 'OK') {
+                _this.notifier.notify('success', 'Retention Bonus succesfully assigned');
+            }
             else
-                this.lblValue = "Enable";
-            this.companyService.toggleValueConstraint(this.companyID, this.gameID)
-                .subscribe(function (res) {
-                if (res['result'] === 'OK') {
-                    _this.notifier.notify('success', 'Retention Bonus succesfully assigned');
-                }
-                else
-                    _this.notifier.notify('error', 'Error while assigning the retention Bonus');
-                _this.ngOnInit();
-            });
-        }
-        else {
-            if (!this.company.oppyConstraint.flgQualification)
-                this.lblQualification = "Disable";
+                _this.notifier.notify('error', 'Error while assigning the retention Bonus');
+            _this.ngOnInit();
+        });
+        if (!this.company.oppyConstraint.flgQualification)
+            this.lblQualification = "Disable";
+        else
+            this.lblQualification = "Enable";
+        this.companyService.toggleValueQualification(this.companyID, this.gameID)
+            .subscribe(function (res) {
+            if (res['result'] === 'OK') {
+                _this.notifier.notify('success', 'Retention Bonus succesfully assigned');
+            }
             else
-                this.lblQualification = "Enable";
-            this.companyService.toggleValueQualification(this.companyID, this.gameID)
-                .subscribe(function (res) {
-                if (res['result'] === 'OK') {
-                    _this.notifier.notify('success', 'Retention Bonus succesfully assigned');
-                }
-                else
-                    _this.notifier.notify('error', 'Error while assigning the retention Bonus');
-                _this.ngOnInit();
-            });
-        }
+                _this.notifier.notify('error', 'Error while assigning the retention Bonus');
+            _this.ngOnInit();
+        });
     };
     OpportunitiesComponent.prototype.changeConstraint = function (type) {
         var _this = this;
-        if (type === 0) {
-            this.companyService.changeValueConstraint(this.companyID, this.gameID, this.company.oppyConstraint.Value)
-                .subscribe(function (res) {
-                if (res['result'] === 'OK') {
-                    _this.notifier.notify('success', 'Retention Bonus succesfully assigned');
-                }
-                else
-                    _this.notifier.notify('error', 'Error while assigning the retention Bonus');
-                _this.ngOnInit();
-            });
-        }
-        else {
-            console.log(this.company.oppyConstraint.Qualification);
-            this.companyService.changeValueQualification(this.companyID, this.gameID, this.company.oppyConstraint.Qualification)
-                .subscribe(function (res) {
-                if (res['result'] === 'OK') {
-                    _this.notifier.notify('success', 'Retention Bonus succesfully assigned');
-                }
-                else
-                    _this.notifier.notify('error', 'Error while assigning the retention Bonus');
-                _this.ngOnInit();
-            });
-        }
+        this.companyService.changeValueConstraint(this.companyID, this.gameID, this.company.oppyConstraint.Value)
+            .subscribe(function (res) {
+            if (res['result'] === 'OK') {
+                _this.notifier.notify('success', 'Retention Bonus succesfully assigned');
+            }
+            else
+                _this.notifier.notify('error', 'Error while assigning the retention Bonus');
+            _this.ngOnInit();
+        });
+        console.log(this.company.oppyConstraint.Qualification);
+        this.companyService.changeValueQualification(this.companyID, this.gameID, this.company.oppyConstraint.Qualification)
+            .subscribe(function (res) {
+            if (res['result'] === 'OK') {
+                _this.notifier.notify('success', 'Retention Bonus succesfully assigned');
+            }
+            else
+                _this.notifier.notify('error', 'Error while assigning the retention Bonus');
+            _this.ngOnInit();
+        });
     };
     OpportunitiesComponent.prototype.modifyQualificationArray = function (level) {
         if (level !== 0) {
@@ -2810,6 +2783,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ChatService", function() { return ChatService; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _websocket_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./websocket.service */ "./src/app/services/websocket.service.ts");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2819,11 +2793,16 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param = (undefined && undefined.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 
 
-var CHAT_URL = 'ws://itmil-ves:1337/';
+
 var ChatService = /** @class */ (function () {
-    function ChatService(wsService) {
+    function ChatService(wsService, document) {
+        this.document = document;
+        var CHAT_URL = 'ws://' + this.document.location.hostname + ':1337/';
         this.messages = wsService
             .connect(CHAT_URL)
             .map(function (response) {
@@ -2835,7 +2814,9 @@ var ChatService = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
             providedIn: 'root'
         }),
-        __metadata("design:paramtypes", [_websocket_service__WEBPACK_IMPORTED_MODULE_1__["WebsocketService"]])
+        __param(1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"])(_angular_common__WEBPACK_IMPORTED_MODULE_2__["DOCUMENT"])),
+        __metadata("design:paramtypes", [_websocket_service__WEBPACK_IMPORTED_MODULE_1__["WebsocketService"],
+            Document])
     ], ChatService);
     return ChatService;
 }());
@@ -3936,7 +3917,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<h1>TOP</h1>"
+module.exports = "<div class=\"main-panel\">\n    <div class=\"content\">\n        <div class=\"container-fluid\">\n            <div class=\"row\">\n                <div class=\"col-md-8\">\n                        <div class=\"card\">\n                                <div class=\"header\">\n                                    <h4 class=\"title\">Market Trends</h4>\n                                    <p class=\"category\">Sorted by Relevance</p>\n                                </div>\n                                <div class=\"content\">\n                                    <div id=\"chartMarketTrends\" class=\"ct-chart\"></div>\n\n                                </div>\n                            </div>\n                </div>\n            </div>\n        </div>\n    </div>"
 
 /***/ }),
 
@@ -3952,6 +3933,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TopComponent", function() { return TopComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _services_message_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/message.service */ "./src/app/services/message.service.ts");
+/* harmony import */ var _services_presales_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/presales.service */ "./src/app/services/presales.service.ts");
+/* harmony import */ var ngx_cookie_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ngx-cookie-service */ "./node_modules/ngx-cookie-service/index.js");
+/* harmony import */ var picasso_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! picasso.js */ "./node_modules/picasso.js/dist/picasso.esm.js");
+/* harmony import */ var _shared_PicassoCharts_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../shared/PicassoCharts.js */ "./src/app/shared/PicassoCharts.js");
+/* harmony import */ var _shared_PicassoCharts_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_shared_PicassoCharts_js__WEBPACK_IMPORTED_MODULE_5__);
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3963,12 +3949,38 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 };
 
 
+
+
+
+
 var TopComponent = /** @class */ (function () {
-    function TopComponent(messageService) {
+    function TopComponent(messageService, presalesService, cookieService) {
         this.messageService = messageService;
+        this.presalesService = presalesService;
+        this.cookieService = cookieService;
+        this.marketTrends = [];
     }
     TopComponent.prototype.ngOnInit = function () {
+        var _this_1 = this;
         this.messageService.setPageStatus("TOP");
+        this.gameID = this.cookieService.get('gameID');
+        this.companyID = this.cookieService.get('companyID');
+        this.presalesService.getPresales(this.gameID)
+            .subscribe(function (res) {
+            var _this = _this_1;
+            Object.keys(res['data'][Object.keys(res['data'])[0]]['marketTrends']).forEach(function (trend) {
+                _this.marketTrends.push({ name: trend, score: res['data'][Object.keys(res['data'])[0]]['marketTrends'][trend] });
+            });
+            _this_1.marketTrends.sort(function (a, b) { return (b.score - a.score); });
+            picasso_js__WEBPACK_IMPORTED_MODULE_4__["default"].chart({
+                element: document.querySelector('#chartMarketTrends'),
+                data: [{
+                        type: 'matrix',
+                        data: _this_1.marketTrends
+                    }],
+                settings: _shared_PicassoCharts_js__WEBPACK_IMPORTED_MODULE_5___default.a.barchart
+            });
+        });
     };
     TopComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -3976,7 +3988,9 @@ var TopComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./top.component.html */ "./src/app/top/top.component.html"),
             styles: [__webpack_require__(/*! ./top.component.css */ "./src/app/top/top.component.css")]
         }),
-        __metadata("design:paramtypes", [_services_message_service__WEBPACK_IMPORTED_MODULE_1__["MessageService"]])
+        __metadata("design:paramtypes", [_services_message_service__WEBPACK_IMPORTED_MODULE_1__["MessageService"],
+            _services_presales_service__WEBPACK_IMPORTED_MODULE_2__["PresalesService"],
+            ngx_cookie_service__WEBPACK_IMPORTED_MODULE_3__["CookieService"]])
     ], TopComponent);
     return TopComponent;
 }());

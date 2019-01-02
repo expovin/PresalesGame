@@ -4,10 +4,10 @@ module.exports = {
     trends : [
         "Artificial Intelligence",
         "Internet of Things",
-        "Augmented analytics",
+        "Augmented Intelligence",
         "Blockchain",
         "Quantum computing",
-        "Cloud Comuting",
+        "Cloud Computing",
         "Conversational Platform",
         "Cybersecurity",
         "Digital transformation",

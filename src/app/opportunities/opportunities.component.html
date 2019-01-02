@@ -82,6 +82,7 @@
                                             <div class="panel-body">
                                                 <div class="row">
                                                         <form>
+                                                        <div class="row">
                                                                 <div class="col-md-4">
                                                                         <div class="btn-group-vertical" role="group" aria-label="...">
                                                                                 <button type="button" class="btn btn-outline-primary" (click)="toggleConstraint(0)">{{lblValue}}</button>
@@ -89,19 +90,19 @@
                                                                         </div>
 
                                                                 </div>
-                                                                        <div class="col-md-4">
-                                                                                <div class="form-group">
-                                                                                        <label>From</label>
-                                                                                        <input type="number" class="form-control border-input"  
+                                                                <div class="col-md-4">
+                                                                        <div class="form-group">
+                                                                                <label>From</label>
+                                                                                <input type="number" class="form-control border-input"  
                                                                                                 placeholder="Insert the Merit Increase in %" 
                                                                                                 [(ngModel)]="company.oppyConstraint.Value[0]" 
                                                                                                 name="valueMin" 
                                                                                                 [disabled]="!company.oppyConstraint.flgValue"
                                                                                                 required />
-                                                                                </div>
                                                                         </div>
-                                                                        <div class="col-md-4">
-                                                                                <div class="form-group">
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                        <div class="form-group">
                                                                                         <label>To</label>
                                                                                         <input type="number" class="form-control border-input"  
                                                                                             placeholder="Insert the Merit Increase in %" 
@@ -109,13 +110,32 @@
                                                                                             name="valueMax" 
                                                                                             [disabled]="!company.oppyConstraint.flgValue"
                                                                                             required />
-                                                                                </div>
                                                                         </div>
-                                                            </form>
+                                                                </div>
+                                                        </div>
+                                                        <div class="row">
+                                                                <div class="col-md-4"></div>
+                                                                        <div class="col-md-8">
+                                                                                <div class="form-group">
+                                                                                                <div class="row"><label>Qualification Level</label></div>
+                                                                                                <div class="row">
+                                                                                                        <div class="btn-group" role="group" aria-label="..." >
+                                                                                                                <button type="button" [ngClass]="btnClassArray['1B']" (click)="modifyQualificationArray(1)" [disabled]="!company.oppyConstraint.flgQualification">1</button>
+                                                                                                                <button type="button" [ngClass]="btnClassArray['2B']" (click)="modifyQualificationArray(2)" [disabled]="!company.oppyConstraint.flgQualification">2</button>
+                                                                                                                <button type="button" [ngClass]="btnClassArray['3B']" (click)="modifyQualificationArray(3)" [disabled]="!company.oppyConstraint.flgQualification">3</button>
+                                                                                                                <button type="button" [ngClass]="btnClassArray['4B']" (click)="modifyQualificationArray(4)" [disabled]="!company.oppyConstraint.flgQualification">4</button>
+                                                                                                                <button type="button" [ngClass]="btnClassArray['5B']" (click)="modifyQualificationArray(5)" [disabled]="!company.oppyConstraint.flgQualification">5</button>
+                                                                                                        </div>    
+                                                                                                </div>                                                                            
+                                                                                        </div>
+                                                                         </div>
+                                                                </div>
+                                                        </form>
                                                 </div>
                                             </div>
                                     </div>
 
+                                    <!--
                                     <div class="panel panel-default">
                                             <div class="panel-heading"><h5>Qualification Level</h5></div>
                                             <div class="panel-body">
@@ -146,6 +166,8 @@
                                                 </div>
                                             </div>
                                     </div>
+                                -->
+
                                 </div>
 
 

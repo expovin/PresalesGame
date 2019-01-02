@@ -1,9 +1,11 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 const QIX = require('../lib/ClassQIX');
+const QRSClass = require('../lib/QRSClass');
 const customers = require('../lib/dictionary').companies;
-
-var qix=null;
+const settings = require('../lib/settings');
+const qix= new QIX();
+const qrs = new QRSClass();
 
 /* get all presales */
 router.route('/')
@@ -61,6 +63,9 @@ router.route('/app')
     }, error => {
         res.status(506).json({result:'ERROR', error:error});
     })
+    .catch(err =>{
+        res.status(506).json({result:'ERROR', error:err});
+    })
     
 })
 .delete( function (req, res, next){
@@ -73,6 +78,16 @@ router.route('/app')
     
 })
 
+router.route('/app/close')
+.get( function(req, res, next) {
+    qix.closeDoc()
+    .then( result =>{
+        res.status(200).json({result:'OK '+  result});
+    }, error =>{
+        res.status(508).json({result:'ERROR: '+ error});
+    })
+})
+
 
 /* get all presales */
 router.route('/app/layout')
@@ -80,9 +95,9 @@ router.route('/app/layout')
     qix.getAppLayout()
     .then( appLayout =>{
 
-        res.status(200).json({result:'OK', data: appLayout});
+        res.status(200).json({result:'OK ',  message:appLayout});
     }, error =>{
-        res.status(508).json({result:'ERROR', error: error});
+        res.status(508).json({result:'ERROR: '+ error});
     })
 })
 
@@ -91,9 +106,9 @@ router.route('/app/createSessionObject')
 .get( function(req, res, next) {
     qix.createSessionObject()
     .then( hypercube =>{
-        res.status(200).json({result:'OK', data: hypercube});
+        res.status(200).json({result:'OK '+ hypercube});
     }, error =>{
-        res.status(508).json({result:'ERROR', error: error});
+        res.status(508).json({result:'ERROR: '+  error});
     })
 })
 
@@ -103,17 +118,76 @@ router.route('/app/script')
 .get( function(req, res, next) {
     qix.getScript()
     .then( script =>{
-        res.status(200).json({result:'OK', data: script});
+        res.status(200).json({result:'OK '+ script});
     }, error =>{
-        res.status(508).json({result:'ERROR', error: error});
+        res.status(508).json({result:'ERROR: '+  error});
     })
 })
 .post( function(req, res, next) {
     qix.setScript(req.body.script)
     .then( script =>{
-        res.status(200).json({result:'OK', data: script});
+        res.status(200).json({result:'OK '+ script});
     }, error =>{
-        res.status(508).json({result:'ERROR', error: error});
+        res.status(508).json({result:'ERROR'+  error});
+    })
+})
+
+router.route('/app/MAB/reload')
+.get( function(req, res, next) {
+    qix.openDoc(settings.QIX.MABAppId)
+    .then( appObj =>{
+        return (appObj.appObj.doReloadEx({
+                    "qMode": 0,
+                    "qPartial": false,
+                    "qDebug": false
+                }));
+    }, error => {
+        console.log("Error opening the app --> "+error);
+        res.status(506).json({result:'ERROR', error:error});
+    })
+    .then( result =>{
+        console.log("Reload lunched succesfully ");
+        res.status(200).json({result:'OK', message:"Reoad lunched succesfully", data: result});
+    }, err => { 
+        console.log("Error whie loading MAB "+err);
+        res.status(507).json({result:'ERROR', error:err});
+    })
+    .catch(error =>{
+        console.log("Something went wrong!");
+        res.status(506).json({result:'ERROR', error:error});
+    })    
+})
+
+router.route('/app/MAB/layout')
+.get( function(req, res, next) {
+    qix.MABReload()
+    .then( result =>{
+        res.status(200).json({result:'OK', data:res});
+    }, error =>{
+        res.status(507).json({result:'ERROR', error:error});
+    })
+    .catch(error =>{
+        res.status(506).json({result:'ERROR', error:error});
+    })      
+})
+
+router.route('/user/:id/custProp')
+.get( function(req, res, next) {
+    qrs.getUser(req.params.id)
+    .then( custProp =>{
+        res.status(200).json({result:'OK', data:custProp});
+    })
+})
+.put( function(req, res, next) {
+    qrs.addCustomProp(req.params.id,req.body.custProp)
+    .then( result =>{
+        res.status(200).json({result:'OK', data:result});
+    })
+})
+.delete( function(req, res, next) {
+    qrs.removeCustomProp(req.params.id,req.body.custProp)
+    .then( result =>{
+        res.status(200).json({result:'OK', data:result});
     })
 })
 
@@ -125,12 +199,12 @@ router.route('/app/halyard')
 .post( function(req, res, next) {
     qix.reloadApp()
     .then( result =>{
-        res.status(200).json({result:'OK', data: result});
+        res.status(200).json({result:'OK: '+ result});
     },error => {
-        res.status(530).json({result:'ERROR', error: error});
+        res.status(530).json({result:'ERROR: '+ error});
     })
     .catch( error =>{
-        res.status(530).json({result:'ERROR', error: error});
+        res.status(530).json({result:'ERROR: '+ error});
     })
 })
 .put( function(req, res, next) {

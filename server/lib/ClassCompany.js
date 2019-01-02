@@ -221,7 +221,9 @@ class Company {
             if(this.budget - person.getCost() < 0)
                 return (false)
 
-            this.presalesTeam.push(person.getID());
+            if(!this.presalesTeam.includes(person.getID()))
+                this.presalesTeam.push(person.getID());
+                
             this.budget-=person.getCost();
             this.totalHours +=person.getTimePerQuarter();
         }
@@ -351,6 +353,15 @@ class Company {
     setOppyIndustry(industries){ this.oppyConstraint.Industry=industries}
     /********************** */
 
+    getOppyCompletedData(gameId, quarter){
+        let rows=[];
+        Object.keys(this.oppyCompeted).forEach((oppyId) => {
+            rows.push(["'"+gameId+"','"+quarter+"','"+this.id+"','"+oppyId+"',"+this.oppyCompeted[oppyId].closeValue+","+this.oppyCompeted[oppyId].TTC+","+
+                        this.oppyCompeted[oppyId].budget+","+this.oppyCompeted[oppyId].hoursLeft+","+this.oppyCompeted[oppyId].idx+",'"+ this.oppyCompeted[oppyId].outcome+"'"]);
+        })
+        return(rows);
+    }
+
     saveQuarterResultToFile(quarter){        
         let fileName=this.id+"_"+quarter+"_OppyCompleted.csv";
         let data="CompanyId;OpportunitiesId;quarter;InitialValue;ClosedValue;TTC;budget;hoursLeft;idx;outcome\r\n";
@@ -390,6 +401,23 @@ class Company {
                 })
             }
         })
+    }
+
+    getFeaturesData(gameId, quarter){
+        let rows=[];
+        Object.keys(this.productFeatures).forEach((feature, index) => {
+            rows.push(["'"+gameId+"','"+ quarter+"','"+ this.id+"','"+ this.productFeatures[feature].name+"',"+ this.productFeatures[feature].score]);
+        })
+        return(rows);
+    }
+
+
+    getTeamData(gameId, quarter){
+        let rows=[];
+        this.presalesTeam.forEach( person =>{
+            rows.push(["'"+gameId+"','"+ quarter+"','"+this.id+"','"+ person+"'"]);
+        })
+        return(rows);
     }
 
     saveTeamToFile(quarter){

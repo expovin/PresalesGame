@@ -278,6 +278,27 @@ class Presales  {
 
     getValues(){ return(this.person) }
 
+    getPersonDetailsData(gameId, quarter){
+        return (["'"+gameId+"','"+quarter+"','"+this.person.ID+"','"+this.person.name+"',"+this.person.cost+","+this.person.satisfactionLevel]);
+    }
+
+    getPersonTrendsData(gameId, quarter){
+        let personData=[];
+        this.person.PersonTrends.forEach( (t,idx) =>{
+            personData.push(["'"+gameId+"','"+quarter+"','"+this.person.ID+"','"+t.name+"',"+t.score]);
+        })
+        return (personData);
+    }
+
+    getPersonFeaturesData(gameId, quarter){
+        let personData=[];
+        this.person.features.forEach( (t,idx) =>{
+            personData.push(["'"+gameId+"','"+quarter+"','"+this.person.ID+"','"+t.name+"',"+t.score]);
+        })
+        return (personData);
+    }
+
+    /*
     saveQuarterResultToFile(quarter){
         let fileName=this.person.ID+"_"+quarter+"_PersonDetails.csv";
         let personData="PersonId;Name;Cost;satisfactionLevel;quarter\r\n";
@@ -331,6 +352,7 @@ class Presales  {
             }
         })
     }
+    */
 }
 
 module.exports = Presales;

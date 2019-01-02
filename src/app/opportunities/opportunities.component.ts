@@ -75,7 +75,7 @@ export class OpportunitiesComponent implements OnInit {
 
   toggleConstraint(type){
     
-    if(type === 0){
+
       if(!this.company.oppyConstraint.flgValue)
         this.lblValue="Disable";
       else
@@ -91,7 +91,7 @@ export class OpportunitiesComponent implements OnInit {
   
         this.ngOnInit();
       })
-    } else {
+
 
       if(!this.company.oppyConstraint.flgQualification)
         this.lblQualification="Disable";
@@ -108,12 +108,12 @@ export class OpportunitiesComponent implements OnInit {
   
         this.ngOnInit();
       })
-    }
+    
   }  
 
   changeConstraint(type){
 
-    if(type === 0) {
+
 
       this.companyService.changeValueConstraint(this.companyID,this.gameID, this.company.oppyConstraint.Value)
       .subscribe( res =>{
@@ -125,7 +125,7 @@ export class OpportunitiesComponent implements OnInit {
   
         this.ngOnInit();
       })
-    } else {
+
       console.log(this.company.oppyConstraint.Qualification);
       this.companyService.changeValueQualification(this.companyID,this.gameID, this.company.oppyConstraint.Qualification)
       .subscribe( res =>{
@@ -137,7 +137,7 @@ export class OpportunitiesComponent implements OnInit {
   
         this.ngOnInit();
       })
-    }
+
   }
 
   modifyQualificationArray(level){

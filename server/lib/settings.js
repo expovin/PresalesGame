@@ -79,6 +79,8 @@ module.exports = {
     marketTrendPercentageVariationMin: -7,
     marketTrendPercentageVariationMax: 8,
 
+    oppyTTCRatio:5,   // number of hours for each 5K oppy
+
     weighCompetition : {
         Trends : 37,
         Features : 23,
@@ -87,6 +89,72 @@ module.exports = {
     },
 
     penaltyDeclineToHire : 10,
-    quarterLogFilePath : "qLog/"
+    quarterLogFilePath : "qLog/",
+
+    dbConnectionOri : {
+        host : 'db_node',
+        port : '3306',
+        database: 'pg_data',
+        user: 'pguser',
+        passwd : 'pgpasswd'
+    },
+
+    dbConnection : {
+        host : 'ves-london.ceohohnitre2.eu-west-2.rds.amazonaws.com',
+        port : '3306',
+        database: 'pg_data',
+        user: 'pbg',
+        passwd : 'pbgpasswd'
+    },
+
+    QIX : {
+        host: 'pbgqix.expovin.it',
+        port: 4747,
+        QRSPort : 4242,
+        userDir : 'EC2AMAZ-L9N9VC9',
+        userName: 'ptw',
+        certsPath : '../certs',
+        MABAppId : "1f93f120-15c0-436a-a06b-1f9a8d94d376"
+    },
+
+    MAB : { 
+            id: "6812021b-97c6-4110-b049-2f81eb72f59f",
+            createdDate: "2018-12-26T22:25:03.726Z",
+            modifiedDate: "2018-12-26T22:25:03.726Z",
+            modifiedByUserName: "EC2AMAZ-L9N9VC9\\ves",
+            value: "MAB",
+            definition: {
+                id: "7da7be76-ed06-4193-9ce2-483a702f54e2",
+                name: "PCB",
+                valueType: "Text",
+                choiceValues: [
+                    "POT",
+                    "MAB"
+                ],
+                privileges: null
+            },
+            schemaPath: "CustomPropertyValue"      
+    },
+
+
+    POT : {
+        id: "3b59bd97-28e2-4065-b5c9-2095d68b1251",
+        createdDate: "2019-01-02T10:02:55.999Z",
+        modifiedDate: "2019-01-02T10:02:55.999Z",
+        modifiedByUserName: "EC2AMAZ-L9N9VC9\\ves",
+        value: "POT",
+        definition: {
+            id: "7da7be76-ed06-4193-9ce2-483a702f54e2",
+            name: "PCB",
+            valueType: "Text",
+            choiceValues: [
+                "POT",
+                "MAB"
+            ],
+            privileges: null
+        },
+        schemaPath: "CustomPropertyValue"
+    }
+
 
 }

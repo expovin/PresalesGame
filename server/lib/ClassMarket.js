@@ -12,7 +12,7 @@ const customers = require('./dictionary').companies;
 const fs = require('fs');
 const Oppy = require('../lib/ClassOpportunities');
 const wsClass = require('./wsMessages');
-
+const dbClass = require('./ClassDB');
 const QIX = require('../lib/ClassQIX');
 
 
@@ -21,6 +21,11 @@ class Market {
     
 
     constructor(m) {
+        this.db = new dbClass  (settings.dbConnection.host, 
+                                settings.dbConnection.port,
+                                settings.dbConnection.database,
+                                settings.dbConnection.user,
+                                settings.dbConnection.passwd);
         this.qix=new QIX(m);;
         this.periodIndex=0;
         this.MarketTrends=[];
@@ -76,6 +81,16 @@ class Market {
             .catch( error =>{
                 reject(error);
             })
+        })
+    }
+
+    dbInit(){ 
+        this.db.init()
+        .then( value => {
+            console.log(value);
+        })
+        .catch( error => {
+            console.log(error);
         })
     }
 
@@ -169,9 +184,9 @@ class Market {
             brandRecognitionNormalized=0;
             
         /** Trend Score */
-        let trendScore =0;
+        var trendScore =0;
         oppy.getTrends().forEach( (trend, index) => {
-            let sumTrendScore=0;
+            var sumTrendScore=0;
             this.Companies[companyID].getPresalesTeam().forEach( personID => {
                 this.People[personID].getTrends().forEach( t => {
                     if((trend === t.name))
@@ -179,7 +194,7 @@ class Market {
                 })
             })
             //trendScore /= this.Companies[companyID].getPresalesTeam().length; //settings.TrendWeight[index]*maxTrendScore;
-            trendScoreNormalized = (sumTrendScore  * settings.weighCompetition.Trends)/12 | 0;
+            trendScoreNormalized = (sumTrendScore  * settings.weighCompetition.Trends)/12;
 
         })
 
@@ -194,7 +209,7 @@ class Market {
                 })
             })
             //featureScore += feature.score*maxFeatureScore;
-            featureScoreNormalized = (sumFeatureScore * settings.weighCompetition.Features)/12 | 0;
+            featureScoreNormalized = (sumFeatureScore * settings.weighCompetition.Features)/12;
         })
         
         /** Get the Business Acumen Average  */
@@ -226,16 +241,21 @@ class Market {
         this.ws.sendBroadcastMessage(JSON.stringify(msg));
 
 
-        Object.keys(this.Companies).forEach(function(companyID) {
+        var _this=this;
+        Object.keys(this.Companies).forEach(function(companyID,idx) {
             let totalPeopleCosts = 0;
             _this.Companies[companyID].getPresalesTeam().forEach( personID => totalPeopleCosts += _this.People[personID].getCost())
             _this.Companies[companyID].payQuarterCosts(totalPeopleCosts/4);
 
             _this.Companies[companyID].saveBudgetInfo();
             _this.Companies[companyID].saveBrendRecognition();
+
+            if(idx === Object.keys(_this.Companies).length -1){
+                msg={type:'actions',msg:{type:"Making quarter payments and saving results",result:"done"}};
+                _this.ws.sendBroadcastMessage(JSON.stringify(msg));
+            }
           });
-          msg={type:'actions',msg:{type:"Making quarter payments and saving results",result:"done"}};
-          this.ws.sendBroadcastMessage(JSON.stringify(msg));
+
 
         // Loop for each opportunity and pass them to the companies.
         this.Opportunities.forEach( (oppy,oppyNum) => {
@@ -275,29 +295,46 @@ class Market {
                 }
             }
 
+            if(oppyNum === this.Opportunities.length -1){
+                msg={type:'actions',msg:{type:"Opportunities fight is over",result:"done"}};
+                this.ws.sendBroadcastMessage(JSON.stringify(msg));
+            }
         })
-        msg={type:'actions',msg:{type:"Opportunities fight is over",result:"done"}};
-        this.ws.sendBroadcastMessage(JSON.stringify(msg));
-
 
         /** Saving Opportunities statistics */
-        this.saveQuarterResultToFile(this.quarter,this.getOpportunities())
-
+        //this.saveQuarterResultToFile(this.quarter,this.getOpportunities())
+        let opportunitiesData = this.getOpportunitiesData("Fix", this.quarter);
+        this.db.marketOpportunitiesIns(opportunitiesData.opportunities);
+        this.db.marketFeaturesIns(opportunitiesData.features);
+        this.db.marketPretendersIns(opportunitiesData.pretenders);
+        this.db.marketTrendsIns(opportunitiesData.trends);
 
         /** Saving Employed people statistics */
         let employedPeople = this.getPeople(true);
-        Object.keys(employedPeople).forEach( personId => employedPeople[personId].saveQuarterResultToFile(this.quarter))
+
+        Object.keys(employedPeople).forEach( personId => {
+            this.db.personDetailsIns(_this.People[personId].getPersonDetailsData("Fix",_this.quarter));
+            this.db.personTrendsIns(_this.People[personId].getPersonTrendsData("Fix",_this.quarter));
+            this.db.personFeaturesIns(_this.People[personId].getPersonFeaturesData("Fix",_this.quarter));
+        })
+
+
+
         msg={type:'actions',msg:{type:"Quarter results saved",result:"done"}};
         this.ws.sendBroadcastMessage(JSON.stringify(msg));        
 
         /** Move forward to the next Quarter */
-        Object.keys(this.Companies).forEach(function(companyID) {
+        Object.keys(this.Companies).forEach(function(companyID, idx) {
             /** Save company statistics */
-            _this.Companies[companyID].saveTeamToFile(_this.quarter);
+            _this.db.companyTeamIns(_this.Companies[companyID].getTeamData("Fix",_this.quarter));
+            //_this.Companies[companyID].saveTeamToFile(_this.quarter);
             /** Save Company statistics */
-            _this.Companies[companyID].saveQuarterResultToFile(_this.quarter);
+            _this.db.companyOppyCompletedIns(_this.Companies[companyID].getOppyCompletedData("Fix",_this.quarter))
+            //_this.Companies[companyID].saveQuarterResultToFile(_this.quarter);
+            
             /** Save the amount of hours left */
-            _this.Companies[companyID].saveRemainingHours(_this.quarter);
+            _this.db.companyProductFeatureIns(_this.Companies[companyID].getFeaturesData("Fix",_this.quarter));
+            //_this.Companies[companyID].saveRemainingHours(_this.quarter);
             /** Reset the total hours for each Company */
             _this.Companies[companyID].resetTotalHours();
             _this.QIncomeCompanyRanking.push({id:companyID, rank:_this.Companies[companyID].getPercentGrow()})
@@ -309,11 +346,13 @@ class Market {
             _this.Companies[companyID].getPresalesTeam().forEach( personID =>  _this.People[personID].changeSatisfactionalLevel(decrease*(-1)))
             /** Lower the Company brad */
             _this.Companies[companyID].decreaseBrendRecognition();
+
+            if(idx === Object.keys(_this.Companies).length -1){
+                msg={type:'actions',msg:{type:"Calulating new quarter company status",result:"done"}};
+                _this.ws.sendBroadcastMessage(JSON.stringify(msg)); 
+            }
         });
-        msg={type:'actions',msg:{type:"Calulating new quarter company status",result:"done"}};
-        this.ws.sendBroadcastMessage(JSON.stringify(msg));          
-
-
+         
         _this.QIncomeCompanyRanking.sort(function(a,b){
             return a.rank - b.rank
         })
@@ -341,12 +380,17 @@ class Market {
         msg={type:'actions',msg:{type:"Generated new opportunities",result:"done"}};
         this.ws.sendBroadcastMessage(JSON.stringify(msg));  
 
-        var _this=this;
-        setTimeout( function(){
+        
+        /** QIX Reload */
+        this.qix.MABReload()
+        .then( result =>{
+            console.log(result);
             msg={type:'end',msg:"Terminated"};
             _this.ws.sendBroadcastMessage(JSON.stringify(msg)); 
-        }, 3000);
-
+        })
+        .catch( error =>{
+            console.log("Error while reloading QIX ",error);
+        })
 
     }
 
@@ -496,7 +540,32 @@ class Market {
         if (a.score < b.score)
           return 1;
         return 0;
-      }    
+    }    
+
+    
+    getOpportunitiesData(gameId, quarter){
+
+        let rows=[];
+        let featuresRows=[];
+        let pretendersRows=[];
+        let trendsRows=[];
+        this.getOpportunities().forEach( oppy =>{
+            rows.push(['"'+gameId+'","'+quarter+'","'+oppy.ID+'","'+oppy.CompanyName+'",'+oppy.teoricalValue+','+oppy.variationPerc+','+
+                        oppy.realOppyValue+','+oppy.qualificationLevel+','+oppy.TTC+',"'+oppy.winner+'","'+oppy.status+'"']);
+
+            oppy.features.forEach( feature => {
+                featuresRows.push(["'"+gameId+"','"+quarter+"','"+oppy.ID+"','"+feature.name+"',"+feature.score]);
+            })
+            oppy.pretenders.forEach( pretender => {
+                pretendersRows.push(["'"+gameId+"','"+quarter+"','"+oppy.ID+"','"+pretender.companyID+"',"+pretender.TrendScore+","+
+                pretender.FeatureScore+","+pretender.BA+","+pretender.BR]);
+            })  
+            oppy.TrendsRequired.forEach( trend => {
+                trendsRows.push(["'"+gameId+"','"+quarter+"','"+oppy.ID+"','"+trend+"'"]);
+            })                         
+        })
+        return({opportunities: rows, features : featuresRows, pretenders: pretendersRows, trends: trendsRows});
+    }
 
     saveQuarterResultToFile(quarter,data){
         let generalFileName="General_"+quarter+"_Opportunities.csv";
@@ -520,6 +589,15 @@ class Market {
             this.savePretenders(oppy.ID,quarter,oppy.pretenders);
             this.saveTrends(oppy.ID, quarter, oppy.TrendsRequired);
         })
+    }
+
+    getMarketFeaturesData(gameId, quarter){
+        let rows=[];
+        this.getOpportunities().forEach( oppy =>{
+            rows.push(["'"+gameId+"','"+quarter+"','"+oppy.ID+"','"+oppy.CompanyName+"',"+oppy.teoricalValue+","+oppy.variationPerc+","+
+                        oppy.realOppyValue+","+oppy.qualificationLevel+","+oppy.TTC+",'"+oppy.winner+"','"+oppy.status+"'"]);
+        })
+        return(rows);
     }
 
     saveFeatures(id,quarter,data){

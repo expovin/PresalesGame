@@ -1,8 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { Observable, Subject } from 'rxjs/Rx';
 import { WebsocketService } from './websocket.service';
-
-const CHAT_URL = 'ws://itmil-ves:1337/';
+import { DOCUMENT } from '@angular/common';
 
 export interface Message {
 	type: string,
@@ -16,7 +15,10 @@ export class ChatService {
 
 	public messages: Subject<Message>;
 
-	constructor(wsService: WebsocketService) {
+	constructor(wsService: WebsocketService,
+							@Inject(DOCUMENT) private document: Document) {
+								
+		const CHAT_URL = 'ws://'+this.document.location.hostname+':1337/';
 		this.messages = <Subject<Message>>wsService
 			.connect(CHAT_URL)
 			.map((response: MessageEvent): Message => {

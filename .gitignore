@@ -110,3 +110,6 @@ Thumbs.db
 debugFile.html
 
 *.html_bk
+
+#certificates
+/server/certs

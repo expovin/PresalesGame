@@ -19,7 +19,7 @@ var post_data = {
 };
 
 var options = {
-    host: 'localhost',
+    host: 'itmil-ves',
     port: 3000,
     path: '/api/v1/market',
     method: 'GET',

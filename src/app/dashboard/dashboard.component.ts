@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter, Inject } from '@angular/core';
 import { MessageService } from '../services/message.service';
 import { CompanyService } from '../services/company.service';
 import { CookieService } from 'ngx-cookie-service';
@@ -11,6 +11,7 @@ import { NotifierService } from 'angular-notifier';
 import { ChartsComponent } from '../charts/charts.component'
 import { NgxSmartModalService } from 'ngx-smart-modal';
 import { Subscription } from 'rxjs/Subscription';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-dashboard',
@@ -67,7 +68,8 @@ export class DashboardComponent implements OnInit {
               private presalesService: PresalesService,
               private messageService: MessageService,
               public ngxSmartModalService: NgxSmartModalService,
-              private marketService: MarketService) 
+              private marketService: MarketService,
+              @Inject(DOCUMENT) private document: Document) 
               { 
                 
                 this.notifier = this.notifierService; 
@@ -78,6 +80,13 @@ export class DashboardComponent implements OnInit {
 
     this.companyID = this.cookieService.get('companyID');
     this.gameID = this.cookieService.get('gameID');
+
+    if(this.companyID === undefined || this.gameID === undefined || this.companyID === "" || this.gameID === ""){
+      console.log("Company not created yet. Redirect to landing!");
+      let hostname=this.document.location.protocol+"//"+this.document.location.hostname+":"+this.document.location.port +"/landing";
+      window.location.href = hostname;
+    }
+
     this.userDetails=0;
     this.messageService.setPageStatus("Dashboard");
 

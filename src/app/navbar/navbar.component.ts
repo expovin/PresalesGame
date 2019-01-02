@@ -42,7 +42,7 @@ export class NavbarComponent implements OnInit {
   ngOnInit() {      
     this.gameID = this.cookieService.get('gameID');
     this.companyID = this.cookieService.get('companyID');
-    console.log("companyID from cookie : "+this.companyID);
+    console.log(this.companyID);
 
     this.marketService.getQuarter(this.gameID)
     .subscribe ( res =>{

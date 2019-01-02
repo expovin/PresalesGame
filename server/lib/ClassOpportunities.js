@@ -53,15 +53,26 @@ class Opportunities  {
                                                         settings.MaxOppyValueVariationPercentage,
                                                         4,1,this.qualificationLevel);                                           
         this.realOppyValue=Math.round(this.teoricalValue*(1+this.variationPerc/100));
-        if(isNaN(this.variationPerc))
+        if(isNaN(this.variationPerc)){
             this.variationPerc=0;
+            this.realOppyValue=this.teoricalValue;
+        }
+            
     }    
-    generateTTC(min, max){this.TTC =helper.generateRandomValue(min, max,0,-1)}
-    generateTrends(){
-        this.TrendsRequired.push(trends[Math.floor(Math.random() * trends.length)]);
-        this.TrendsRequired.push(trends[Math.floor(Math.random() * trends.length)]);
-        this.TrendsRequired.push(trends[Math.floor(Math.random() * trends.length)]);
+    generateTTC(min, max){
+        var baseValue = this.teoricalValue / settings.oppyTTCRatio;      
+        this.TTC =helper.generateRandomValue(baseValue/2, baseValue/2*3,0,-1)
     }
+
+    generateTrends(){
+
+        while(this.TrendsRequired.length < 3){
+            let randomTrend=trends[Math.floor(Math.random() * trends.length)];
+            if(!this.TrendsRequired.includes(randomTrend))
+                this.TrendsRequired.push(randomTrend);
+        }       
+    }
+
     generateFeatures(){
         var tmp=[];
         for(var i=0; i<settings.NumberOfFeaturesPerOppy; i++)

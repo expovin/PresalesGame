@@ -46,6 +46,11 @@ router.route('/quarter')
     res.status(200).json({result:'OK', data:m[req.headers.gameid].getQuarter()});
 })
 
+router.route('/initDb')
+.get( function(req, res, next) {
+    m[req.headers.gameid].dbInit();
+    res.status(200).json({result:'OK', message:"Database initialied"});
+})
 
 /* get all presales */
 router.route('/nextPeriod')
@@ -78,12 +83,15 @@ router.route('/BRShare')
 /* get all presales */
 router.route('/evaluate')
 .get( function(req, res, next) {
+    msg={type:'start',msg:'People offer evaluation'};
+    m[req.headers.gameid].ws.sendBroadcastMessage(JSON.stringify(msg));
+
     var Deals=initDeals(m[req.headers.gameid].getCompanies());
     var people = m[req.headers.gameid].getPeople(false);
 
 
     /** Loop over unemployed people*/
-    Object.keys(people).forEach(function(personID) {
+    Object.keys(people).forEach(function(personID, idx) {
         companyID=m[req.headers.gameid].getPerson(personID).acceptProposal();
 
         if(companyID !== null){
@@ -96,12 +104,17 @@ router.route('/evaluate')
                 .getPerson(personID)
                 .getName()});
         }
-      });
+
+        if(idx === Object.keys(people).length -1){
+            msg={type:'actions',msg:{type:"Checking hire people",result:"done"}};
+            m[req.headers.gameid].ws.sendBroadcastMessage(JSON.stringify(msg));
+        }
+    });
 
     /** Loop over employed people */
     var people = m[req.headers.gameid].getPeople(true);
     var resignedPeople=[];
-    Object.keys(people).forEach(function(personID) {
+    Object.keys(people).forEach(function(personID, idx) {
         const resigned=m[req.headers.gameid].getPerson(personID).resign();
         if(resigned){
             resignedPeople.push(personID);
@@ -118,14 +131,25 @@ router.route('/evaluate')
             m[req.headers.gameid]
                 .getPerson(personID));
         }
+
+        if(idx === Object.keys(people).length -1){
+            msg={type:'actions',msg:{type:"Checking resign people",result:"done"}};
+            m[req.headers.gameid].ws.sendBroadcastMessage(JSON.stringify(msg));
+        }
+
       });
 
 
-      Object.keys(Deals).forEach(companyID => {
+      Object.keys(Deals).forEach((companyID,idx) => {
           Deals[companyID].forEach( personID =>{
             // Add this person to the list of people to confirm
             m[req.headers.gameid].getCompany(companyID).addPeopleToConfirm(m[req.headers.gameid].getPerson(personID));
           })
+
+          if(idx === Object.keys(Deals).length -1){
+            msg={type:'end',msg:'finish'};
+            m[req.headers.gameid].ws.sendBroadcastMessage(JSON.stringify(msg));
+        }          
       });
 
     res.status(200).json({result:'OK', data: Deals, resigned : resignedPeople});

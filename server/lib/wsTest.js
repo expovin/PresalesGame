@@ -1,11 +1,11 @@
-wsClass = require('./wsMessages');
+const QRSClass = require('./QRSClass');
 
-const wsM = new wsClass;
+const qrs = new QRSClass();
 
+/*
+qrs.getUser('e6ff2e60-78cc-43f2-afd7-8f01a1a79f61')
+.then( result => console.log(result));
+*/
 
-wsM.sendBroadcastMessage(JSON.stringify({type:'start',msg:"Starting opportunities calculation from 2019 Q1 to 2019 Q2"}))
-
-
-//setInterval( function() {wsM.sendTextMessage(JSON.stringify({type:'info',msg:"Ciao dal Server!"}))}, 10000)
-
-//wsM.printWsServer();
+//qrs.removeCustomProp('f63f1be6-13cf-4d68-ba89-88f3acd0cb0c','MAB')
+qrs.addCustomProp('f63f1be6-13cf-4d68-ba89-88f3acd0cb0c','MAB')

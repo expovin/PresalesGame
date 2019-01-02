@@ -1,0 +1,14 @@
+.BAMBOX {
+    min-height:1000px;
+    margin-top: 35px;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    
+}
+
+iframe {
+    border:2px;
+    width:100%;
+    height:1000px;
+}

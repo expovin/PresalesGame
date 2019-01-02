@@ -6,4 +6,5 @@ qLog*
 .gitignore
 assets
 src
+server/certs
 
