@@ -4,7 +4,6 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var presalesRoute = require('./routes/presales');
 var opportunitiesRoute = require('./routes/opportunities');
@@ -43,7 +42,8 @@ app.use(function (req, res, next) {
 
    // Website you wish to allow to connect
   var allowedOrigins = ['http://127.0.0.1:3000', 'http://127.0.0.1:4200', 'http://localhost:3000', 'http://localhost:4200',
-                        'http://itmil-ves:3000', 'http://itmil-ves:4200', 'http://itmil-ves, http://localhost'];
+                        'http://itmil-ves:3000', 'http://itmil-ves:4200', 'http://itmil-ves, http://localhost','https://itmil-ves',
+                        'http://localhost:3200', 'http://itmil-ves:3200','http://pg_game:3000'];
 
   var origin = req.headers.origin;
   if(allowedOrigins.indexOf(origin) > -1){
@@ -53,7 +53,7 @@ app.use(function (req, res, next) {
   // Request methods you wish to allow
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
   // Request headers you wish to allow
-  res.setHeader('Access-Control-Allow-Headers', 'gameID,content-type');
+  res.setHeader('Access-Control-Allow-Headers', 'gameID,content-type,x-access-token');
 
   // Set to true if you need the website to include cookies in the requests sent
   // to the API (e.g. in case you use sessions)

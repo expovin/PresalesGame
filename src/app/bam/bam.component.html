@@ -1,5 +1,21 @@
 <div class=" row">
     <div class="col-lg-12 BAMBOX">
-            <iframe src='https://pbgqix.expovin.it/single/?appid=4efbe950-8e2d-4793-8a51-6f8ba3f95f1f&sheet=7f4b7dbd-837e-4515-a0c2-1a7f58201cd0&opt=ctxmenu&select=clearall'></iframe>
+        <div class="row buttonController">
+            <div class="col-lg-2 .offset-md-2">
+                <div class="btn-group" role="group" aria-label="...">
+                    <button type="button" class="btn btn-default" aria-label="Left Align">
+                            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true" (click)="pagePrev();"></span>
+                    </button>     
+                    <button type="button" class="btn btn-default" aria-label="Left Align">
+                            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true" (click)="pageNext();"></span>
+                    </button>                                 
+                </div>
+            </div>
+        </div>
+        <div class="row">
+                <iframe [src]="iFrameUrl"></iframe>
+        </div>
+            
     </div>
 </div>
+

@@ -1,38 +1,39 @@
 'use strict';
 
-var WebSocketServer = require('websocket').server;
-var http = require('http');
-const CircularJSON = require('circular-json')
+const WebSocketServer = require('websocket').server;
+const http = require('http');
+//const fs = require('fs');
+//const path=require('path');
 
-var settings = require("./settings");
+const Config = require('./settings');
+const settings = new Config();
 
 class wsMessages {
 
     constructor(){
 
-        console.log("You're instantiating the wsClass");
-
         this.wsServer;
         this.index=[];
         this.clients={};
 
-        var server = http.createServer(function(request, response) {
+        var httpServer = http.createServer(function(request, response) {
             // Qui possiamo processare la richiesta HTTP
             // Dal momento che ci interessano solo le WebSocket, non dobbiamo implementare nulla
             console.log("http server opened");
         });
 
-        server.listen(settings.wsPort, function() { 
+        httpServer.listen(settings.wsPort, function() { 
             console.log("wsServer listening on port : ",settings.wsPort);
         });
         // Creazione del server
         this.wsServer = new WebSocketServer({
-            httpServer: server
+            httpServer : httpServer
         });
 
         // Gestione degli eventi
         var _this=this;
         this.wsServer.on('request', function(request) {
+            console.log("request triggered");
              var connection = request.accept(null, request.origin);
             
              connection.on('message', function(message) {
@@ -53,12 +54,14 @@ class wsMessages {
                     console.log('Il messaggio ricevuto da : '+connection.socket._peername.address+' : '+msg.message);
                 }
             });
+            connection.on('error', function(error){
+                console.log("Error : "+error);
+            })            
             connection.on('close', function(connection) {
                 // Metodo eseguito alla chiusura della connessione
                 console.log("Disconnected "+connection.companyId);
                 console.log("Number of client connected : "+Object.keys(_this.clients).length);
                 delete _this.clients[connection.companyId];
-                
             });
         });        
     }

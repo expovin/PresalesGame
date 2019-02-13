@@ -1,6 +1,6 @@
-var settings = require("./settings");
+const Config = require('./settings');
+const settings = new Config();
 var crypto = require('crypto');
-//const Market = require('./ClassMarket');
 const helper = require('./helper');
 const fs = require('fs');
 

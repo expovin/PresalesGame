@@ -3,7 +3,8 @@ const WebSocket = require('ws');
 //const qixSchema = require('enigma.js/schemas/3.2.json');
 const schema = require('enigma.js/schemas/12.20.0.json');
 //const mixins = require('halyard.js/dist/halyard-enigma-mixin');
-const settings = require('./settings');
+const Config = require('./settings');
+const settings = new Config();
 const fs = require('fs');
 const path = require('path');
 

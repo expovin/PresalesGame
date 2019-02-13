@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService } from '../services/message.service';
-import { PresalesService } from '../services/presales.service'
+import { QrsService } from '../services/qrs.service';
 import { CookieService } from 'ngx-cookie-service';
-import picasso from 'picasso.js';
-import PicassoCharts from '../shared/PicassoCharts.js';
+import {BrowserModule, DomSanitizer} from '@angular/platform-browser'
+import { Config } from '../shared/config';
 
 @Component({
   selector: 'app-top',
@@ -12,38 +12,45 @@ import PicassoCharts from '../shared/PicassoCharts.js';
 })
 export class TopComponent implements OnInit {
 
-  private gameID;
-  private companyID;
-  private marketTrends=[];
+  private iFrameUrl;
+  private idxSheet:number=0;;
+  private prog:number=0;
 
   constructor(private messageService: MessageService,
-              private presalesService: PresalesService,
-              private cookieService: CookieService) { }
+              private qrsService : QrsService,
+              private cookieService: CookieService,
+              private sanitizer: DomSanitizer) { }
 
   ngOnInit() {
     this.messageService.setPageStatus("TOP");
-    this.gameID = this.cookieService.get('gameID');
-    this.companyID = this.cookieService.get('companyID');
 
-    this.presalesService.getPresales(this.gameID)
-    .subscribe( res =>{
+    var trigram = this.cookieService.get('trigram');
+    this.qrsService.getQSToken(trigram)
+    .subscribe ( ticket =>{
+      console.log(ticket);
+      var baseUrl=Config.BaseUtl;
+      var appId=Config.POT.AppId; 
+      var sheetConnect="&sheet="
+      var sheetId=Config.POT.Sheets[this.idxSheet]; 
+      var ticketConnect="&qlikTicket="
+      var url=baseUrl+appId+sheetConnect+sheetId+ticketConnect+ticket.data.Ticket;
+      this.iFrameUrl=this.sanitizer.bypassSecurityTrustResourceUrl(url);
+      console.log(this.iFrameUrl);
+    })
+  }
 
-      var _this=this;
-      Object.keys(res['data'][Object.keys(res['data'])[0]]['marketTrends']).forEach(function(trend) {
-        _this.marketTrends.push({name:trend, score:res['data'][Object.keys(res['data'])[0]]['marketTrends'][trend]})
-      })  
+  pageNext(){
+    console.log("Next Page");
+    let numEle = Config.POT.Sheets.length;
+    this.prog++;
+    this.idxSheet=this.prog % numEle;
+  }
 
-      this.marketTrends.sort((a,b) => {return(b.score - a.score)});  
-
-      picasso.chart({
-        element: document.querySelector('#chartMarketTrends'), // This is the element to render the chart in
-        data: [{
-          type: 'matrix',
-          data: this.marketTrends
-        }],
-        settings: PicassoCharts.barchart
-      })
-    })    
+  pagePrev(){
+    console.log("Previous Page");
+    let numEle = Config.POT.Sheets.length;
+    this.prog--;
+    this.idxSheet=this.prog % numEle;
   }
 
 }

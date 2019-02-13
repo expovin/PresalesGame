@@ -22,6 +22,7 @@ export class WebsocketService {
   private create(url): Rx.Subject<MessageEvent> {
     let ws = new WebSocket(url);
 
+    console.log("WS created : " + url);
     let observable = Rx.Observable.create(
 	(obs: Rx.Observer<MessageEvent>) => {
 		ws.onmessage = obs.next.bind(obs);

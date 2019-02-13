@@ -51,6 +51,10 @@ router.route('/initDb')
     m[req.headers.gameid].dbInit();
     res.status(200).json({result:'OK', message:"Database initialied"});
 })
+.post( function(req, res, next){
+    m[req.headers.gameid].clearTables();
+    res.status(200).json({result:'OK', message:"Database cleared!"});
+})
 
 /* get all presales */
 router.route('/nextPeriod')

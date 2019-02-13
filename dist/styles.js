@@ -1113,21 +1113,21 @@ if(false) {}
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /opt/Dev/PresalesGame/src/styles.css */"./src/styles.css");
-__webpack_require__(/*! /opt/Dev/PresalesGame/node_modules/bootstrap/dist/css/bootstrap.css */"./node_modules/bootstrap/dist/css/bootstrap.css");
-__webpack_require__(/*! /opt/Dev/PresalesGame/node_modules/angular-notifier/styles/themes/theme-material.css */"./node_modules/angular-notifier/styles/themes/theme-material.css");
-__webpack_require__(/*! /opt/Dev/PresalesGame/node_modules/angular-notifier/styles/types/type-default.css */"./node_modules/angular-notifier/styles/types/type-default.css");
-__webpack_require__(/*! /opt/Dev/PresalesGame/node_modules/angular-notifier/styles/types/type-error.css */"./node_modules/angular-notifier/styles/types/type-error.css");
-__webpack_require__(/*! /opt/Dev/PresalesGame/node_modules/angular-notifier/styles/types/type-info.css */"./node_modules/angular-notifier/styles/types/type-info.css");
-__webpack_require__(/*! /opt/Dev/PresalesGame/node_modules/angular-notifier/styles/types/type-success.css */"./node_modules/angular-notifier/styles/types/type-success.css");
-__webpack_require__(/*! /opt/Dev/PresalesGame/node_modules/angular-notifier/styles/types/type-warning.css */"./node_modules/angular-notifier/styles/types/type-warning.css");
-__webpack_require__(/*! /opt/Dev/PresalesGame/node_modules/ngx-smart-modal/ngx-smart-modal.css */"./node_modules/ngx-smart-modal/ngx-smart-modal.css");
-__webpack_require__(/*! /opt/Dev/PresalesGame/node_modules/angular-notifier/styles/core.css */"./node_modules/angular-notifier/styles/core.css");
-__webpack_require__(/*! /opt/Dev/PresalesGame/src/assets/css/animate.min.css */"./src/assets/css/animate.min.css");
-__webpack_require__(/*! /opt/Dev/PresalesGame/src/assets/css/paper-dashboard.css */"./src/assets/css/paper-dashboard.css");
-__webpack_require__(/*! /opt/Dev/PresalesGame/node_modules/bootstrap-slider/dist/css/bootstrap-slider.css */"./node_modules/bootstrap-slider/dist/css/bootstrap-slider.css");
-__webpack_require__(/*! /opt/Dev/PresalesGame/src/assets/css/demo.css */"./src/assets/css/demo.css");
-module.exports = __webpack_require__(/*! /opt/Dev/PresalesGame/src/assets/css/themify-icons.css */"./src/assets/css/themify-icons.css");
+__webpack_require__(/*! /opt/Dev/pbGame/PresalesGame/src/styles.css */"./src/styles.css");
+__webpack_require__(/*! /opt/Dev/pbGame/PresalesGame/node_modules/bootstrap/dist/css/bootstrap.css */"./node_modules/bootstrap/dist/css/bootstrap.css");
+__webpack_require__(/*! /opt/Dev/pbGame/PresalesGame/node_modules/angular-notifier/styles/themes/theme-material.css */"./node_modules/angular-notifier/styles/themes/theme-material.css");
+__webpack_require__(/*! /opt/Dev/pbGame/PresalesGame/node_modules/angular-notifier/styles/types/type-default.css */"./node_modules/angular-notifier/styles/types/type-default.css");
+__webpack_require__(/*! /opt/Dev/pbGame/PresalesGame/node_modules/angular-notifier/styles/types/type-error.css */"./node_modules/angular-notifier/styles/types/type-error.css");
+__webpack_require__(/*! /opt/Dev/pbGame/PresalesGame/node_modules/angular-notifier/styles/types/type-info.css */"./node_modules/angular-notifier/styles/types/type-info.css");
+__webpack_require__(/*! /opt/Dev/pbGame/PresalesGame/node_modules/angular-notifier/styles/types/type-success.css */"./node_modules/angular-notifier/styles/types/type-success.css");
+__webpack_require__(/*! /opt/Dev/pbGame/PresalesGame/node_modules/angular-notifier/styles/types/type-warning.css */"./node_modules/angular-notifier/styles/types/type-warning.css");
+__webpack_require__(/*! /opt/Dev/pbGame/PresalesGame/node_modules/ngx-smart-modal/ngx-smart-modal.css */"./node_modules/ngx-smart-modal/ngx-smart-modal.css");
+__webpack_require__(/*! /opt/Dev/pbGame/PresalesGame/node_modules/angular-notifier/styles/core.css */"./node_modules/angular-notifier/styles/core.css");
+__webpack_require__(/*! /opt/Dev/pbGame/PresalesGame/src/assets/css/animate.min.css */"./src/assets/css/animate.min.css");
+__webpack_require__(/*! /opt/Dev/pbGame/PresalesGame/src/assets/css/paper-dashboard.css */"./src/assets/css/paper-dashboard.css");
+__webpack_require__(/*! /opt/Dev/pbGame/PresalesGame/node_modules/bootstrap-slider/dist/css/bootstrap-slider.css */"./node_modules/bootstrap-slider/dist/css/bootstrap-slider.css");
+__webpack_require__(/*! /opt/Dev/pbGame/PresalesGame/src/assets/css/demo.css */"./src/assets/css/demo.css");
+module.exports = __webpack_require__(/*! /opt/Dev/pbGame/PresalesGame/src/assets/css/themify-icons.css */"./src/assets/css/themify-icons.css");
 
 
 /***/ })

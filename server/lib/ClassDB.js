@@ -36,6 +36,9 @@ class DB  {
         this.marketPretendersDdl = "INSERT INTO `pg_data`.`pretenders` (gameId, quarter, opportunityId, companyId, trendScore, featureScore, BA, BR) VALUES";
         this.marketTrends  = "INSERT INTO `pg_data`.`trends` (gameId, quarter, opportunityId, trend) VALUES ";
 
+        this.truncate = "Truncate table pg_data.";
+        this.tables = ['features','oppiesCompleted','Opportunities','personDetails','personFeatures','personTrends','presalesTeam',
+                        'pretenders','productFeatures','trends'];
              
     }
 
@@ -49,6 +52,25 @@ class DB  {
                 password : password,
             })
         )
+    }
+
+    clearTables(){
+        var Promises=[];
+        this.tables.forEach( table =>{
+            console.log("Truncate table "+table);
+            Promises.push(
+                this.con.query(this.truncate+table, (error, result)=>{
+                    if(error) throw error;
+                    else console.log("Table Truncated!");
+                })
+            )
+        })
+        return (Promise.all(Promises)
+        .then( (value)=>{
+            value.forEach( val =>{
+                console.log(val);
+            })
+        }))
     }
 
     init(){

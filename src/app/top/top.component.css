@@ -1,0 +1,19 @@
+.BAMBOX {
+    min-height:1000px;
+    margin-top: 35px;
+    margin-left: 285px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    
+}
+
+iframe {
+    border:none;
+    width:85%;
+    height:1000px;
+}
+
+.buttonController{
+    margin-bottom: 5px;
+    
+}

@@ -1,6 +1,9 @@
 var express = require('express');
 var Presales = require('../lib/Game');
+//var ClassDB = require('../lib/ClassDB');
+
 var router = express.Router();
+//const DB = new ClassDB();
 
 var games={};
 
@@ -38,5 +41,6 @@ router.route('/:presalesID')
 .delete( function (req, res, next){
     res.status(209).json({result:'WARNING', message:'This function has not been implemented yet'});
 })
+
 
 module.exports = router;

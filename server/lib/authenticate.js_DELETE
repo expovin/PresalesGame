@@ -1,0 +1,101 @@
+var passport = require('passport');
+var https = require('https');
+var fs = require('fs');
+var LocalStrategy = require('passport-local').Strategy;
+var cfg = require('../config');
+
+passport.use(new LocalStrategy(
+    function(username, password, done) {
+      console.log("Now in Authenticate method LocalStrategy, username: ",username);
+
+      lconsole.log("username :",username);
+      console.log("password :", password);
+
+      /** Here need to implement the user/password check
+       *  This simple example just verify admin/admin as crdential
+       */
+
+      checkCredential(username, password)
+      .then( result => {
+        if(result){
+          getQlikSenseToken()
+          .then( qstoken =>{
+            console.log("Authenticate QSToken : ",qstoken);
+            done(null, {user:username, role:"Ordinary", QSToken: qstoken});
+          }, error =>{
+            console.log("Error : ",error);
+            done(error, false);
+          })
+          .catch (error =>{
+            console.log("Error : ",error);
+            done(error, false);
+          })
+        }        
+        else{
+            console.log("Authentication error. User/password not correct");
+          done("Error authentication. User/Password not valid", false);
+        } 
+      })
+    }
+));
+
+
+function checkCredential (username, password){
+
+  return new Promise ( (fulfill, reject ) => {
+    console.log("Check credential user: ",username," password : ",password);
+    if(username === 'admin' && password === "admin")
+      fulfill(true);
+    else
+      fulfill(false);
+  })
+}
+
+function getQlikSenseToken(){
+
+  var key="1234567890acbdef"
+
+  var options = {
+    hostname: 'win-qn2klt7k35',
+    port: 4243,
+    path: '/qps/ctkt/ticket?xrfkey='+key,
+    method: 'POST',
+    rejectUnauthorized: false, 
+    headers: {
+        'Content-Type': 'application/json',
+        'Accept' : 'application/json',
+        'x-qlik-xrfkey' : key
+    },
+    cert: fs.readFileSync(cfg.QSCerts.cert),
+    key : fs.readFileSync(cfg.QSCerts.key),
+    passphrase : cfg.QSCerts.passphrase
+  };
+
+  var bodyData = {
+    UserDirectory : "win-qn2klt7k35j",
+    UserId : "qlik"
+  };
+
+  console.log(" --------->> Sending requet to QS : Option : ",options);
+  console.log(" --------->> Body data : ",bodyData);
+
+  return new Promise ( (fulfill, reject) =>{
+
+    var req = https.request(options, function(res) {
+        console.log(' --------->> Status: ' + res.statusCode);
+        console.log(' --------->> Headers: ' + JSON.stringify(res.headers));
+
+        res.on('data', function (body) {
+            console.log(' --------->> Body: ' + body);
+            fulfill(JSON.parse(body));
+        });
+    });
+
+    req.on('error', function(e) {
+      reject(e.message);
+    });
+
+    req.write(JSON.stringify(bodyData));
+    req.end();
+  })
+}

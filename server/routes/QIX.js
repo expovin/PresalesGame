@@ -3,7 +3,8 @@ const router = express.Router();
 const QIX = require('../lib/ClassQIX');
 const QRSClass = require('../lib/QRSClass');
 const customers = require('../lib/dictionary').companies;
-const settings = require('../lib/settings');
+const Config = require('../lib/settings');
+const settings = new Config();
 const qix= new QIX();
 const qrs = new QRSClass();
 
@@ -36,6 +37,27 @@ router.route('/')
     
 })
 
+router.route('/token/:trigram')
+.get( function(req, res, next) {
+    qrs.getToken(req.params.trigram)
+    .then( token =>{
+        res.status(200).json({result:'OK', data:token});
+    }, error => {
+        res.status(503).json({result:'ERROR', error:error});
+    })
+    
+})
+
+router.route('/userId/:trigram')
+.get( function(req, res, next) {
+    qrs.getUserId(req.params.trigram, req.headers.userdir)
+    .then( UserId =>{
+        res.status(200).json({result:'OK', data:UserId});
+    }, error => {
+        res.status(503).json({result:'ERROR', error:error});
+    })
+    
+})
 
 /* get all presales */
 router.route('/app')
@@ -185,9 +207,9 @@ router.route('/user/:id/custProp')
     })
 })
 .delete( function(req, res, next) {
-    qrs.removeCustomProp(req.params.id,req.body.custProp)
+    qrs.removeCustomProp(req.params.id,req.headers.custprop)
     .then( result =>{
-        res.status(200).json({result:'OK', data:result});
+        res.status(200).json({result:'OK', data:result.toString('utf8')});
     })
 })
 

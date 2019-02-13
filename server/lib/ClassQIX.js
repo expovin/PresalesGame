@@ -2,7 +2,8 @@
 
 const enigmaConfig = require('./enigma-config.js');
 const enigma = require('enigma.js');
-const settings = require('./settings');
+const Config = require('./settings');
+const settings = new Config();
 //const Halyard = require('halyard.js');
 //const enigmaMixin = require('halyard.js/dist/halyard-enigma-mixin.js');
 
@@ -163,12 +164,14 @@ class QIX {
         })
     }    
 
-    MABReload(){
+    AppReload(AppName){
+        console.log("Start App "+settings.QIX[AppName]);
         return new Promise( (fulfill, reject ) =>{
-            this.qix.openDoc(settings.QIX.MABAppId)
-            .then( appObj =>{
-                console.log("MAP App with Id "+settings.QIX.MABAppId+" is open");
-                return (appObj.appObj.getAppLayout());
+            this.qix.openDoc({qDocName:settings.QIX[AppName]})
+            .then( result =>{
+                console.log("MAP App with Id "+settings.QIX[AppName]+" is open");
+                console.log(result);
+                return (result.getAppLayout());
             }, error => {
                 console.log("Error opening the app --> "+error);
                 reject({result:'ERROR', error:error});

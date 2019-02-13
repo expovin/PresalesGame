@@ -3,7 +3,8 @@
 /** This is the parent class Market. This class define the heuristic algorithms
  *  used by the child class Presales and Opportunities.
   */
-const settings = require("./settings");
+const Config = require('./settings');
+const settings = new Config();
 const helper = require("./helper");
 const trends = require('./dictionary').trends;
 const features = require('./dictionary').features;
@@ -14,7 +15,8 @@ const Oppy = require('../lib/ClassOpportunities');
 const wsClass = require('./wsMessages');
 const dbClass = require('./ClassDB');
 const QIX = require('../lib/ClassQIX');
-
+const QRSClass = require('../lib/QRSClass');
+var taskRun=0;
 
 
 class Market {
@@ -56,6 +58,7 @@ class Market {
         this.oppyTTCmax;
         this.oppyNum;
         this.ws = new wsClass();
+        this.qrs = new QRSClass();
 
     }
 
@@ -91,6 +94,16 @@ class Market {
         })
         .catch( error => {
             console.log(error);
+        })
+    }
+
+    clearTables(){
+        this.db.clearTables()
+        .then( value =>{
+            console.log("Table truncated!")
+        })
+        .catch( error =>{
+            console.log("Error : "+error);
         })
     }
 
@@ -380,19 +393,99 @@ class Market {
         msg={type:'actions',msg:{type:"Generated new opportunities",result:"done"}};
         this.ws.sendBroadcastMessage(JSON.stringify(msg));  
 
-        
+
         /** QIX Reload */
-        this.qix.MABReload()
+        taskRun=0;
+        this.runQIXTask(taskRun)
         .then( result =>{
-            console.log(result);
-            msg={type:'end',msg:"Terminated"};
-            _this.ws.sendBroadcastMessage(JSON.stringify(msg)); 
+            console.log("Task completed "+result);
         })
         .catch( error =>{
-            console.log("Error while reloading QIX ",error);
+            console.log("Error "+error);
+        })
+        /*
+        this.qrs.runTask(settings.QIX.POT)
+        .then( session =>{
+            return (this.getTaskStatus(session));           
+        })
+        .then( message =>{
+            msg={type:'actions',msg:{type:"POT reloaded",result:"done"}};
+            this.ws.sendBroadcastMessage(JSON.stringify(msg)); 
+        })
+        .catch( error =>{
+            console.log("Error :"+error);
+            msg={type:'actions',msg:{type:"POT reloaded",result:"error"}};
+            this.ws.sendBroadcastMessage(JSON.stringify(msg));             
         })
 
+        this.qrs.runTask(settings.QIX.MAB)
+        .then( session =>{
+            return (this.getTaskStatus(session));           
+        })
+        .then( message =>{
+            msg={type:'actions',msg:{type:"MAB reloaded",result:"done"}};
+            this.ws.sendBroadcastMessage(JSON.stringify(msg)); 
+        })
+        .catch( error =>{
+            console.log("Error :"+error);
+            msg={type:'actions',msg:{type:"MAB reloaded",result:"error"}};
+            this.ws.sendBroadcastMessage(JSON.stringify(msg));             
+        })     
+        
+        this.qrs.runTask(settings.QIX.MABOppy)
+        .then( session =>{
+            return (this.getTaskStatus(session));           
+        })
+        .then( message =>{
+            msg={type:'end',msg:{type:"MAB Oppy reloaded",result:"done"}};
+            this.ws.sendBroadcastMessage(JSON.stringify(msg)); 
+        })
+        .catch( error =>{
+            console.log("Error :"+error);
+            msg={type:'end',msg:{type:"MAB Oppy reloaded",result:"error"}};
+            this.ws.sendBroadcastMessage(JSON.stringify(msg));             
+        })  
+        */        
+
     }
+
+    runQIXTask(num){
+        return new Promise ( (fulfill, reject) =>{
+            this.qrs.runTask(settings.QIX.Tasks[num])
+            .then( session =>{
+                return (this.getTaskStatus(session));            
+            })
+            .catch( error =>{
+                console.log("Error "+error);
+            })
+        })
+    }
+
+    getTaskStatus(id){
+
+        var msg="";
+        
+        return new Promise( (fulfill, reject) =>{
+            var _this=this;
+            this.qrs.pullTask(id)
+            .then( res =>{
+                console.log(res);
+                setTimeout(function(){_this.getTaskStatus(id)}, 1000);
+            })
+            .catch( error =>{    
+                console.log("Fine Task id --> "+id);
+                msg={type:'actions',msg:{type:"Reload Task ID "+id+" ended",result:"done"}};
+                this.ws.sendBroadcastMessage(JSON.stringify(msg));    
+                if(taskRun < settings.QIX.Tasks.length-1)              
+                   this.runQIXTask(++taskRun);
+                else {
+                    msg={type:'end',msg:{type:"Reload Task ID "+id+" ended",result:"done"}};
+                    this.ws.sendBroadcastMessage(JSON.stringify(msg));                        
+                }
+            })
+        })    
+    }
+
 
     getQCompanyRank() {
         this.QIncomeCompanyRanking.forEach( (company, idx) =>{

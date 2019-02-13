@@ -1,4 +1,5 @@
-const settings = require('./settings');
+const Config = require('./settings');
+const settings = new Config();
 const Reset = "\x1b[0m";
 const Bright = "\x1b[1m";
 const Dim = "\x1b[2m";

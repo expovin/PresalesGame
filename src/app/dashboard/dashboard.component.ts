@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, Output, EventEmitter, Inject } from '@angular/core';
 import { MessageService } from '../services/message.service';
 import { CompanyService } from '../services/company.service';
+import { QrsService } from '../services/qrs.service';
 import { CookieService } from 'ngx-cookie-service';
 import { PresalesService } from '../services/presales.service';
 import { MarketService } from '../services/market.service';
@@ -12,6 +13,7 @@ import { ChartsComponent } from '../charts/charts.component'
 import { NgxSmartModalService } from 'ngx-smart-modal';
 import { Subscription } from 'rxjs/Subscription';
 import { DOCUMENT } from '@angular/common';
+import { mergeMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-dashboard',
@@ -26,6 +28,7 @@ export class DashboardComponent implements OnInit {
   private companyID:string=null;
   private gameID: string=null;
 
+  private qsUserId:string;
   private company:Company;
   private team=[];
   private peopleToConfirm=[];
@@ -67,8 +70,9 @@ export class DashboardComponent implements OnInit {
               private notifierService: NotifierService,
               private presalesService: PresalesService,
               private messageService: MessageService,
-              public ngxSmartModalService: NgxSmartModalService,
+              public  ngxSmartModalService: NgxSmartModalService,
               private marketService: MarketService,
+              private qrsService : QrsService,
               @Inject(DOCUMENT) private document: Document) 
               { 
                 
@@ -80,6 +84,10 @@ export class DashboardComponent implements OnInit {
 
     this.companyID = this.cookieService.get('companyID');
     this.gameID = this.cookieService.get('gameID');
+    this.qsUserId = this.cookieService.get('qsUserId');
+
+    console.log("From Dashboard CompanyID : "+this.companyID);
+    console.log("From Dashboard gameID : "+this.gameID);
 
     if(this.companyID === undefined || this.gameID === undefined || this.companyID === "" || this.gameID === ""){
       console.log("Company not created yet. Redirect to landing!");
@@ -149,25 +157,18 @@ export class DashboardComponent implements OnInit {
 
     if(!this.company['isBAMEnabled']){
       this.companyService.enableBAM(this.companyID,this.gameID)
+      .pipe( mergeMap( res  => this.qrsService.addCustomProp(this.gameID,this.qsUserId,"MAB")))
       .subscribe( res =>{
-        if(res['result'] === 'OK'){
-          this.labelBAM="Disable BAM";
-          this.notifier.notify( 'success', 'BAM has been enabled');          
-        }         
-        else
-          this.notifier.notify( 'error', 'Error while enabling BAM');
+        this.labelBAM="Disable BAM";
+        this.notifier.notify( 'success', 'BAM has been enabled');        
       })
+
     } else {
       this.companyService.disableBAM(this.companyID,this.gameID)
-      .subscribe( res =>{
-        
-        if(res['result'] === 'OK'){
-          this.labelBAM="Enable BAM"
-          this.notifier.notify( 'success', 'BAM has been disabled');
-        }
-          
-        else
-          this.notifier.notify( 'error', 'Error while disabling BAM');
+      .pipe( mergeMap( res  => this.qrsService.delCustomProp(this.gameID,this.qsUserId,"MAB")))
+      .subscribe( res =>{        
+        this.labelBAM="Enable BAM"
+        this.notifier.notify( 'success', 'BAM has been disabled');        
       })
     }
     this.messageService.setCompany(this.company);
@@ -179,25 +180,17 @@ export class DashboardComponent implements OnInit {
 
     if(!this.company['isTOPEnabled']){
       this.companyService.enableTOP(this.companyID,this.gameID)
+      .pipe( mergeMap( res  => this.qrsService.addCustomProp(this.gameID,this.qsUserId,"POT")))
       .subscribe( res =>{
-        if(res['result'] === 'OK'){
-          this.labelTOP="Disable TOP";
-          this.notifier.notify( 'success', 'TOP has been enabled');
-        }         
-        else
-          this.notifier.notify( 'error', 'Error while enabling TOP');
+        this.labelTOP="Disable TOP";
+        this.notifier.notify( 'success', 'TOP has been enabled');        
       })
     } else {
       this.companyService.disableTOP(this.companyID,this.gameID)
+      .pipe( mergeMap( res  => this.qrsService.delCustomProp(this.gameID,this.qsUserId,"POT")))
       .subscribe( res =>{
-        
-        if(res['result'] === 'OK'){
-          this.labelTOP="Enable TOP"
-          this.notifier.notify( 'success', 'TOP has been disabled');
-        }
-          
-        else
-          this.notifier.notify( 'error', 'Error while disabling TOP');
+        this.labelTOP="Enable TOP"
+        this.notifier.notify( 'success', 'TOP has been disabled');        
       })
     }
 

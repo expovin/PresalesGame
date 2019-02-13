@@ -5,14 +5,30 @@
 
         <ngx-smart-modal [closable]="false" [escapable]="false" [dismissable]="false" #modalMsgFromServer identifier="modalMsgFromServer" id="modalMsgFromServer">
             <h3>{{modalTitle}}</h3>
-            <hr>     
+            <hr>   
+                    
             <ul *ngIf="actions.length > 0">                
-                <li *ngFor="let action of actions">
-                    <div class="col-md-5">{{action.type}}</div>
-                    <div class="col-md-1"></div>
-                    <div class="col-md-1">[{{action.result}}]</div>
-                </li>
+                    <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Action</th>
+                                    <th scope="col">Result</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let action of actions">
+                                    <td>{{action.type}}</td>
+                                    <td>[{{action.result}}]</td>
+                                </tr>
+                            </tbody>
+                            
+                    </table>    
             </ul>   
+
+            <ngx-spinner bdOpacity = 0.9 size = "default" color = "#009845" type = "pacman" fullScreen = "false">                
+                <p style="color: #009845" > Running Quarter ... </p>
+            </ngx-spinner>
+
             <button (click)="cleanStatus()" *ngIf="isFinish">Close</button>
         </ngx-smart-modal>
 

@@ -26,8 +26,8 @@ import { ChartsComponent } from './charts/charts.component';
 import { MyFilterPipe } from './shared/filter.pipe';
 import { PeopleProposal } from './shared/filter.pipe.peopleproposal';
 import { NgxSmartModalModule } from 'ngx-smart-modal';
-
 import { ElaborationComponent } from './elaboration/elaboration.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
@@ -49,6 +49,7 @@ import { ElaborationComponent } from './elaboration/elaboration.component';
   imports: [
     BrowserModule,
     FormsModule,
+    NgxSpinnerModule,
     AppRoutingModule,
     HttpModule,
     ChartModule,

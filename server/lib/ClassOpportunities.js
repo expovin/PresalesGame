@@ -1,6 +1,7 @@
 var randomstring = require("randomstring");
 const Market = require('./ClassMarket');
-var settings = require("./settings");
+const Config = require('./settings');
+const settings = new Config();
 const helper = require('./helper');
 var customers = require('./dictionary').companies;
 var trends = require('./dictionary').trends;

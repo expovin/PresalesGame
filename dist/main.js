@@ -1186,7 +1186,7 @@ module.exports = "\n.wrapperDisabled {\n    display: none;\n    position: absolu
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--The content below is only a placeholder and can be replaced.\n    <notifier-container></notifier-container>\n-->    \n    <div [ngClass]=\"{'wrapper': true}\"> \n\n        <ngx-smart-modal [closable]=\"false\" [escapable]=\"false\" [dismissable]=\"false\" #modalMsgFromServer identifier=\"modalMsgFromServer\" id=\"modalMsgFromServer\">\n            <h3>{{modalTitle}}</h3>\n            <hr>     \n            <ul *ngIf=\"actions.length > 0\">                \n                <li *ngFor=\"let action of actions\">\n                    <div class=\"col-md-5\">{{action.type}}</div>\n                    <div class=\"col-md-1\"></div>\n                    <div class=\"col-md-1\">[{{action.result}}]</div>\n                </li>\n            </ul>   \n            <button (click)=\"cleanStatus()\" *ngIf=\"isFinish\">Close</button>\n        </ngx-smart-modal>\n\n\n                    <app-sidebar></app-sidebar>                                \n                    <app-navbar></app-navbar>\n            \n                    <div [ngClass]=\"{'wrapperDisabled': isElaborating}\">\n                        <router-outlet></router-outlet> \n                        <app-footer></app-footer>\n                    </div>\n                    \n                    <app-elaboration [hidden]=\"!isElaborating\"></app-elaboration>\n                    \n                    \n\n            \n    </div>        \n\n\n\n\n"
+module.exports = "<!--The content below is only a placeholder and can be replaced.\n    <notifier-container></notifier-container>\n-->    \n    <div [ngClass]=\"{'wrapper': true}\"> \n\n        <ngx-smart-modal [closable]=\"false\" [escapable]=\"false\" [dismissable]=\"false\" #modalMsgFromServer identifier=\"modalMsgFromServer\" id=\"modalMsgFromServer\">\n            <h3>{{modalTitle}}</h3>\n            <hr>   \n                    \n            <ul *ngIf=\"actions.length > 0\">                \n                    <table class=\"table\">\n                            <thead>\n                                <tr>\n                                    <th scope=\"col\">Action</th>\n                                    <th scope=\"col\">Result</th>\n                                </tr>\n                            </thead>\n                            <tbody>\n                                <tr *ngFor=\"let action of actions\">\n                                    <td>{{action.type}}</td>\n                                    <td>[{{action.result}}]</td>\n                                </tr>\n                            </tbody>\n                            \n                    </table>    \n            </ul>   \n\n            <ngx-spinner bdOpacity = 0.9 size = \"default\" color = \"#06f47d\" type = \"pacman\" fullScreen = \"false\">                \n                <p style=\"color: #06f47d\" > Running Quarter ... </p>\n            </ngx-spinner>\n\n            <button (click)=\"cleanStatus()\" *ngIf=\"isFinish\">Close</button>\n        </ngx-smart-modal>\n\n\n                    <app-sidebar></app-sidebar>                                \n                    <app-navbar></app-navbar>\n            \n                    <div [ngClass]=\"{'wrapperDisabled': isElaborating}\">\n                        <router-outlet></router-outlet> \n                        <app-footer></app-footer>\n                    </div>\n                    \n                    <app-elaboration [hidden]=\"!isElaborating\"></app-elaboration>\n                    \n                    \n\n            \n    </div>        \n\n\n\n\n"
 
 /***/ }),
 
@@ -1205,6 +1205,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _services_chat_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./services/chat.service */ "./src/app/services/chat.service.ts");
 /* harmony import */ var ngx_smart_modal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ngx-smart-modal */ "./node_modules/ngx-smart-modal/esm5/ngx-smart-modal.js");
 /* harmony import */ var ngx_cookie_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ngx-cookie-service */ "./node_modules/ngx-cookie-service/index.js");
+/* harmony import */ var ngx_spinner__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ngx-spinner */ "./node_modules/ngx-spinner/fesm5/ngx-spinner.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1219,16 +1220,19 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var AppComponent = /** @class */ (function () {
-    function AppComponent(chatService, cookieService, ngxSmartModalService) {
+    function AppComponent(chatService, cookieService, ngxSmartModalService, spinner) {
         var _this_1 = this;
         this.chatService = chatService;
         this.cookieService = cookieService;
         this.ngxSmartModalService = ngxSmartModalService;
+        this.spinner = spinner;
         this.title = 'The Presales Game';
         this.isFinish = false;
         this.actions = [];
         this.chatService.messages.subscribe(function (msg) {
+            console.log(msg);
             if (msg['type'] === 'start') {
                 _this_1.isFinish = false;
                 _this_1.modalTitle = msg['msg'];
@@ -1236,6 +1240,7 @@ var AppComponent = /** @class */ (function () {
             }
             if (msg['type'] === 'end') {
                 _this_1.isFinish = true;
+                _this_1.spinner.hide();
             }
             if (msg['type'] === 'actions') {
                 _this_1.actions.push(msg['msg']);
@@ -1250,7 +1255,8 @@ var AppComponent = /** @class */ (function () {
     AppComponent.prototype.ngOnInit = function () {
         this.companyID = this.cookieService.get('companyID');
         var _this = this;
-        setTimeout(function () { _this.chatService.messages.next({ type: 'control', message: _this.companyID }); }, 500);
+        setTimeout(function () { _this.chatService.messages.next({ type: 'control', message: _this.companyID }); }, 1000);
+        this.spinner.show();
     };
     AppComponent.prototype.cleanStatus = function () {
         this.ngxSmartModalService.getModal('modalMsgFromServer').close();
@@ -1264,9 +1270,11 @@ var AppComponent = /** @class */ (function () {
             styles: [__webpack_require__(/*! ./app.component.css */ "./src/app/app.component.css")],
             providers: [_services_websocket_service__WEBPACK_IMPORTED_MODULE_1__["WebsocketService"], _services_chat_service__WEBPACK_IMPORTED_MODULE_2__["ChatService"]]
         }),
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
         __metadata("design:paramtypes", [_services_chat_service__WEBPACK_IMPORTED_MODULE_2__["ChatService"],
             ngx_cookie_service__WEBPACK_IMPORTED_MODULE_4__["CookieService"],
-            ngx_smart_modal__WEBPACK_IMPORTED_MODULE_3__["NgxSmartModalService"]])
+            ngx_smart_modal__WEBPACK_IMPORTED_MODULE_3__["NgxSmartModalService"],
+            ngx_spinner__WEBPACK_IMPORTED_MODULE_5__["NgxSpinnerService"]])
     ], AppComponent);
     return AppComponent;
 }());
@@ -1314,12 +1322,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _shared_filter_pipe_peopleproposal__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./shared/filter.pipe.peopleproposal */ "./src/app/shared/filter.pipe.peopleproposal.ts");
 /* harmony import */ var ngx_smart_modal__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ngx-smart-modal */ "./node_modules/ngx-smart-modal/esm5/ngx-smart-modal.js");
 /* harmony import */ var _elaboration_elaboration_component__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./elaboration/elaboration.component */ "./src/app/elaboration/elaboration.component.ts");
+/* harmony import */ var ngx_spinner__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ngx-spinner */ "./node_modules/ngx-spinner/fesm5/ngx-spinner.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -1373,6 +1383,7 @@ var AppModule = /** @class */ (function () {
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
                 _angular_forms__WEBPACK_IMPORTED_MODULE_13__["FormsModule"],
+                ngx_spinner__WEBPACK_IMPORTED_MODULE_29__["NgxSpinnerModule"],
                 _app_routing_app_routing_module__WEBPACK_IMPORTED_MODULE_14__["AppRoutingModule"],
                 _angular_http__WEBPACK_IMPORTED_MODULE_12__["HttpModule"],
                 angular_highcharts__WEBPACK_IMPORTED_MODULE_23__["ChartModule"],
@@ -1440,7 +1451,7 @@ var AppModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".BAMBOX {\n    min-height:1000px;\n    margin-top: 35px;\n    margin-left: 5px;\n    margin-right: 5px;\n    margin-bottom: 5px;\n    \n}\n\niframe {\n    border:2px;\n    width:100%;\n    height:1000px;\n}"
+module.exports = ".BAMBOX {\n    min-height:1000px;\n    margin-top: 35px;\n    margin-left:285px;\n    margin-right: 5px;\n    margin-bottom: 5px;\n    \n}\n\niframe {\n    border:none;\n    width:85%;\n    height:1000px;\n}\n\n.buttonController{\n    margin-bottom: 5px;\n    \n}"
 
 /***/ }),
 
@@ -1451,7 +1462,7 @@ module.exports = ".BAMBOX {\n    min-height:1000px;\n    margin-top: 35px;\n    
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\" row\">\n    <div class=\"col-lg-12 BAMBOX\">\n            <iframe src='https://pbgqix.expovin.it/single/?appid=4efbe950-8e2d-4793-8a51-6f8ba3f95f1f&sheet=7f4b7dbd-837e-4515-a0c2-1a7f58201cd0&opt=ctxmenu&select=clearall'></iframe>\n    </div>\n</div>\n"
+module.exports = "<div class=\" row\">\n    <div class=\"col-lg-12 BAMBOX\">\n        <div class=\"row buttonController\">\n            <div class=\"col-lg-2 .offset-md-2\">\n                <div class=\"btn-group\" role=\"group\" aria-label=\"...\">\n                    <button type=\"button\" class=\"btn btn-default\" aria-label=\"Left Align\">\n                            <span class=\"glyphicon glyphicon-chevron-left\" aria-hidden=\"true\" (click)=\"pagePrev();\"></span>\n                    </button>     \n                    <button type=\"button\" class=\"btn btn-default\" aria-label=\"Left Align\">\n                            <span class=\"glyphicon glyphicon-chevron-right\" aria-hidden=\"true\" (click)=\"pageNext();\"></span>\n                    </button>                                 \n                </div>\n            </div>\n        </div>\n        <div class=\"row\">\n                <iframe [src]=\"iFrameUrl\"></iframe>\n        </div>\n            \n    </div>\n</div>\n\n"
 
 /***/ }),
 
@@ -1467,6 +1478,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BamComponent", function() { return BamComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _services_message_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/message.service */ "./src/app/services/message.service.ts");
+/* harmony import */ var _services_qrs_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/qrs.service */ "./src/app/services/qrs.service.ts");
+/* harmony import */ var ngx_cookie_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ngx-cookie-service */ "./node_modules/ngx-cookie-service/index.js");
+/* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/platform-browser */ "./node_modules/@angular/platform-browser/fesm5/platform-browser.js");
+/* harmony import */ var _shared_config__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../shared/config */ "./src/app/shared/config.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1478,12 +1493,60 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 };
 
 
+
+
+
+
 var BamComponent = /** @class */ (function () {
-    function BamComponent(messageService) {
+    function BamComponent(messageService, qrsService, cookieService, sanitizer) {
         this.messageService = messageService;
+        this.qrsService = qrsService;
+        this.cookieService = cookieService;
+        this.sanitizer = sanitizer;
+        this.idxSheet = 0;
+        this.prog = 0;
+        this.sheetConnect = "&sheet=";
+        this.ticketConnect = "&qlikTicket=";
     }
+    ;
     BamComponent.prototype.ngOnInit = function () {
+        var _this = this;
         this.messageService.setPageStatus("BAM");
+        this.qsTrigram = this.cookieService.get('trigram');
+        this.qrsService.getQSToken(this.qsTrigram)
+            .subscribe(function (ticket) {
+            var baseUrl = _shared_config__WEBPACK_IMPORTED_MODULE_5__["Config"].BaseUtl;
+            var appId = _shared_config__WEBPACK_IMPORTED_MODULE_5__["Config"].MAB.AppId;
+            var sheetId = _shared_config__WEBPACK_IMPORTED_MODULE_5__["Config"].MAB.Sheets[_this.idxSheet];
+            var url = baseUrl + appId + _this.sheetConnect + sheetId + _this.ticketConnect + ticket.data.Ticket;
+            _this.iFrameUrl = _this.sanitizer.bypassSecurityTrustResourceUrl(url);
+        });
+    };
+    BamComponent.prototype.pageNext = function () {
+        var _this = this;
+        console.log("Next Page");
+        this.qrsService.getQSToken(this.qsTrigram)
+            .subscribe(function (ticket) {
+            var numEle = _shared_config__WEBPACK_IMPORTED_MODULE_5__["Config"].MAB.Sheets.length;
+            _this.prog++;
+            _this.idxSheet = _this.prog % numEle;
+            var url = _shared_config__WEBPACK_IMPORTED_MODULE_5__["Config"].BaseUtl + _shared_config__WEBPACK_IMPORTED_MODULE_5__["Config"].MAB.AppId + _this.sheetConnect + _shared_config__WEBPACK_IMPORTED_MODULE_5__["Config"].MAB.Sheets[_this.idxSheet] + _this.ticketConnect + ticket.data.Ticket;
+            _this.iFrameUrl = _this.sanitizer.bypassSecurityTrustResourceUrl(url);
+            console.log(url);
+        });
+    };
+    BamComponent.prototype.pagePrev = function () {
+        var _this = this;
+        console.log("Previous Page");
+        this.qrsService.getQSToken(this.qsTrigram)
+            .subscribe(function (ticket) {
+            var numEle = _shared_config__WEBPACK_IMPORTED_MODULE_5__["Config"].MAB.Sheets.length;
+            _this.prog--;
+            _this.idxSheet = _this.prog % numEle;
+            var url = _shared_config__WEBPACK_IMPORTED_MODULE_5__["Config"].BaseUtl + _shared_config__WEBPACK_IMPORTED_MODULE_5__["Config"].MAB.AppId + _this.sheetConnect + _shared_config__WEBPACK_IMPORTED_MODULE_5__["Config"].MAB.Sheets[_this.idxSheet] + _this.ticketConnect + ticket.data.Ticket;
+            _this.iFrameUrl = _this.sanitizer.bypassSecurityTrustResourceUrl(url);
+            console.log(url);
+        });
     };
     BamComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -1491,7 +1554,10 @@ var BamComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./bam.component.html */ "./src/app/bam/bam.component.html"),
             styles: [__webpack_require__(/*! ./bam.component.css */ "./src/app/bam/bam.component.css")]
         }),
-        __metadata("design:paramtypes", [_services_message_service__WEBPACK_IMPORTED_MODULE_1__["MessageService"]])
+        __metadata("design:paramtypes", [_services_message_service__WEBPACK_IMPORTED_MODULE_1__["MessageService"],
+            _services_qrs_service__WEBPACK_IMPORTED_MODULE_2__["QrsService"],
+            ngx_cookie_service__WEBPACK_IMPORTED_MODULE_3__["CookieService"],
+            _angular_platform_browser__WEBPACK_IMPORTED_MODULE_4__["DomSanitizer"]])
     ], BamComponent);
     return BamComponent;
 }());
@@ -1681,16 +1747,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _services_message_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/message.service */ "./src/app/services/message.service.ts");
 /* harmony import */ var _services_company_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/company.service */ "./src/app/services/company.service.ts");
-/* harmony import */ var ngx_cookie_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ngx-cookie-service */ "./node_modules/ngx-cookie-service/index.js");
-/* harmony import */ var _services_presales_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../services/presales.service */ "./src/app/services/presales.service.ts");
-/* harmony import */ var _services_market_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../services/market.service */ "./src/app/services/market.service.ts");
-/* harmony import */ var picasso_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! picasso.js */ "./node_modules/picasso.js/dist/picasso.esm.js");
-/* harmony import */ var _shared_PicassoCharts_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../shared/PicassoCharts.js */ "./src/app/shared/PicassoCharts.js");
-/* harmony import */ var _shared_PicassoCharts_js__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_shared_PicassoCharts_js__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var angular_notifier__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! angular-notifier */ "./node_modules/angular-notifier/esm5/angular-notifier.js");
-/* harmony import */ var _charts_charts_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../charts/charts.component */ "./src/app/charts/charts.component.ts");
-/* harmony import */ var ngx_smart_modal__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ngx-smart-modal */ "./node_modules/ngx-smart-modal/esm5/ngx-smart-modal.js");
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var _services_qrs_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../services/qrs.service */ "./src/app/services/qrs.service.ts");
+/* harmony import */ var ngx_cookie_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ngx-cookie-service */ "./node_modules/ngx-cookie-service/index.js");
+/* harmony import */ var _services_presales_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../services/presales.service */ "./src/app/services/presales.service.ts");
+/* harmony import */ var _services_market_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../services/market.service */ "./src/app/services/market.service.ts");
+/* harmony import */ var picasso_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! picasso.js */ "./node_modules/picasso.js/dist/picasso.esm.js");
+/* harmony import */ var _shared_PicassoCharts_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../shared/PicassoCharts.js */ "./src/app/shared/PicassoCharts.js");
+/* harmony import */ var _shared_PicassoCharts_js__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_shared_PicassoCharts_js__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var angular_notifier__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! angular-notifier */ "./node_modules/angular-notifier/esm5/angular-notifier.js");
+/* harmony import */ var _charts_charts_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../charts/charts.component */ "./src/app/charts/charts.component.ts");
+/* harmony import */ var ngx_smart_modal__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ngx-smart-modal */ "./node_modules/ngx-smart-modal/esm5/ngx-smart-modal.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1715,8 +1783,10 @@ var __param = (undefined && undefined.__param) || function (paramIndex, decorato
 
 
 
+
+
 var DashboardComponent = /** @class */ (function () {
-    function DashboardComponent(companyService, cookieService, notifierService, presalesService, messageService, ngxSmartModalService, marketService, document) {
+    function DashboardComponent(companyService, cookieService, notifierService, presalesService, messageService, ngxSmartModalService, marketService, qrsService, document) {
         this.companyService = companyService;
         this.cookieService = cookieService;
         this.notifierService = notifierService;
@@ -1724,6 +1794,7 @@ var DashboardComponent = /** @class */ (function () {
         this.messageService = messageService;
         this.ngxSmartModalService = ngxSmartModalService;
         this.marketService = marketService;
+        this.qrsService = qrsService;
         this.document = document;
         this.companyID = null;
         this.gameID = null;
@@ -1756,6 +1827,9 @@ var DashboardComponent = /** @class */ (function () {
         var _this_1 = this;
         this.companyID = this.cookieService.get('companyID');
         this.gameID = this.cookieService.get('gameID');
+        this.qsUserId = this.cookieService.get('qsUserId');
+        console.log("From Dashboard CompanyID : " + this.companyID);
+        console.log("From Dashboard gameID : " + this.gameID);
         if (this.companyID === undefined || this.gameID === undefined || this.companyID === "" || this.gameID === "") {
             console.log("Company not created yet. Redirect to landing!");
             var hostname = this.document.location.protocol + "//" + this.document.location.hostname + ":" + this.document.location.port + "/landing";
@@ -1798,13 +1872,13 @@ var DashboardComponent = /** @class */ (function () {
                     _this_1.proposals.push(person['data']['person']);
                 });
             });
-            picasso_js__WEBPACK_IMPORTED_MODULE_6__["default"].chart({
+            picasso_js__WEBPACK_IMPORTED_MODULE_7__["default"].chart({
                 element: document.querySelector('#chartProductFeatures'),
                 data: [{
                         type: 'matrix',
                         data: _this_1.company['productFeatures']
                     }],
-                settings: _shared_PicassoCharts_js__WEBPACK_IMPORTED_MODULE_7___default.a.barchart
+                settings: _shared_PicassoCharts_js__WEBPACK_IMPORTED_MODULE_8___default.a.barchart
             });
         });
     };
@@ -1812,24 +1886,18 @@ var DashboardComponent = /** @class */ (function () {
         var _this_1 = this;
         if (!this.company['isBAMEnabled']) {
             this.companyService.enableBAM(this.companyID, this.gameID)
+                .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_13__["mergeMap"])(function (res) { return _this_1.qrsService.addCustomProp(_this_1.gameID, _this_1.qsUserId, "MAB"); }))
                 .subscribe(function (res) {
-                if (res['result'] === 'OK') {
-                    _this_1.labelBAM = "Disable BAM";
-                    _this_1.notifier.notify('success', 'BAM has been enabled');
-                }
-                else
-                    _this_1.notifier.notify('error', 'Error while enabling BAM');
+                _this_1.labelBAM = "Disable BAM";
+                _this_1.notifier.notify('success', 'BAM has been enabled');
             });
         }
         else {
             this.companyService.disableBAM(this.companyID, this.gameID)
+                .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_13__["mergeMap"])(function (res) { return _this_1.qrsService.delCustomProp(_this_1.gameID, _this_1.qsUserId, "MAB"); }))
                 .subscribe(function (res) {
-                if (res['result'] === 'OK') {
-                    _this_1.labelBAM = "Enable BAM";
-                    _this_1.notifier.notify('success', 'BAM has been disabled');
-                }
-                else
-                    _this_1.notifier.notify('error', 'Error while disabling BAM');
+                _this_1.labelBAM = "Enable BAM";
+                _this_1.notifier.notify('success', 'BAM has been disabled');
             });
         }
         this.messageService.setCompany(this.company);
@@ -1839,24 +1907,18 @@ var DashboardComponent = /** @class */ (function () {
         var _this_1 = this;
         if (!this.company['isTOPEnabled']) {
             this.companyService.enableTOP(this.companyID, this.gameID)
+                .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_13__["mergeMap"])(function (res) { return _this_1.qrsService.addCustomProp(_this_1.gameID, _this_1.qsUserId, "POT"); }))
                 .subscribe(function (res) {
-                if (res['result'] === 'OK') {
-                    _this_1.labelTOP = "Disable TOP";
-                    _this_1.notifier.notify('success', 'TOP has been enabled');
-                }
-                else
-                    _this_1.notifier.notify('error', 'Error while enabling TOP');
+                _this_1.labelTOP = "Disable TOP";
+                _this_1.notifier.notify('success', 'TOP has been enabled');
             });
         }
         else {
             this.companyService.disableTOP(this.companyID, this.gameID)
+                .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_13__["mergeMap"])(function (res) { return _this_1.qrsService.delCustomProp(_this_1.gameID, _this_1.qsUserId, "POT"); }))
                 .subscribe(function (res) {
-                if (res['result'] === 'OK') {
-                    _this_1.labelTOP = "Enable TOP";
-                    _this_1.notifier.notify('success', 'TOP has been disabled');
-                }
-                else
-                    _this_1.notifier.notify('error', 'Error while disabling TOP');
+                _this_1.labelTOP = "Enable TOP";
+                _this_1.notifier.notify('success', 'TOP has been disabled');
             });
         }
         this.messageService.setCompany(this.company);
@@ -2026,8 +2088,8 @@ var DashboardComponent = /** @class */ (function () {
         });
     };
     __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])(_charts_charts_component__WEBPACK_IMPORTED_MODULE_9__["ChartsComponent"]),
-        __metadata("design:type", _charts_charts_component__WEBPACK_IMPORTED_MODULE_9__["ChartsComponent"])
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])(_charts_charts_component__WEBPACK_IMPORTED_MODULE_10__["ChartsComponent"]),
+        __metadata("design:type", _charts_charts_component__WEBPACK_IMPORTED_MODULE_10__["ChartsComponent"])
     ], DashboardComponent.prototype, "child", void 0);
     DashboardComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -2035,14 +2097,15 @@ var DashboardComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./dashboard.component.html */ "./src/app/dashboard/dashboard.component.html"),
             styles: [__webpack_require__(/*! ./dashboard.component.css */ "./src/app/dashboard/dashboard.component.css")]
         }),
-        __param(7, Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"])(_angular_common__WEBPACK_IMPORTED_MODULE_11__["DOCUMENT"])),
+        __param(8, Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"])(_angular_common__WEBPACK_IMPORTED_MODULE_12__["DOCUMENT"])),
         __metadata("design:paramtypes", [_services_company_service__WEBPACK_IMPORTED_MODULE_2__["CompanyService"],
-            ngx_cookie_service__WEBPACK_IMPORTED_MODULE_3__["CookieService"],
-            angular_notifier__WEBPACK_IMPORTED_MODULE_8__["NotifierService"],
-            _services_presales_service__WEBPACK_IMPORTED_MODULE_4__["PresalesService"],
+            ngx_cookie_service__WEBPACK_IMPORTED_MODULE_4__["CookieService"],
+            angular_notifier__WEBPACK_IMPORTED_MODULE_9__["NotifierService"],
+            _services_presales_service__WEBPACK_IMPORTED_MODULE_5__["PresalesService"],
             _services_message_service__WEBPACK_IMPORTED_MODULE_1__["MessageService"],
-            ngx_smart_modal__WEBPACK_IMPORTED_MODULE_10__["NgxSmartModalService"],
-            _services_market_service__WEBPACK_IMPORTED_MODULE_5__["MarketService"],
+            ngx_smart_modal__WEBPACK_IMPORTED_MODULE_11__["NgxSmartModalService"],
+            _services_market_service__WEBPACK_IMPORTED_MODULE_6__["MarketService"],
+            _services_qrs_service__WEBPACK_IMPORTED_MODULE_3__["QrsService"],
             Document])
     ], DashboardComponent);
     return DashboardComponent;
@@ -3488,6 +3551,99 @@ var ProcessHTTPMsgService = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/services/qrs.service.ts":
+/*!*****************************************!*\
+  !*** ./src/app/services/qrs.service.ts ***!
+  \*****************************************/
+/*! exports provided: QrsService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "QrsService", function() { return QrsService; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var ngx_restangular__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ngx-restangular */ "./node_modules/ngx-restangular/fesm5/ngx-restangular.js");
+/* harmony import */ var _angular_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/http */ "./node_modules/@angular/http/fesm5/http.js");
+/* harmony import */ var _shared_baseurl__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../shared/baseurl */ "./src/app/shared/baseurl.ts");
+/* harmony import */ var _process_httpmsg_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./process-httpmsg.service */ "./src/app/services/process-httpmsg.service.ts");
+/* harmony import */ var rxjs_add_operator_map__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs/add/operator/map */ "./node_modules/rxjs-compat/_esm5/add/operator/map.js");
+/* harmony import */ var rxjs_add_operator_catch__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! rxjs/add/operator/catch */ "./node_modules/rxjs-compat/_esm5/add/operator/catch.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+var QrsService = /** @class */ (function () {
+    function QrsService(http, restangular, processHTTPMsgService) {
+        this.http = http;
+        this.restangular = restangular;
+        this.processHTTPMsgService = processHTTPMsgService;
+    }
+    QrsService.prototype.addCustomProp = function (gameId, userId, customProp) {
+        var _this = this;
+        var headerDict = {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'gameID': gameId
+        };
+        var requestOptions = {
+            headers: new _angular_http__WEBPACK_IMPORTED_MODULE_2__["Headers"](headerDict),
+        };
+        return this.http.put(_shared_baseurl__WEBPACK_IMPORTED_MODULE_3__["baseURL"] + 'QIX/user/' + userId + '/custProp', { custProp: customProp }, requestOptions)
+            .map(function (res) { return _this.processHTTPMsgService.extractData(res); });
+    };
+    QrsService.prototype.delCustomProp = function (gameId, userId, customProp) {
+        var _this = this;
+        var headerDict = {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'gameID': gameId,
+            'custProp': customProp
+        };
+        var requestOptions = {
+            headers: new _angular_http__WEBPACK_IMPORTED_MODULE_2__["Headers"](headerDict),
+        };
+        return this.http.delete(_shared_baseurl__WEBPACK_IMPORTED_MODULE_3__["baseURL"] + 'QIX/user/' + userId + '/custProp', requestOptions)
+            .map(function (res) { return _this.processHTTPMsgService.extractData(res); });
+    };
+    QrsService.prototype.getQSToken = function (trigram) {
+        var _this = this;
+        var headerDict = {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        };
+        var requestOptions = {
+            headers: new _angular_http__WEBPACK_IMPORTED_MODULE_2__["Headers"](headerDict),
+        };
+        return this.http.get(_shared_baseurl__WEBPACK_IMPORTED_MODULE_3__["baseURL"] + 'QIX/token/' + trigram, requestOptions)
+            .map(function (res) { return _this.processHTTPMsgService.extractData(res); });
+    };
+    QrsService = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
+            providedIn: 'root'
+        }),
+        __metadata("design:paramtypes", [_angular_http__WEBPACK_IMPORTED_MODULE_2__["Http"],
+            ngx_restangular__WEBPACK_IMPORTED_MODULE_1__["Restangular"],
+            _process_httpmsg_service__WEBPACK_IMPORTED_MODULE_4__["ProcessHTTPMsgService"]])
+    ], QrsService);
+    return QrsService;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/services/websocket.service.ts":
 /*!***********************************************!*\
   !*** ./src/app/services/websocket.service.ts ***!
@@ -3523,6 +3679,7 @@ var WebsocketService = /** @class */ (function () {
     };
     WebsocketService.prototype.create = function (url) {
         var ws = new WebSocket(url);
+        console.log("WS created : " + url);
         var observable = rxjs_Rx__WEBPACK_IMPORTED_MODULE_1__["Observable"].create(function (obs) {
             ws.onmessage = obs.next.bind(obs);
             ws.onerror = obs.error.bind(obs);
@@ -3718,9 +3875,56 @@ var baseURL = document.location.protocol + '//' + document.location.hostname + '
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Config", function() { return Config; });
 var Config = {
-    showOpportunities: false
+    showOpportunities: false,
+    BaseUtl: "https://pbgqix.expovin.it/pbg/single/?appid=",
+    MAB: {
+        AppId: "4efbe950-8e2d-4793-8a51-6f8ba3f95f1f",
+        Sheets: [
+            //'7f4b7dbd-837e-4515-a0c2-1a7f58201cd0',
+            'cc0a8c51-d494-4857-8d08-f360f07bc2de',
+            '9d98e7f9-8d3a-4b25-b342-f14de4c83399',
+            'f16262ff-63ea-437c-a57a-0c8bf80bb9ec',
+            '9a8425b1-4b8c-4975-8834-ee71e9ad6a59'
+        ]
+    },
+    POT: {
+        AppId: "eb9a769f-9dea-4297-a54b-86a686c9c71d",
+        Sheets: ["1f35bd57-fee3-4039-8f51-b2e180fe5f7a"]
+    }
 };
 //# sourceMappingURL=config.js.map
+
+/***/ }),
+
+/***/ "./src/app/shared/config.ts":
+/*!**********************************!*\
+  !*** ./src/app/shared/config.ts ***!
+  \**********************************/
+/*! exports provided: Config */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Config", function() { return Config; });
+var Config = {
+    showOpportunities: false,
+    BaseUtl: "https://pbgqix.expovin.it/pbg/single/?appid=",
+    MAB: {
+        AppId: "4efbe950-8e2d-4793-8a51-6f8ba3f95f1f",
+        Sheets: [
+            //'7f4b7dbd-837e-4515-a0c2-1a7f58201cd0',
+            'cc0a8c51-d494-4857-8d08-f360f07bc2de',
+            '9d98e7f9-8d3a-4b25-b342-f14de4c83399',
+            'f16262ff-63ea-437c-a57a-0c8bf80bb9ec',
+            '9a8425b1-4b8c-4975-8834-ee71e9ad6a59'
+        ]
+    },
+    POT: {
+        AppId: "eb9a769f-9dea-4297-a54b-86a686c9c71d",
+        Sheets: ["1f35bd57-fee3-4039-8f51-b2e180fe5f7a"]
+    }
+};
+
 
 /***/ }),
 
@@ -3906,7 +4110,7 @@ var SidebarComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ""
+module.exports = ".BAMBOX {\n    min-height:1000px;\n    margin-top: 35px;\n    margin-left: 285px;\n    margin-right: 5px;\n    margin-bottom: 5px;\n    \n}\n\niframe {\n    border:none;\n    width:85%;\n    height:1000px;\n}\n\n.buttonController{\n    margin-bottom: 5px;\n    \n}"
 
 /***/ }),
 
@@ -3917,7 +4121,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"main-panel\">\n    <div class=\"content\">\n        <div class=\"container-fluid\">\n            <div class=\"row\">\n                <div class=\"col-md-8\">\n                        <div class=\"card\">\n                                <div class=\"header\">\n                                    <h4 class=\"title\">Market Trends</h4>\n                                    <p class=\"category\">Sorted by Relevance</p>\n                                </div>\n                                <div class=\"content\">\n                                    <div id=\"chartMarketTrends\" class=\"ct-chart\"></div>\n\n                                </div>\n                            </div>\n                </div>\n            </div>\n        </div>\n    </div>"
+module.exports = "<div class=\" row\">\n        <div class=\"col-lg-12 BAMBOX\">\n            <div class=\"row buttonController\">\n                <div class=\"col-lg-2 .offset-md-2\">\n                    <div class=\"btn-group\" role=\"group\" aria-label=\"...\">\n                        <button type=\"button\" class=\"btn btn-default\" aria-label=\"Left Align\">\n                                <span class=\"glyphicon glyphicon-chevron-left\" aria-hidden=\"true\" (click)=\"pagePrev();\"></span>\n                        </button>     \n                        <button type=\"button\" class=\"btn btn-default\" aria-label=\"Left Align\">\n                                <span class=\"glyphicon glyphicon-chevron-right\" aria-hidden=\"true\" (click)=\"pageNext();\"></span>\n                        </button>                                 \n                    </div>\n                </div>\n            </div>\n            <div class=\"row\">\n                    <iframe [src]=\"iFrameUrl\"></iframe>\n            </div>\n                \n        </div>\n    </div>\n    \n    "
 
 /***/ }),
 
@@ -3933,11 +4137,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TopComponent", function() { return TopComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _services_message_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/message.service */ "./src/app/services/message.service.ts");
-/* harmony import */ var _services_presales_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/presales.service */ "./src/app/services/presales.service.ts");
+/* harmony import */ var _services_qrs_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/qrs.service */ "./src/app/services/qrs.service.ts");
 /* harmony import */ var ngx_cookie_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ngx-cookie-service */ "./node_modules/ngx-cookie-service/index.js");
-/* harmony import */ var picasso_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! picasso.js */ "./node_modules/picasso.js/dist/picasso.esm.js");
-/* harmony import */ var _shared_PicassoCharts_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../shared/PicassoCharts.js */ "./src/app/shared/PicassoCharts.js");
-/* harmony import */ var _shared_PicassoCharts_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_shared_PicassoCharts_js__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/platform-browser */ "./node_modules/@angular/platform-browser/fesm5/platform-browser.js");
+/* harmony import */ var _shared_config__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../shared/config */ "./src/app/shared/config.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3954,33 +4157,43 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 var TopComponent = /** @class */ (function () {
-    function TopComponent(messageService, presalesService, cookieService) {
+    function TopComponent(messageService, qrsService, cookieService, sanitizer) {
         this.messageService = messageService;
-        this.presalesService = presalesService;
+        this.qrsService = qrsService;
         this.cookieService = cookieService;
-        this.marketTrends = [];
+        this.sanitizer = sanitizer;
+        this.idxSheet = 0;
+        this.prog = 0;
     }
+    ;
     TopComponent.prototype.ngOnInit = function () {
-        var _this_1 = this;
+        var _this = this;
         this.messageService.setPageStatus("TOP");
-        this.gameID = this.cookieService.get('gameID');
-        this.companyID = this.cookieService.get('companyID');
-        this.presalesService.getPresales(this.gameID)
-            .subscribe(function (res) {
-            var _this = _this_1;
-            Object.keys(res['data'][Object.keys(res['data'])[0]]['marketTrends']).forEach(function (trend) {
-                _this.marketTrends.push({ name: trend, score: res['data'][Object.keys(res['data'])[0]]['marketTrends'][trend] });
-            });
-            _this_1.marketTrends.sort(function (a, b) { return (b.score - a.score); });
-            picasso_js__WEBPACK_IMPORTED_MODULE_4__["default"].chart({
-                element: document.querySelector('#chartMarketTrends'),
-                data: [{
-                        type: 'matrix',
-                        data: _this_1.marketTrends
-                    }],
-                settings: _shared_PicassoCharts_js__WEBPACK_IMPORTED_MODULE_5___default.a.barchart
-            });
+        var trigram = this.cookieService.get('trigram');
+        this.qrsService.getQSToken(trigram)
+            .subscribe(function (ticket) {
+            console.log(ticket);
+            var baseUrl = _shared_config__WEBPACK_IMPORTED_MODULE_5__["Config"].BaseUtl;
+            var appId = _shared_config__WEBPACK_IMPORTED_MODULE_5__["Config"].POT.AppId;
+            var sheetConnect = "&sheet=";
+            var sheetId = _shared_config__WEBPACK_IMPORTED_MODULE_5__["Config"].POT.Sheets[_this.idxSheet];
+            var ticketConnect = "&qlikTicket=";
+            var url = baseUrl + appId + sheetConnect + sheetId + ticketConnect + ticket.data.Ticket;
+            _this.iFrameUrl = _this.sanitizer.bypassSecurityTrustResourceUrl(url);
+            console.log(_this.iFrameUrl);
         });
+    };
+    TopComponent.prototype.pageNext = function () {
+        console.log("Next Page");
+        var numEle = _shared_config__WEBPACK_IMPORTED_MODULE_5__["Config"].POT.Sheets.length;
+        this.prog++;
+        this.idxSheet = this.prog % numEle;
+    };
+    TopComponent.prototype.pagePrev = function () {
+        console.log("Previous Page");
+        var numEle = _shared_config__WEBPACK_IMPORTED_MODULE_5__["Config"].POT.Sheets.length;
+        this.prog--;
+        this.idxSheet = this.prog % numEle;
     };
     TopComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -3989,8 +4202,9 @@ var TopComponent = /** @class */ (function () {
             styles: [__webpack_require__(/*! ./top.component.css */ "./src/app/top/top.component.css")]
         }),
         __metadata("design:paramtypes", [_services_message_service__WEBPACK_IMPORTED_MODULE_1__["MessageService"],
-            _services_presales_service__WEBPACK_IMPORTED_MODULE_2__["PresalesService"],
-            ngx_cookie_service__WEBPACK_IMPORTED_MODULE_3__["CookieService"]])
+            _services_qrs_service__WEBPACK_IMPORTED_MODULE_2__["QrsService"],
+            ngx_cookie_service__WEBPACK_IMPORTED_MODULE_3__["CookieService"],
+            _angular_platform_browser__WEBPACK_IMPORTED_MODULE_4__["DomSanitizer"]])
     ], TopComponent);
     return TopComponent;
 }());
@@ -4060,7 +4274,7 @@ Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_1__["platformB
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /opt/Dev/PresalesGame/src/main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! /opt/Dev/pbGame/PresalesGame/src/main.ts */"./src/main.ts");
 
 
 /***/ })

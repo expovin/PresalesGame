@@ -1,6 +1,7 @@
 var crypto = require('crypto');
 const Market = require('./ClassMarket');
-var settings = require("./settings");
+const Config = require('./settings');
+const settings = new Config();
 var skills = require('./dictionary').skills;
 var features = require('./dictionary').features;
 var trends = require('./dictionary').trends;

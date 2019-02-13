@@ -1,4 +1,6 @@
-module.exports = {
+
+
+var config = {
 
     wsPort : 1337,
 
@@ -81,6 +83,9 @@ module.exports = {
 
     oppyTTCRatio:5,   // number of hours for each 5K oppy
 
+    TokenExpirees : 3600,
+    secret : "%DMX5@&MW5*caDiGU$$S7D5bGHL#w^FCX5Wap9VJYtr7",
+
     weighCompetition : {
         Trends : 37,
         Features : 23,
@@ -111,10 +116,26 @@ module.exports = {
         host: 'pbgqix.expovin.it',
         port: 4747,
         QRSPort : 4242,
-        userDir : 'EC2AMAZ-L9N9VC9',
+        ProxyPort: 4243,
+        userDir : 'QT',
         userName: 'ptw',
         certsPath : '../certs',
-        MABAppId : "1f93f120-15c0-436a-a06b-1f9a8d94d376"
+        proxyTketPath : "/qps/pbg/ticket?xrfkey=",
+        MAB : "90c257e1-c519-49b6-9a62-3528db0950fa",
+        POT : "851550e8-da01-4387-84f3-640886a1d6c2",
+        MABOppy : "69fcc214-5b76-4abb-a4d1-bf31136a7e28",
+        Tasks : ["90c257e1-c519-49b6-9a62-3528db0950fa", "851550e8-da01-4387-84f3-640886a1d6c2", "69fcc214-5b76-4abb-a4d1-bf31136a7e28"],
+        UserIdDef : "85bef0d4-3826-42d7-b559-b80bc966ef21"
+    },
+
+    O365Auth : {
+        authority: "https://login.microsoftonline.com/common",
+        authorize_endpoint: "/oauth2/v2.0/authorize",
+        token_endpoint: "/oauth2/v2.0/token",
+        client_id:"ad3a107b-6ea0-4ac3-984d-6abd0cc81262",
+        client_secret : "retP06^@ehlaRAECIC709=}",
+        redirect_uri: "https://itmil-ves/api/v1/users/auth/return", //Redirect URL for Oauth2
+        scope: "user.read offline_access"
     },
 
     MAB : { 
@@ -157,4 +178,15 @@ module.exports = {
     }
 
 
+}
+
+module.exports = function(){
+
+    if(process.env.NODE_ENV === "production"){
+        console.log("Ambiente di produzione. Cambio parametri");
+        config.QIX.host = "pbgqix.expovin.it";
+        config.O365Auth.redirect_uri = "https://pbgame.expovin.it/api/v1/users/auth/return";
+    }
+
+    return (config);
 }

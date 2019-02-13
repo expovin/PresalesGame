@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Injectable } from '@angular/core';
 import { WebsocketService } from './services/websocket.service';
 import { ChatService } from './services/chat.service';
 import { NgxSmartModalService } from 'ngx-smart-modal';
 import { CookieService } from 'ngx-cookie-service';
+import { NgxSpinnerService } from 'ngx-spinner';
+
 
 
 @Component({
@@ -11,6 +13,8 @@ import { CookieService } from 'ngx-cookie-service';
   styleUrls: ['./app.component.css'],
   providers: [ WebsocketService, ChatService ]
 })
+
+@Injectable()
 export class AppComponent implements OnInit{ 
   title = 'The Presales Game';
   private companyID:string;
@@ -20,10 +24,12 @@ export class AppComponent implements OnInit{
 
   constructor(private chatService: ChatService,
               private cookieService: CookieService,
-              private ngxSmartModalService: NgxSmartModalService){
+              private ngxSmartModalService: NgxSmartModalService,
+              private spinner: NgxSpinnerService){
 
     this.chatService.messages.subscribe(
       msg => {			
+        console.log(msg);
         if(msg['type'] === 'start'){
           this.isFinish=false;
           this.modalTitle=msg['msg'];
@@ -31,7 +37,7 @@ export class AppComponent implements OnInit{
         }        
         if(msg['type'] === 'end'){
           this.isFinish=true;
-
+          this.spinner.hide();
         }
         if(msg['type'] === 'actions'){
           this.actions.push(msg['msg']);
@@ -49,11 +55,10 @@ export class AppComponent implements OnInit{
   }
 
   ngOnInit(){
-
       this.companyID = this.cookieService.get('companyID');
       var _this=this;
-      setTimeout(function(){ _this.chatService.messages.next({type:'control', message:_this.companyID})}, 500)
-      
+      setTimeout(function(){ _this.chatService.messages.next({type:'control', message:_this.companyID})}, 1000)
+      this.spinner.show();
   }
 
   cleanStatus(){
